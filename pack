@@ -52,15 +52,17 @@ cp -pr clean/$package dirty || exit 1
   echo "cd dirty"
   cd dirty || exit 1
 
+if test -z "$DOINGSNAPSHOT"; then
   # remove nonreleased stuff
   echo "removestuff $package"
   ../removestuff $package $version || exit 1
+fi
 
   # Anonymize the CVS dirs
   echo "anon $package"
   ../anon $package || exit 1
  
-if test -z "$NODOCU"; then
+if test -z "$DOINGSNAPSHOT"; then
   # Generate docu
   echo "docu $package"
   ../docu $package 
