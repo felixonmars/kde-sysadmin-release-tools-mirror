@@ -53,10 +53,18 @@ cp -pr clean/$package dirty || exit 1
   fi
   if [ $package = "kde-i18n" ]; then
   ( cd $package
+     echo "Removing other stuff"
+     cat subdirs | while read lang; do
+       ( cd $lang  && \
+	 rm -rf messages/others) 
+     done
+    #####
+  )
+  ( cd $package
      echo "Removing koffice specific stuff"
      cat subdirs | while read lang; do
        ( cd $lang  && \
-	 rm -rf messages/koffice) 
+         rm -rf messages/koffice)
      done
     #####
   )
