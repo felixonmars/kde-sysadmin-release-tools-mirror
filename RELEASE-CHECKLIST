@@ -18,9 +18,12 @@ Update version number
  * kdelibs/kdecore/kdeversion.h
  * kdelibs/kdecore/ksycoca.h --> ksycoca version number
  * kdelibs/README
- * pack script :)   (2 version numbers)
+ * for koffice: *_aboutdata.h, configure.in.in, koshell_main.cc ...
+ * pack script :)
+
 Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well
+For koffice: rename kde-i18n as koffice-i18n (the script takes care of removing all the non-koffice stuff)
 Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
 ** remove the xx language! **
 Tag the CVS
