@@ -2,7 +2,7 @@
 # Call it with the package name as argument, like:  ./pack kdelibs
 # Make sure to update the version numbers inside the script first.
 
-version=3.0-alpha1
+version=3.0-alpha2
 package=$1
 
 CDPATH=""
@@ -83,3 +83,4 @@ cp -pr clean/$package dirty || exit 1
   echo "tar cjf $package-$version.tar.bz2 $package-$version"
   tar --owner=root --group=root -cjf ../sources/$package-$version.tar.bz2 $package-$version || exit 1
 )
+rm -rf dirty/$package || exit 1
