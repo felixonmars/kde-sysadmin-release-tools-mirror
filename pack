@@ -16,10 +16,10 @@ case $package in
     version=3.1_20021104
     ;;
   arts) 
-    version=1.3.92
+    version=1.4.0
     ;;
   kdevelop)
-    version=3.1.92
+    version=3.2.0
     ;;
   koffice)
     version=1.3.5
@@ -28,7 +28,7 @@ case $package in
     version=1.3.5
     ;;
   *)
-    version=3.3.92
+    version=3.4.0
     ;;
 esac
 
@@ -101,22 +101,26 @@ fi
   tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
 
   if test "$package" = "kde-i18n"; then
+    cd ../sources
     # for kde-i18n we only generate xdelta for the small files
-    files=`cd kde-i18n && ls -1 kde-i18n-*-$version.tar.bz2 2> /dev/null`
+    files=`cd ../sources/kde-i18n && ls -1 kde-i18n-*-$version.tar.bz2 2> /dev/null`
     for file in $files; do
 	lang=${file/kde-i18n-/}
 	lang=${lang/-$version.tar.bz2/}
 	oldlang=`ls -1 ../sources-old/kde-i18n/kde-i18n-$lang-*tar.bz2 2>/dev/null | tail -n 1`
 	if test -n "$oldlang" && test -r "$oldlang"; then
 	    cp $oldlang kde-i18n
+	    echo "bunzip2 kde-i18n/kde-i18n-$lang-$version.tar.bz2"
 	    bunzip2 kde-i18n/kde-i18n-$lang-$version.tar.bz2
             cd kde-i18n 
             ../$scriptpath/xdelta kde-i18n-$lang-*.bz2 kde-i18n-$lang-$version.tar
 	    cd ..
-	    rm kde-i18n/kde-i18n-$lang-*.bz2
+	    rm -f kde-i18n/kde-i18n-$lang-*.bz2
+            echo "bzip2 kde-i18n/kde-i18n-$lang-$version.tar"
 	    bzip2 kde-i18n/kde-i18n-$lang-$version.tar
         fi
     done
+    cd ../dirty
 
   else
     # generate xdeltas
