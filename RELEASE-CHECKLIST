@@ -49,6 +49,7 @@ Test tarballs
 md5sum *.tar.bz2 kde-i18n/*.tar.bz2 > MD5SUMS
 gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
 Prepare a Changelog
+Inform the packagers (kde-packager at kde dot org)
 Ask for/write announcement (this used to be done on the kde-pr mailing-list)
 
 When everything is ready:
