@@ -42,7 +42,6 @@ Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase las
 If you have to redo a tarball because of a code cahnge and don't want to wait for meinproc to complete,
 extract the old tarball inside cache/<module> before calling "pack". The docu script will
 then use the version from the cache instead of regenerating it, saving a lot of time.
-(for koffice-i18n, use the root and admin dir from KDE_3_1_BRANCH)
 Upload tarballs to their final location, as 'ftprelease' user under a src/ directory.
 chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
