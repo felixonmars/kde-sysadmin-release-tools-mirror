@@ -23,6 +23,7 @@ Update version number
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * pack script :)
 
+Update kdepackages in kdelibs/kdeui
 Make sure the meinproc in path is a version of the correct branch
 Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well (and are not symlinks)
