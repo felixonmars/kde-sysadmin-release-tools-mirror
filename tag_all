@@ -15,6 +15,9 @@ esac
 cd clean
 cvscheck -mucra $i | xargs rm -f
 cvs update $i
+if test "$i" = "kde-i18n"; then
+  cp ../language_list $i/subdirs 
+fi
 ../removestuff $i
 cvs rtag -d $tag $i 
 cvs tag $tag $i
