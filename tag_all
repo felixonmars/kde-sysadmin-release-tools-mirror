@@ -1,0 +1,2 @@
+tag=KDE_3_1_0_BETA_1
+for i in `cat modules`; do (cd clean/$i; cvs rtag -d $tag $i; cvs tag $tag); done
