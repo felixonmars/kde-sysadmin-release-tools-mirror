@@ -69,9 +69,8 @@ When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
 Add an entry to www/index.php, www/announcements/index.php, www/info/releases.php,
 www/download/index.php and www/whatiskde/project.php
-If you've got root@ktown, edit motd.rsync 
-Post announcement in text to kde-announce@kde.org (with a @kde.org From address
-  so that it doesn't need moderation).
+
+Post announcement in text to kde-announce@kde.org
 Post news bit to
   * dot.kde.org (editors@kdenews.org)
   * freshmeat.net
