@@ -9,7 +9,7 @@ Choose version number:
    stuff like "-" etc is not working, so omit it
 
 Update version number
- * */*.lsm
+ * */*.lsm (only every 5th release or if you're really really bored)
  * arts/configure.in.in
  * quanta/configure.in.in
  * kdevelop/configure.in.in
