@@ -3,13 +3,16 @@
 # Make sure to update the version numbers inside the script first.
 
 package=$1
+version=$2
+
+if test -z "$version"; then 
 
 case $package in
   qt-copy)
     version=3.0.5
     ;;
   arts) 
-    version=1.0.7
+    version=1.0.3
     ;;
   kdevelop)
     version=2.1.3_for_KDE_3.0
@@ -25,9 +28,11 @@ case $package in
     version=1.2
     ;;
   *)
-    version=3.0.7
+    version=3.0.3a
     ;;
 esac
+
+fi
 
 CDPATH=""
 
@@ -53,10 +58,12 @@ cp -pr clean/$package dirty || exit 1
   # Anonymize the CVS dirs
   echo "anon $package"
   ../anon $package || exit 1
-
+ 
+if test -z "$NODOCU"; then
   # Generate docu
   echo "docu $package"
   ../docu $package 
+fi
 
   # Prepare for distribution
   echo "dist $package"
