@@ -1,3 +1,4 @@
+#!/bin/bash
 # This is the main script.
 # Call it with the package name as argument, like:  ./pack kdelibs
 # Make sure to update the version numbers inside the script first.
@@ -87,15 +88,15 @@ fi
   tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
 
   # generate xdeltas
-  oldpackage=`ls -1 ../sources-old/$package*tar.bz2`
-  if test -r $oldpackage; then 
+  oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null`
+  if test -n "$oldpackage" && test -r $oldpackage; then 
       cp $oldpackage .
       ../xdelta $package*tar.bz2 $package*tar
+      mv $package*.tar.xdelta ../sources
   fi
 
   bzip2 -9 $package-$version.tar
   mv $package-$version.tar.bz2 ../sources
-  mv $package*.tar.xdelta ../sources
   rm -f $package*tar
   rm -rf $package-$version
 }

@@ -26,7 +26,7 @@ for i in `cat snapmodules`; do
   if test -n "`find clean/$i -type f \! -path \"*/CVS*\" -mtime -1`"; then 
       ./pack $i $version
       rm -f ftp/$i*bz2
-      mv sources/$i*bz2 ftp
+      ln sources/$i*bz2 ftp
       if test "$i" = "kde-i18n"; then
           rm -f ftp/$i/$i*bz2
           mv sources/$i/$i*bz2 ftp/$i
