@@ -1,0 +1,31 @@
+#! /bin/sh
+
+logfile=$HOME/logs/log_`date +"%Y%m%d"`
+rm -rf $logfile
+umask 022
+export VERBOSE=yes
+export NODOCU=yes
+(cd ~/prod && cvs -l up)
+
+# lets go work
+cd ~/prod
+rm -rf sources
+mkdir sources
+
+version=`date +%y%m%d`
+
+for i in `cat snapmodules`; do 
+(
+  test -d clean/$i || { echo "$i doesn't exist"; exit 1; }
+
+  ( cd clean/$i && cvs up )
+  
+  if test -n "`find clean/$i -mtime -24`"; then 
+      ./pack $i $version
+      rm -f ftp/$i*bz2
+      mv sources/$i*bz2 ftp
+  fi 
+
+  ( cd dirty && rm -rf $i* )
+)
+done
