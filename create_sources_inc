@@ -9,11 +9,11 @@ for i in *.tar.bz2; do
     echo '<tr valign="top">'
     l=`echo $i | sed -e "s#.tar.bz2##"`
     echo '   <td><a href="http://download.kde.org/stable/3.2/src/'$i'">'$l'</a></td>'
-    size=`ls -1s $i | sed -e "s#^ *##" | cut -f1 -d' '`
+    size=`ls -1s --block-size=1024 $i | sed -e "s#^ *##" | cut -f1 -d' '`
     if test "$size" -lt 1024; then
       size="$size"kB
     else
-      size=`echo "($size * 10 + 5120) / 1024" | bc`
+      size=`echo "($size * 10 + 512) / 1024" | bc`
       if test "$size" -lt 100; then
         size=`echo "$size"MB | sed -e "s#\(.\)MB#.\1MB#"`
       else
