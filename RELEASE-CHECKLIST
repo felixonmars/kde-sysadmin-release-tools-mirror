@@ -53,6 +53,7 @@ Ask Binner for announcement (this used to be done on the kde-pr mailing-list)
 
 When everything is ready:
 Make directory on the FTP site readable, so that mirrors can start getting it
+Update latest and/or {koffice,quanta,kdevelop}-latest symlinks on the FTP site
 When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
 Add an entry to www/index.php, www/announcements/index.php, www/info/releases.php,
