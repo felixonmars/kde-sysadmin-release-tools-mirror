@@ -40,6 +40,7 @@ fi
 
 CDPATH=""
 unset UNSERMAKE # very important for now :)
+export UNSERMAKE=no 
 
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
