@@ -19,7 +19,7 @@ case $package in
     version=2.0a54
     ;;
   koffice)
-    version=1.2-beta1
+    version=1.2-beta2
     ;;
   *)
     version=3.0.2
@@ -42,65 +42,6 @@ cp -pr clean/$package dirty || exit 1
 {
   echo "cd dirty"
   cd dirty || exit 1
-  if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
-  ( cd $package 
-    echo Removing non-released languages from package
-    test -f subdirs.orig || { echo "$package/subdirs.orig doest no exist"; exit 1; }
-    cat subdirs.orig | while read lang; do
-       if grep -q ^$lang\$ subdirs; then
-          echo Keeping $lang
-       else
-          echo Deleting $lang
-          rm -rf $lang
-       fi
-    done
-    )
-  fi
-  if [ $package = "koffice-i18n" ]; then
-  ( cd $package
-     ### koffice release specific
-     echo "Removing non-koffice stuff"
-     perl -pi -e 's/kde-i18n/koffice-i18n/g; s/kdelibs.po/Makefile.am/g' Makefile.am
-     rm -rf templates */data */docs
-     cat subdirs | while read lang; do
-       ( cd $lang  && \
-         mv messages messages.orig && \
-	 mkdir messages && \
-         mv messages.orig/Makefile.am messages/ &&\
-         mv messages.orig/koffice messages/ &&\
-	 rm -rf messages.orig)
-     done
-    #####
-  )
-  fi
-  if [ $package = "kde-i18n" ]; then
-  ( cd $package
-     echo "Removing other stuff"
-     cat subdirs | while read lang; do
-       ( cd $lang  && \
-	 rm -rf messages/others && \
-         rm -rf docs/others )
-     done
-    #####
-  )
-  ( cd $package
-     echo "Removing koffice specific stuff"
-     cat subdirs | while read lang; do
-       ( cd $lang  && \
-         rm -rf */koffice \
-         rm -rf messages/docs/koffice )
-     done
-    #####
-  )
-  fi
-  if [ $package = "koffice" ]; then
-  ( cd $package
-    ### koffice release specific
-     echo "Removing non-released stuff"
-    # rm -rf krayon kplato graphite kosoap
-    #####
-  )
-  fi
 
   # Anonymize the CVS dirs
   echo "anon $package"

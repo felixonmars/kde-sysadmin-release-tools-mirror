@@ -25,14 +25,17 @@ Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well
 For koffice: rename kde-i18n as koffice-i18n (the script takes care of removing all the non-koffice stuff)
 Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
-** remove the xx language! **
+Make sure the xx language isn't listed in "subdirs"
+Run "removestuff <module>", which removes subdirs that shouldn't be tagged
+   (currently used for kde-i18n, koffice and koffice-i18n only)
 Tag the CVS
-Make sure the admin directoies gets tagged as well
-Make tarballs using pack (includes doc creation). Start with kde-i18n. Do kdelibs/kdebase last.
+Make sure the admin directories gets tagged as well
+Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase last.
 Upload tarballs on the packager account
 chmod g+w the new directory in the packager account
 Test tarballs
 Prepare a Changelog
+
 Announce binaries when ready
 Ask for announce on kde-pr
 Commit announcement (after adding PHP header/footer)

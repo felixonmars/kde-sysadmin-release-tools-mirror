@@ -1,0 +1,97 @@
+# This is a helper script, which removes the useless stuff from some modules.
+# For instance it separates the koffice translations between kde-i18n and koffice-i18n.
+# Call it with the package name as argument, like:  ./removestuff kde-i18n
+# Usually, you'll want to do this before tagging.
+
+package=$1
+
+CDPATH=""
+
+test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
+test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
+test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
+
+# Unlike "pack", this script acts on clean/, because it's supposed to be run
+# before tagging.
+
+echo "cd clean"
+cd clean || exit 1
+
+  if [ $package = "koffice-i18n" ]; then
+  ( cd $package
+     echo "Removing non-koffice stuff"
+     perl -pi -e 's/kde-i18n/koffice-i18n/g; s/kdelibs.po/Makefile.am/g' Makefile.am
+     rm -rf templates
+     cp subdirs subdirs.new
+     cat subdirs | while read lang; do
+       ( cd $lang || exit 1
+         found=""
+         # Look for koffice stuff in each of the 3 subdirs
+         for subdir in data messages docs; do
+           if test -d $subdir/koffice; then
+             mv $subdir $subdir.orig &&
+             mkdir $subdir &&
+             mv $subdir.orig/Makefile.am $subdir/ &&
+             mv $subdir.orig/CVS $subdir/ &&
+             mv $subdir.orig/.cvsignore $subdir/ &&
+             mv $subdir.orig/koffice $subdir/ &&
+             rm -rf $subdir.orig || exit 1
+             found="$found $subdir"
+           else
+             rm -rf $subdir
+           fi
+         done
+         if test -z "$found"; then
+           echo "$lang has no koffice translation, removing"
+           rm -rf $lang
+           sed -e "/^$lang/d" ../subdirs.new > ../subdirs.tmpnew
+           mv -f ../subdirs.tmpnew ../subdirs.new
+         else
+           echo "$lang: found$found"
+         fi
+       )
+     done
+     mv -f subdirs.new subdirs
+  ) || exit 1
+  fi
+
+  if [ $package = "kde-i18n" ]; then
+  ( cd $package
+     echo "Removing other stuff"
+     cat subdirs | while read lang; do
+       ( cd $lang  && \
+	 rm -rf messages/others && \
+         rm -rf docs/others )
+     done
+     echo "Removing koffice specific stuff"
+     cat subdirs | while read lang; do
+       ( cd $lang  && \
+         rm -rf */koffice \
+         rm -rf messages/docs/koffice )
+     done
+  )
+  fi
+
+  if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
+  ( cd $package 
+    echo Removing non-released languages from package
+    test -f subdirs.orig || { echo "$package/subdirs.orig doesn't exist"; exit 1; }
+    grep ^xx subdirs && { echo "$package/subdirs.orig contains the xx language!"; exit 1; }
+    cat subdirs.orig | while read lang; do
+       if grep -q ^$lang\$ subdirs; then
+          echo Keeping $lang
+       else
+          echo Deleting $lang
+          rm -rf $lang
+       fi
+    done
+    ) || exit 1
+  fi
+
+  if [ $package = "koffice" ]; then
+  ( cd $package
+     echo "Removing non-released stuff"
+     rm -rf krita kdatabase kplato graphite kosoap
+  )
+  fi
+
