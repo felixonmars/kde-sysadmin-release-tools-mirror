@@ -7,6 +7,7 @@ Choose version number:
  * remember that RPM is stupid and considers 5.0beta1 newer than
    5.0, so always use "code versions" for the packages. Also
    stuff like "-" etc is not working, so omit it
+ * put the version numbers to the "pack" script
 
 Update version number
  * */*.lsm
@@ -19,15 +20,16 @@ Update version number
  * kdelibs/kdecore/ksycoca.h --> ksycoca version number
  * kdelibs/README
  * bugs/template/wizard/report.html.tmpl
- * for koffice: *_aboutdata.h, configure.in.in, koshell_main.cc ...
+ * for koffice: configure.in.in, koshell_main.cc ...
  * pack script :)
 
 Check out or update everything with the correct branch tag
-Make sure all admin directories are up to date as well
-For koffice: rename kde-i18n as koffice-i18n (the script takes care of removing all the non-koffice stuff)
+Make sure all admin directories are up to date as well (and are not symlinks)
+Copy the clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
+For koffice: rename kde-i18n to koffice-i18n (the script takes care of removing all the non-koffice stuff)
 Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
 Make sure the xx language isn't listed in "subdirs"
-Run "removestuff <module>", which removes subdirs that shouldn't be tagged
+Run "removestuff <module>", which removes subdirs that shouldn't be tagged (pack does that)
    (currently used for kde-i18n, koffice and koffice-i18n only)
 Tag the CVS
 Make sure the admin directories gets tagged as well
