@@ -16,10 +16,10 @@ Update version number
  * kdebase/konqueror/version.h
  * kdebase/startkde 
  * kde-common/admin/cvs.sh has VERSION="3.x"
- * kdesupport/configure.in
  * kdelibs/kdecore/kdeversion.h
  * kdelibs/kdecore/ksycoca.h --> ksycoca version number
  * kdelibs/README
+ * kdenetwork/kopete/kopete/main.cpp
  * bugs/template/wizard/report.html.tmpl
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * pack script :)
