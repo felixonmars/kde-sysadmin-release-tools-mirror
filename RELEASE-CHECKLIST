@@ -12,7 +12,7 @@ Update version number
  * */*.lsm
  * kdebase/konqueror/version.h
  * kdebase/startkde 
- * kde-common/admin/Makefile.common has VERSION="2.x"
+ * kde-common/admin/cvs.sh has VERSION="3.x"
  * kdesupport/configure.in
  * kde-i18n/configure.in
  * kdelibs/kdecore/kdeversion.h
