@@ -22,6 +22,7 @@ Update version number
  * kdenetwork/kopete/kopete/main.cpp
  * bugs/template/wizard/report.html.tmpl
  * bugs/bugz/wizard_config.pl
+ * www/areas/enterprise/bizcase/form.inc (major KDE versions only)
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * pack script :)
 
