@@ -7,11 +7,10 @@ test build done
 Update version number
  * */*.lsm
  * kdebase/konqueror/version.h
- * kdebase/kcontrol/kcontrol/main.cpp/kcmshell.cpp
  * kde-common/admin/Makefile.common has VERSION="2.x"
  * kdesupport/configure.in
  * kde-i18n/configure.in
- * kdelibs/kdecore/kapp.h
+ * kdelibs/kdecore/kapplication.h
  * kdelibs/kdecore/ksycoca.h --> ksycoca version number
  * kdelibs/README
  * pack script :)   (2 version numbers)
