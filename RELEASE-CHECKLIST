@@ -31,8 +31,9 @@ Run "removestuff <module>", which removes subdirs that shouldn't be tagged
 Tag the CVS
 Make sure the admin directories gets tagged as well
 Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase last.
-Upload tarballs on the packager account
-chmod g+w the new directory in the packager account
+Upload tarballs to their final location, as 'ftprelease' user.
+chmod o-rwx any new dir (so that they're not yet public)
+chmod g+w the new directory where packagers will put their files
 Test tarballs
 Prepare a Changelog
 
