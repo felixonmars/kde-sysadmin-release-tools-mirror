@@ -9,7 +9,7 @@ Choose version number:
    stuff like "-" etc is not working, so omit it
 
 Update version number
- * */*.lsm (only every 5th release or if you're really really bored)
+ * */*.lsm
  * arts/configure.in.in
  * kdewebdev/quanta/src/quanta.h
  * kdevelop/configure.in.in
@@ -39,7 +39,7 @@ Run "removestuff <module>", which removes subdirs that shouldn't be tagged (pack
 Tag the CVS
 Make sure the admin directories gets tagged as well
 Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase last.
-If you have to redo a tarball because of a code cahnge and don't want to wait for meinproc to complete,
+If you have to redo a tarball because of a code change and don't want to wait for meinproc to complete,
 extract the old tarball inside cache/<module> before calling "pack". The docu script will
 then use the version from the cache instead of regenerating it, saving a lot of time.
 Upload tarballs to their final location, as 'ftprelease' user under a src/ directory.
@@ -52,15 +52,15 @@ gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
 (Note: for KOffice, MD5SUMS should be signed with --clearsign instead of --detach-sign.)
 Prepare a Changelog
 Inform the packagers (kde-packager at kde dot org)
-Ask for/write announcement (this used to be done on the kde-pr mailing-list)
+Ask for/write announcement (on the kde-promo mailing-list)
 
 When everything is ready:
 
 - Make directory on the FTP site readable, so that mirrors can start getting it
-  Update latest and/or {koffice,quanta,kdevelop}-latest symlinks on the FTP site
+  Update latest and/or {koffice,kdevelop}-latest symlinks on the FTP site
 
 - clean up the older releases. Make sure that kdestableftp and kdeunstableftp
-  remain in their advertised size limits. Sort out older binary packages, 
+  remain in their advertised size limits (~20 GB). Sort out older binary packages, 
   add compatibility links.
 
 - Enable syncing during the night, so that the uplink can be saturated and
