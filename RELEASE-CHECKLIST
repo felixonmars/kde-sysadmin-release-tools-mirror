@@ -52,8 +52,17 @@ Prepare a Changelog
 Ask Binner for announcement (this used to be done on the kde-pr mailing-list)
 
 When everything is ready:
-Make directory on the FTP site readable, so that mirrors can start getting it
-Update latest and/or {koffice,quanta,kdevelop}-latest symlinks on the FTP site
+
+- Make directory on the FTP site readable, so that mirrors can start getting it
+  Update latest and/or {koffice,quanta,kdevelop}-latest symlinks on the FTP site
+
+- clean up the older releases. Make sure that kdestableftp and kdeunstableftp
+  remain in their advertised size limits. Sort out older binary packages, 
+  add compatibility links.
+
+- Enable syncing during the night, so that the uplink can be saturated and
+  does not affect interactive server load and network traffic. 
+
 When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
 Add an entry to www/index.php, www/announcements/index.php, www/info/releases.php,
