@@ -12,6 +12,7 @@ Update version number
  * */*.lsm
  * arts/configure.in.in
  * quanta/configure.in.in
+ * kdevelop/configure.in.in
  * kdebase/konqueror/version.h
  * kdebase/startkde 
  * kde-common/admin/cvs.sh has VERSION="3.x"
