@@ -11,7 +11,14 @@ renice 20 $$
 # lets go work
 cd ~/prod
 rm -rf sources-old
-mv sources sources-old
+mkdir sources-old
+mkdir sources-old/kde-i18n
+# now lets populate the directory
+for i in `cat snapmodules`; do
+ t=$(perl -e "print readlink 'ftp/$i.tar.bz2'")
+ ln -s ../ftp/$t sources-old
+done
+rm -rf sources
 mkdir sources
 mkdir sources/kde-i18n
 
