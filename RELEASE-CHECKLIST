@@ -11,7 +11,7 @@ Choose version number:
 Update version number
  * */*.lsm (only every 5th release or if you're really really bored)
  * arts/configure.in.in
- * quanta/configure.in.in
+ * kdewebdev/quanta/src/quanta.h
  * kdevelop/configure.in.in
  * kdebase/konqueror/version.h
  * kdebase/startkde 
