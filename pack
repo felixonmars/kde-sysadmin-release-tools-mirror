@@ -64,6 +64,11 @@ cp -pr clean/$package dirty || exit 1
   cd dirty || exit 1
 
 if test -z "$DOINGSNAPSHOT"; then
+  if [ "$package" = "kde-i18n" ]; then
+    mv $package/subdirs $package/subdirs.orig
+    cp ../language_list $package/subdirs
+  fi
+
   # remove nonreleased stuff
   echo "removestuff $package"
   $scriptpath/removestuff $package $version || exit 1
