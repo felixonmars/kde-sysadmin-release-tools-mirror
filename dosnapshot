@@ -22,7 +22,7 @@ for i in `cat snapmodules`; do
 
   ( cd clean/$i && cvs up )
   
-  if test -n "`find clean/$i -mtime -24`"; then 
+  if test -n "`find clean/$i -type f \! -path \"*/CVS*\" -mtime -1`"; then 
       ./pack $i $version
       rm -f ftp/$i*bz2
       mv sources/$i*bz2 ftp
