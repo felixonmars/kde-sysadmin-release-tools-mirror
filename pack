@@ -50,15 +50,20 @@ if [ $package = kde-i18n ]; then
   test -d sources/kde-i18n || { echo "create empty subdir sources/kde-i18n"; exit 1; }
 fi
 if [ $package = koffice-i18n ]; then
-  test -d sources/koffice-i18n || { echo "create empty subdir sources/koffice-i18n"; exit 1; }
+  test -d sources/koffice-i18n || mkdir sources/koffice-i18n || { echo "create empty subdir sources/koffice-i18n"; exit 1; }
 fi
 
 test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
 test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
 test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package; }
 
-echo "cp -pr clean/$package dirty"
-cp -pr clean/$package dirty || exit 1
+if test -z "$HARDLINKS"; then
+  echo "cp -pr clean/$package dirty"
+  cp -pr clean/$package dirty || exit 1
+else
+  echo "cp -prl clean/$package dirty"
+  cp -prl clean/$package dirty || exit 1
+fi
 {
   echo "cd dirty"
   cd dirty || exit 1
