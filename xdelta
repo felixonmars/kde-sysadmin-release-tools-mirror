@@ -1,0 +1,34 @@
+#!/bin/bash
+
+test -z "$1" && { echo "parameter oldtarball required"; exit 1; }
+test -z "$2" && { echo "parameter newtarball required"; exit 1; }
+
+cleanupfiles=""
+
+if test `basename $1 .bz2` != $1; then
+  echo "bunzip2 $1"
+  bunzip2 $1
+  cleanupfiles="$cleanupfiles `basename $1 .bz2`"
+fi
+
+if test `basename $2 .bz2` != $2; then
+  echo "bunzip2 $2"
+  bunzip2 $2
+  cleanupfiles="$cleanupfiles `basename $2 .bz2`"
+fi
+
+oldtarball=`basename $1 .bz2`
+newtarball=`basename $2 .bz2`
+
+package=`echo $newtarball | sed -e s,-.*,,`
+oldversion=`basename $oldtarball .tar  | sed -e s,[^-]*-,,`
+newversion=`basename $newtarball .tar  | sed -e s,[^-]*-,,`
+diffname="$package-$oldversion-$newversion.tar.xdelta"
+
+echo "xdelta $oldtarball $newtarball $diffname"
+xdelta delta -9 $oldtarball $newtarball $diffname
+
+if test -n "$cleanupfiles"; then
+  echo "rm -f $cleanupfiles"
+  rm -f $cleanupfiles
+fi

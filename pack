@@ -9,13 +9,13 @@ if test -z "$version"; then
 
 case $package in
   qt-copy)
-    version=3.0.5
+    version=3.1_20021104
     ;;
-  arts)
-    version=1.1.0
+  arts) 
+    version=1.1
     ;;
   kdevelop)
-    version=3.0a1
+    version=3.0a3
     ;;
   kdoc)
     version=2.0a54
@@ -26,8 +26,11 @@ case $package in
   koffice-i18n)
     version=1.2.1
     ;;
+  quanta)
+    version=3.1
+    ;;
   *)
-    version=3.0.9
+    version=3.1
     ;;
 esac
 
@@ -39,6 +42,7 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
 test -d dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || { echo "create empty subdir sources"; exit 1; }
+test -d sources-old || { echo "create empty subdir sources-old with reference files for xdelta"; exit 1; }
 if [ $package = kde-i18n ]; then
   test -d sources/kde-i18n || { echo "create empty subdir sources/kde-i18n"; exit 1; }
 fi
@@ -80,6 +84,19 @@ fi
   echo "mv $package $package-$version"
   mv $package $package-$version || exit 1
   echo "tar cjf $package-$version.tar.bz2 $package-$version"
-  tar --owner=root --group=root -cjf ../sources/$package-$version.tar.bz2 $package-$version || exit 1
+  tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
+
+  # generate xdeltas
+  oldpackage=`ls -1 ../sources-old/$package*tar.bz2`
+  if test -r $oldpackage; then 
+      cp $oldpackage .
+      ../xdelta $package*tar.bz2 $package*tar
+  fi
+
+  bzip2 -9 $package-$version.tar
+  mv $package-$version.tar.bz2 ../sources
+  mv $package*.tar.xdelta ../sources
+  rm -f $package*tar
+  rm -rf $package-$version
 }
 rm -rf dirty/$package || exit 1
