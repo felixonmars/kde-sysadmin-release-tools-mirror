@@ -48,7 +48,7 @@ cp -pr clean/$package dirty || exit 1
 
   # remove nonreleased stuff
   echo "removestuff $package"
-  ../removestuff $package || exit 1
+  ../removestuff $package $version || exit 1
 
   # Anonymize the CVS dirs
   echo "anon $package"
