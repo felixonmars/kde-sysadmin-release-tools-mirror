@@ -4,10 +4,10 @@ for i in `cat modules`; do
 (
 case $i in
   arts)
-    tag=ARTS_1_2_0_RELEASE
+    tag=ARTS_1_2_1_RELEASE
     ;;
   *)
-    tag=KDE_3_2_0_RELEASE
+    tag=KDE_3_2_1_RELEASE
     ;;
 esac
 
