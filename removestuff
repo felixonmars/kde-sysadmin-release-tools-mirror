@@ -46,7 +46,7 @@ cd_package()
              mkdir $subdir &&
              mv $subdir.orig/Makefile.am $subdir/ &&
              mv $subdir.orig/CVS $subdir/ &&
-             mv $subdir.orig/.cvsignore $subdir/ &&
+             (mv $subdir.orig/.cvsignore $subdir/ || true) &&
              mv $subdir.orig/koffice $subdir/ &&
              rm -rf $subdir.orig || exit 1
              found="$found $subdir"
