@@ -53,6 +53,7 @@ Make directory on the FTP site readable, so that mirrors can start getting it
 When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
 Add an entry to www/announcements/index.html
+If you've got root@ktown, edit motd.rsync 
 Post announcement in text to kde-announce@kde.org (with a @kde.org From address
   so that it doesn't need moderation).
 Post news bit to
