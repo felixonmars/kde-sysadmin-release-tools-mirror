@@ -1,2 +1,21 @@
-tag=KDE_3_1_0_BETA_2
-for i in `cat modules`; do (cd clean/$i; cvs rtag -d $tag $i; cvs tag $tag); done
+#!/bin/bash -x 
+for i in `cat modules`; do
+
+(
+case $i in
+  quanta)
+    tag=QUANTA_3_1
+    ;;
+  arts)
+    tag=ARTS_1_1_0_RELEASE
+    ;;
+  *)
+    tag=KDE_3_1_0_RELEASE
+    ;;
+esac
+
+cd clean/$i 
+cvs rtag -d $tag $i 
+cvs tag $tag
+)
+done
