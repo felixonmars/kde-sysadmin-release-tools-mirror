@@ -2,8 +2,23 @@
 # Call it with the package name as argument, like:  ./pack kdelibs
 # Make sure to update the version numbers inside the script first.
 
-version=3.0beta2
 package=$1
+
+case $package in
+  qt-copy)
+    version=3.0.2
+    ;;
+  arts) 
+    version=0.9.8
+    ;;
+  kdevelop)
+    #version=2.1rc2_for_KDE_3.0
+    version=2.1rc2_for_KDE_2.2
+    ;;
+  *)
+    version=3.0rc2
+    ;;
+esac
 
 CDPATH=""
 
@@ -85,7 +100,7 @@ cp -pr clean/$package dirty || exit 1
 
   # Generate docu
   echo "docu $package"
-  ../docu $package || exit 1
+  ../docu $package 
 
   # Prepare for distribution
   echo "dist $package"
