@@ -100,7 +100,12 @@ cd_package()
 	 rm -rf messages/kdeextragear-libs-* && \
 	 rm -rf docs/kdeextragear-libs-* && \
          rm -rf messages/kdekiosk && \
-         rm -rf docs/kdekiosk 
+         rm -rf docs/kdekiosk  && \
+	 rm -rf messages/www.kde.org && \
+	 rm -rf messages/kdeplay* && \
+	 rm -rf messages/docs/kdeplay* && \
+	 rm -rf messages/kdereview && \
+	 rm -rf messages/docs/kdereview && \
          test -e docs/common || rm -vr docs	
 	)
      done
