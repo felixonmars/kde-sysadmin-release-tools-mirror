@@ -13,12 +13,12 @@ test -d dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || { echo "create empty subdir sources"; exit 1; }
 
 test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
-test -d dirty/$package-version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
+test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
 test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package; }
 
 echo "cp -pr clean/$package dirty"
 cp -pr clean/$package dirty || exit 1
-(
+{
   echo "cd dirty"
   cd dirty || exit 1
   if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
@@ -80,5 +80,5 @@ cp -pr clean/$package dirty || exit 1
   mv $package $package-$version || exit 1
   echo "tar cjf $package-$version.tar.bz2 $package-$version"
   tar --owner=root --group=root -cjf ../sources/$package-$version.tar.bz2 $package-$version || exit 1
-)
+}
 rm -rf dirty/$package || exit 1
