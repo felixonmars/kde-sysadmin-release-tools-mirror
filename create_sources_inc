@@ -1,0 +1,31 @@
+echo '<table border="0" cellpadding="4" cellspacing="0">'
+echo '<tr valign="top">'
+echo '  <th align="left">Location</th>'
+echo '  <th align="left">Size</th>'
+echo '  <th align="left">MD5&nbsp;Sum</th>'
+echo '</tr>'
+
+for i in *.tar.bz2; do 
+    echo '<tr valign="top">'
+    l=`echo $i | sed -e "s#.tar.bz2##"`
+    echo '   <td><a href="http://download.kde.org/stable/3.2/src/'$i'">'$l'</a></td>'
+    size=`ls -1s $i | sed -e "s#^ *##" | cut -f1 -d' '`
+    if test "$size" -lt 1024; then
+      size="$size"kB
+    else
+      size=`echo "($size * 10 + 5120) / 1024" | bc`
+      if test "$size" -lt 100; then
+        size=`echo "$size"MB | sed -e "s#\(.\)MB#.\1MB#"`
+      else
+        size=`echo "$size"MB | sed -e "s#\(.\)MB#MB#"`
+      fi
+    fi
+    echo '   <td align="right">'$size'</td>'
+    md5=`md5sum $i | cut -f1 -d' '`
+    echo '   <td><tt>'$md5'</tt></td>'
+    echo '</tr>'
+    echo ''
+done
+ 
+echo '</table>'
+
