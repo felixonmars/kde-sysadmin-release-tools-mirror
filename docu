@@ -14,4 +14,7 @@ else
 	meinproc --cache index.cache.bz2 index.docbook
     ) 
   done
+
+  # make sure we leave no corefiles behind
+  find $1 -type f -name "core" | xargs rm -f
 fi
