@@ -36,10 +36,16 @@ chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
 Test tarballs
 Prepare a Changelog
+Ask Andreas for announcement (this used to be done on the kde-pr mailing-list)
 
-Announce binaries when ready
-Ask for announce on kde-pr
+When everything is ready:
+Make directory on the FTP site readable, so that mirrors can start getting it
+When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
-Add an entry to announcements/index.html
-Post announcement in text to kde-announce@kde.org
-Post news bit to dot.kde.org, to freshmeat.net and to newsgroups
+Add an entry to www/announcements/index.html
+Post announcement in text to kde-announce@kde.org (with a @kde.org From address
+  so that it doesn't need moderation).
+Post news bit to
+  * dot.kde.org (editors@kdenews.org)
+  * freshmeat.net
+  * newsgroups, optionally
