@@ -1,0 +1,1 @@
+for i in `cat modules`; do ./pack $i; done

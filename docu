@@ -1,9 +1,16 @@
-files=`find $1 -name index.docbook`
 
-for f in $files; do
-  (
+if test ! -x "`which meinproc`"; then
+  echo ""
+  echo "!!! No meinproc found. No docu generated.. !!!";
+  echo ""
+else
+  files=`find $1 -name index.docbook`
+
+  for f in $files; do
+    (
 	cd `dirname $f`
 	echo `pwd`
 	meinproc --cache index.cache.bz2 index.docbook
-  ) 
-done
+    ) 
+  done
+fi
