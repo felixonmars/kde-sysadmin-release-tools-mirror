@@ -28,7 +28,7 @@ for i in `cat snapmodules`; do
 (
   test -d clean/$i || { echo "$i doesn't exist"; exit 1; }
 
-  ( cd clean/$i && cvs up )
+  ( cd clean/$i && cvs up >/dev/null )
 
   if test -n "`find clean/$i -type f \! -path \"*/CVS*\" -mtime -1`"; then
       ./pack $i $version
