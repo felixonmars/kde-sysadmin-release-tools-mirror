@@ -42,7 +42,7 @@ chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
 Test tarballs
 Prepare a Changelog
-Ask Andreas for announcement (this used to be done on the kde-pr mailing-list)
+Ask Binner for announcement (this used to be done on the kde-pr mailing-list)
 
 When everything is ready:
 Make directory on the FTP site readable, so that mirrors can start getting it
