@@ -4,17 +4,28 @@
 # Usually, you'll want to do this before tagging.
 
 package=$1
+version=$2
 
 CDPATH=""
 
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
+
+cd_package()
+{
+  if test -n "$version" && test -d $package-$version; then
+    cd $package-$version
+  else
+    cd $package || { echo "bah! $package doesn't exist in $PWD"; exit 1; }
+  fi
+}
 
 # Unlike "pack", this script acts on clean/, because it's supposed to be run
 # before tagging.
 # but it can also act in dirty, for packaging
 
   if [ $package = "koffice-i18n" ]; then
-  ( cd $package
+  ( 
+     cd_package
      echo "Removing non-koffice stuff"
      perl -pi -e 's/kde-i18n/koffice-i18n/g; s/kdelibs.po/Makefile.am/g' Makefile.am
      rm -rf templates
@@ -52,7 +63,8 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
   fi
 
   if [ $package = "kde-i18n" ]; then
-  ( cd $package
+  (  
+     cd_package
      echo "Removing other stuff"
      cat subdirs | while read lang; do
        ( cd $lang  && \
@@ -75,7 +87,8 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
   fi
 
   if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
-  ( cd $package 
+  ( 
+    cd_package 
     echo Removing non-released languages from package
     test -f subdirs.orig || { echo "$package/subdirs.orig doesn't exist"; exit 1; }
     grep ^xx subdirs && { echo "$package/subdirs.orig contains the xx language!"; exit 1; }
@@ -91,7 +104,8 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
   fi
 
   if [ $package = "koffice" ]; then
-  ( cd $package
+  (  
+     cd_package
      echo "Removing non-released stuff"
      rm -rf krita kdatabase kplato graphite kosoap
   )
