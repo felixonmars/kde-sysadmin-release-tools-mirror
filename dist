@@ -3,7 +3,8 @@
   package=$1
   version=$2
   cd $package
-  if [ $package = "kdoc" ]; then
+  
+  if [ $package = "qt-copy" ]; then
     make -f Makefile.cvs || exit 1
   else
     make -f admin/Makefile.common dist || exit 1
