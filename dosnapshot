@@ -28,8 +28,8 @@ for i in `cat snapmodules`; do
       rm -f ftp/$i*bz2
       mv -f sources/$i*bz2 ftp
       ln -s $i-$version.tar.bz2 ftp/$i.tar.bz2
-      mv -f sources/$i*xdelta ftp
       find ftp/ -name "$i*xdelta" -mtime +7 | xargs rm
+      mv -f sources/$i*xdelta ftp
       if test "$i" = "kde-i18n"; then
           rm -f ftp/$i/$i*bz2
           for ki in sources/$i/$i*bz2; do
