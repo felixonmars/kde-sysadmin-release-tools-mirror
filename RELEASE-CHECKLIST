@@ -7,6 +7,7 @@ test build done
 Update version number
  * */*.lsm
  * kdebase/konqueror/version.h
+ * kdebase/startkde 
  * kde-common/admin/Makefile.common has VERSION="2.x"
  * kdesupport/configure.in
  * kde-i18n/configure.in
