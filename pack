@@ -84,8 +84,8 @@ cp -pr clean/$package dirty || exit 1
      echo "Removing koffice specific stuff"
      cat subdirs | while read lang; do
        ( cd $lang  && \
-         rm -rf messages/koffice \
-         rm -rf docs/koffice )
+         rm -rf */koffice \
+         rm -rf messages/docs/koffice )
      done
     #####
   )
