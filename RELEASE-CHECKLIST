@@ -48,7 +48,7 @@ chmod g+w the new directory where packagers will put their files
 Test tarballs
 md5sum *.tar.bz2 kde-i18n/*.tar.bz2 > MD5SUMS
 gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
-(Note: for KOffice, use gpg with --clearsign instead of --detach-sign.)
+(Note: for KOffice, MD5SUMS should be signed with --clearsign instead of --detach-sign.)
 Prepare a Changelog
 Inform the packagers (kde-packager at kde dot org)
 Ask for/write announcement (this used to be done on the kde-pr mailing-list)
