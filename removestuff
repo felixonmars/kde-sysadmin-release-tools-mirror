@@ -24,7 +24,7 @@ cd_package()
 # but it can also act in dirty, for packaging
 
   if [ $package = "koffice-i18n" ]; then
-  ( 
+  (
      cd_package
      echo "Removing non-koffice stuff"
      perl -pi -e 's/kde-i18n/koffice-i18n/g; s/kdelibs.po/Makefile.am/g' Makefile.am
@@ -39,17 +39,30 @@ cd_package()
          found=""
          test -d $lang && {
          cd $lang
-         # Look for koffice stuff in each of the 3 subdirs
+         # Look for koffice stuff in subdirs
          for subdir in data messages docs; do
+           subdirlist=""
            if test -d $subdir/koffice; then
+             subdirlist="$subdirlist $subdir/koffice"
+           fi
+           if test -d $subdir/docs/koffice; then
+             subdirlist="$subdirlist $subdir/docs/koffice"
+           fi
+           if test -n "$subdirlist"; then
              mv $subdir $subdir.orig &&
              mkdir $subdir &&
              mv $subdir.orig/Makefile.am $subdir/ &&
-             mv $subdir.orig/CVS $subdir/ &&
-             (mv $subdir.orig/.cvsignore $subdir/ || true) &&
-             mv $subdir.orig/koffice $subdir/ &&
+             mv $subdir.orig/CVS $subdir/ || exit 1
+             mv $subdir.orig/.cvsignore $subdir/ 2>/dev/null
+             for s in `echo $subdirlist`; do
+               orig=`echo $s | sed -e "s/^$subdir/$subdir.orig/"`
+               # This is for e.g. messages/docs/koffice, we need to create messages/docs first
+               parent=`echo $s | sed -e 's,/[^/]*$,,'`
+               mkdir -p $parent &&
+                   mv $orig $s || exit 1
+             done
              rm -rf $subdir.orig || exit 1
-             found="$found $subdir"
+             found="$found $subdirlist"
            else
              rm -rf $subdir
            fi
