@@ -16,7 +16,6 @@ Update version number
  * kdebase/startkde 
  * kde-common/admin/cvs.sh has VERSION="3.x"
  * kdesupport/configure.in
- * kde-i18n/configure.in
  * kdelibs/kdecore/kdeversion.h
  * kdelibs/kdecore/ksycoca.h --> ksycoca version number
  * kdelibs/README
