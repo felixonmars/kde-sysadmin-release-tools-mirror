@@ -1,10 +1,11 @@
 #! /bin/sh
 
-logfile=$HOME/logs/log_`date +"%Y%m%d"`
-rm -rf $logfile
 umask 022
 export VERBOSE=yes
 export DOINGSNAPSHOT=yes
+
+renice 20 $$
+
 (cd ~/prod && cvs -l up)
 
 # lets go work
