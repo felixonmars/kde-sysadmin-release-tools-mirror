@@ -10,7 +10,8 @@ renice 20 $$
 
 # lets go work
 cd ~/prod
-rm -rf sources
+rm -rf sources-old
+mv sources sources-old
 mkdir sources
 mkdir sources/kde-i18n
 
