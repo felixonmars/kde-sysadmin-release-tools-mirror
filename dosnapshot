@@ -27,6 +27,7 @@ for i in `cat snapmodules`; do
       ./pack $i $version
       rm -f ftp/$i*bz2
       ln sources/$i*bz2 ftp
+      ln sources/$i*xdelta ftp
       if test "$i" = "kde-i18n"; then
           rm -f ftp/$i/$i*bz2
           mv sources/$i/$i*bz2 ftp/$i
