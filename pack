@@ -13,7 +13,7 @@ case $package in
     ;;
   kdevelop)
     version=2.1.2_for_KDE_3.0
-    #version=2.1_for_KDE_2.2
+    #version=2.1.2_for_KDE_2.2
     ;;
   kdoc)
     version=2.0a54
