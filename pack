@@ -6,13 +6,13 @@ package=$1
 
 case $package in
   qt-copy)
-    version=3.0.3
+    version=3.0.4
     ;;
   arts) 
-    version=1.0.0
+    version=1.0.2
     ;;
   kdevelop)
-    version=2.1_for_KDE_3.0
+    version=2.1.2_for_KDE_3.0
     #version=2.1_for_KDE_2.2
     ;;
   kdoc)
@@ -22,7 +22,7 @@ case $package in
     version=1.2-beta1
     ;;
   *)
-    version=3.0
+    version=3.0.2
     ;;
 esac
 
