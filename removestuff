@@ -89,8 +89,6 @@ cd_package()
      echo "Removing other stuff"
      cat subdirs | while read lang; do
        ( cd $lang  && \
-	 rm -rf messages/kdesdk/kdevelop.po && \
-	 rm -rf docs/kdevelop && \
 	 rm -rf messages/others && \
          rm -rf docs/others && \
          rm -rf messages/docs/others && \
