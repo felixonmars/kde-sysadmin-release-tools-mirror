@@ -3,14 +3,11 @@ for i in `cat modules`; do
 
 (
 case $i in
-  quanta)
-    tag=QUANTA_3_1
-    ;;
   arts)
-    tag=ARTS_1_1_0_RELEASE
+    tag=ARTS_1_2_0_RELEASE
     ;;
   *)
-    tag=KDE_3_1_0_RELEASE
+    tag=KDE_3_2_0_RELEASE
     ;;
 esac
 
