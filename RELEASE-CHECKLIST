@@ -41,7 +41,8 @@ Upload tarballs to their final location, as 'ftprelease' user under a src/ direc
 chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
 Test tarballs
-md5sum *.tar.bz2 >MD5SUMS
+md5sum *.tar.bz2 kde-i18n/*.tar.bz2 > MD5SUMS
+gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
 Prepare a Changelog
 Ask Binner for announcement (this used to be done on the kde-pr mailing-list)
 
