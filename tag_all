@@ -5,15 +5,15 @@ for i in `cat modules`; do
 (
 case $i in
   arts)
-    tag=ARTS_1_3_0_ALPHA_1
+    tag=ARTS_1_3_0_BETA_2
     ;;
   *)
-    tag=KDE_3_3_0_ALPHA_1
+    tag=KDE_3_3_0_BETA_2
     ;;
 esac
 
 cd clean
-cvscheck $i | xargs rm
+cvscheck -mucra $i | xargs rm -f
 cvs update $i
 ../removestuff $i
 cvs rtag -d $tag $i 
