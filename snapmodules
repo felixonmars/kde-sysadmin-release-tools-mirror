@@ -1,4 +1,6 @@
+qt-copy
 arts
+kdesupport
 kdelibs
 kdeaccessibility
 kdebase
@@ -17,6 +19,7 @@ kdeartwork
 kdeedu
 kdekiosk
 kdenonbeta
+kdeextragear-libs-1
 kdeextragear-1
 kdeextragear-2
 kdeextragear-3
