@@ -130,7 +130,7 @@ cd_package()
   # generic stuff
   (
      cd_package
-     echo "removing make -f Makefile.cvs"
+     echo "removing Makefile.cvs"
      rm -f Makefile.cvs
   )
 
