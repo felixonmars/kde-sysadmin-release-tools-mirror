@@ -2,6 +2,7 @@
   CDPATH=""  
   package=$1
   version=$2
+  export version
   cd $package
   
   if [ $package = "qt-copy" ] || [ $package = "kdoc" ]; then
