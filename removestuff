@@ -8,8 +8,6 @@ package=$1
 CDPATH=""
 
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
-test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
-test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
 
 # Unlike "pack", this script acts on clean/, because it's supposed to be run
 # before tagging.
@@ -59,7 +57,8 @@ test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
      cat subdirs | while read lang; do
        ( cd $lang  && \
 	 rm -rf messages/others && \
-         rm -rf docs/others )
+         rm -rf docs/others && \
+         rm -rf messages/kdenonbeta )
      done
      echo "Removing koffice specific stuff"
      cat subdirs | while read lang; do
