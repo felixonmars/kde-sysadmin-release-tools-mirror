@@ -95,8 +95,14 @@ fi
   tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
 
   # generate xdeltas
-  ### FIXME: for "koffice" it returns 2 files (also the koffice-i18n-* one)
-  oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null`
+  if test "$package" = "koffice"; then
+      # For KOffice, the modules are named "koffice" and "koffice-i18n"
+      # so search for koffice*tar.bz2 returns 2 files.
+      oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null | fgrep -v i18n`
+  else
+      # Normal case, no problem with a pseudo-duplicate
+      oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null`
+  fi
   if test -n "$oldpackage" && test -r $oldpackage; then 
       cp $oldpackage .
       $scriptpath/xdelta $package*tar.bz2 $package*tar
