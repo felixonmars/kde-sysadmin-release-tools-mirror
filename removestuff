@@ -13,9 +13,7 @@ test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
 
 # Unlike "pack", this script acts on clean/, because it's supposed to be run
 # before tagging.
-
-echo "cd clean"
-cd clean || exit 1
+# but it can also act in dirty, for packaging
 
   if [ $package = "koffice-i18n" ]; then
   ( cd $package
