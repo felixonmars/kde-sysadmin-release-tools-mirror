@@ -99,7 +99,7 @@ cd_package()
     cd_package 
     echo Removing non-released languages from package
     test -f subdirs.orig || { echo "$package/subdirs.orig doesn't exist"; exit 1; }
-    grep ^xx subdirs && { echo "$package/subdirs.orig contains the xx language!"; exit 1; }
+    grep ^xx subdirs && { echo "$package/subdirs contains the xx language!"; exit 1; }
     cat subdirs.orig | while read lang; do
        if grep -q ^$lang\$ subdirs; then
           echo Keeping $lang
