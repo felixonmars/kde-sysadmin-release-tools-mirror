@@ -66,6 +66,11 @@ When everything is ready:
 - Enable syncing during the night, so that the uplink can be saturated and
   does not affect interactive server load and network traffic. 
 
+- Pre-notify sysadm@trolltech.com and sysadmin@kde.org about an upcoming release
+  so that they can be ready for fixing bandwidth problems, server outages or similiar.
+  Its not uncommon that slashdotting affects our server structure, and the right
+  people have to know about the release date and time to be able to react in time. 
+
 When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
 Add an entry to www/index.php, www/announcements/index.php, www/info/releases.php,
