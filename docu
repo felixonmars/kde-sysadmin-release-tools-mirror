@@ -4,14 +4,23 @@ if test ! -x "`which meinproc`"; then
   echo "!!! No meinproc found. No docu generated.. !!!";
   echo ""
 else
-  files=`find $1 -path "*doc*index.docbook"`
-
+  files=`cd $1 && find . -type f -path "*doc*index.docbook"`
   for f in $files; do
     (
-  	cd `dirname $f`
+        dir=`dirname $f`
+    
+        # is it cached ?
+        if test -f ../cache/$1/$dir/index.cache.bz2; then
+           cp ../cache/$1/$dir/index.cache.bz2 $1/$dir
+        fi 
+
+  	cd $1/$dir
 	echo `pwd`
-	echo Running `which meinproc` --cache index.cache.bz2 index.docbook
-	meinproc --cache index.cache.bz2 index.docbook
+
+        if test ! -f index.cache.bz2; then 
+            echo Running `which meinproc` --cache index.cache.bz2 index.docbook
+	    meinproc --cache index.cache.bz2 index.docbook
+        fi
     ) 
   done
 
