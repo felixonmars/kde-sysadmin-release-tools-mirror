@@ -40,6 +40,7 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
 test -d dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || { echo "create empty subdir sources"; exit 1; }
+test -d sources/kde-i18n || { echo "create empty subdir sources/kde-i18n"; exit 1; }
 
 test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
 test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
