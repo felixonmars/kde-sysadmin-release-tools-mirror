@@ -26,7 +26,7 @@ newversion=`basename $newtarball .tar  | sed -e s,$package-,,`
 diffname="$package-$oldversion-$newversion.tar.xdelta"
 
 echo "xdelta $oldtarball $newtarball $diffname"
-xdelta delta -9 $oldtarball $newtarball $diffname
+xdelta delta -9 -m 64M $oldtarball $newtarball $diffname
 
 if test -n "$cleanupfiles"; then
   echo "rm -f $cleanupfiles"
