@@ -7,7 +7,6 @@ Choose version number:
  * remember that RPM is stupid and considers 5.0beta1 newer than
    5.0, so always use "code versions" for the packages. Also
    stuff like "-" etc is not working, so omit it
- * put the version numbers to the "pack" script
 
 Update version number
  * */*.lsm
