@@ -4,11 +4,11 @@ if test ! -x "`which meinproc`"; then
   echo "!!! No meinproc found. No docu generated.. !!!";
   echo ""
 else
-  files=`find $1 -name index.docbook | grep doc`
+  files=`find $1 -path "*doc*index.docbook"`
 
   for f in $files; do
     (
-	cd `dirname $f`
+  	cd `dirname $f`
 	echo `pwd`
 	meinproc --cache index.cache.bz2 index.docbook
     ) 
