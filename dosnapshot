@@ -11,6 +11,7 @@ export NODOCU=yes
 cd ~/prod
 rm -rf sources
 mkdir sources
+mkdir sources/kde-i18n
 
 version=`date +%y%m%d`
 
