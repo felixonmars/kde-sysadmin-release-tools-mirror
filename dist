@@ -10,6 +10,9 @@
     make -f admin/Makefile.common dist || exit 1
   fi
 
+  # remove junk
+  find . -type d -name autom4te.cache | xargs rmdir
+
   # Move language tarballs out and rename them
   if [ $package = "kde-i18n" ]; then
     for i in *.bz2; do
