@@ -98,7 +98,9 @@ cd_package()
          rm -rf messages/kdeextragear-[1-9] && \
          rm -rf docs/kdeextragear-[1-9] && \
          rm -rf messages/kdekiosk && \
-         rm -rf docs/kdekiosk )
+         rm -rf docs/kdekiosk 
+         test -e docs/common || rm -vr docs	
+	)
      done
      echo "Removing template specific stuff"
      rm -rf templates
