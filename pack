@@ -19,6 +19,55 @@ cp -pr clean/$package dirty || exit 1
 (
   echo "cd dirty"
   cd dirty || exit 1
+  if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
+  ( cd $package 
+    echo Removing non-released languages from package
+    cat subdirs.orig | while read lang; do
+       if grep -q ^$lang\$ subdirs; then
+          echo Keeping $lang
+       else
+          echo Deleting $lang
+          rm -rf $lang
+       fi
+    done
+    )
+  fi
+  if [ $package = "koffice-i18n" ]; then
+  ( cd $package
+     ### koffice release specific
+     echo "Removing non-koffice stuff"
+     perl -pi -e 's/kde-i18n/koffice-i18n/g; s/kdelibs.po/Makefile.am/g' Makefile.am
+     rm -rf templates */data */docs
+     cat subdirs | while read lang; do
+       ( cd $lang  && \
+         mv messages messages.orig && \
+	 mkdir messages && \
+         mv messages.orig/Makefile.am messages/ &&\
+         mv messages.orig/koffice messages/ &&\
+	 rm -rf messages.orig)
+     done
+    #####
+  )
+  fi
+  if [ $package = "kde-i18n" ]; then
+  ( cd $package
+     echo "Removing koffice specific stuff"
+     cat subdirs | while read lang; do
+       ( cd $lang  && \
+	 rm -rf messages/koffice) 
+     done
+    #####
+  )
+  fi
+  if [ $package = "koffice" ]; then
+  ( cd $package
+    ### koffice release specific
+     echo "Removing non-released stuff"
+    # rm -rf krayon kplato graphite kosoap
+    #####
+  )
+  fi
+
   echo "anon $package"
   ../anon $package || exit 1
  echo "docu $package"
