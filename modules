@@ -1,5 +1,7 @@
+arts
 kdelibs
 kdebase
+kdebindings
 kdenetwork
 kdegraphics
 kdeadmin
@@ -9,6 +11,7 @@ kdeutils
 kdetoys
 kdepim
 kdesdk
-kdebindings
 kdeaddons
 kdeartwork
+kdeedu
+kde-i18n
