@@ -83,7 +83,10 @@ cd_package()
          rm -rf messages/docs/others && \
          rm -rf messages/kdenonbeta && \
          rm -rf docs/kdenonbeta && \
-         rm -rf messages/docs/kdenonbeta )
+         rm -rf messages/docs/kdenonbeta && \
+         rm -rf messages/kdeextragear-[1-9] && \
+         rm -rf docs/kdeextragear-[1-9] && \
+         rm -rf messages/docs/kdeextragear-[1-9] )
      done
      echo "Removing template specific stuff"
      rm -rf templates
