@@ -4,6 +4,7 @@ if test ! -x "`which meinproc`"; then
   echo "!!! No meinproc found. No docu generated.. !!!";
   echo ""
 else
+  adir=`pwd`
   files=`cd $1 && find . -type f -path "*doc*index.docbook"`
   for f in $files; do
     (
@@ -20,6 +21,9 @@ else
         if test ! -f index.cache.bz2; then 
             echo Running `which meinproc` --cache index.cache.bz2 index.docbook
 	    meinproc --cache index.cache.bz2 index.docbook
+	    if test "$?" != 0; then
+		echo $1/$f >> $adir/source/FAILED
+	    fi
         fi
     ) 
   done
