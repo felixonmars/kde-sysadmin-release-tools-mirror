@@ -20,9 +20,9 @@ fi
 oldtarball=`basename $1 .bz2`
 newtarball=`basename $2 .bz2`
 
-package=`echo $newtarball | sed -e s,-.*,,`
-oldversion=`basename $oldtarball .tar  | sed -e s,[^-]*-,,`
-newversion=`basename $newtarball .tar  | sed -e s,[^-]*-,,`
+package=`echo $newtarball | sed -e s,-[^-]*,,`
+oldversion=`basename $oldtarball .tar  | sed -e s,$package-,,`
+newversion=`basename $newtarball .tar  | sed -e s,$package-,,`
 diffname="$package-$oldversion-$newversion.tar.xdelta"
 
 echo "xdelta $oldtarball $newtarball $diffname"
