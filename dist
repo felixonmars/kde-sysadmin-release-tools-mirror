@@ -9,21 +9,15 @@
     make -f admin/Makefile.common dist || exit 1
   fi
 
-  # Remove non-released languages from kde-i18n
-  if [ $package = "kde-i18n" -a -f subdirs.orig ]; then
-    cat subdirs.orig | while read lang; do
-       if grep -q ^$lang\$ subdirs; then
-          echo Keeping $lang
-       else
-          echo Deleting $lang
-          rm -rf $lang
-       fi
-    done
-  fi
   # Move language tarballs out and rename them
   if [ $package = "kde-i18n" ]; then
     for i in *.bz2; do
       mv -f $i ../../sources/`echo $i|sed -e "s/\.tar/-$version.tar/"` || exit 1
     done
+  fi
+  if [ $package = "koffice-i18n" ]; then
+     d=`echo $i|sed -e "s/kde/koffice/;s/\.tar/-$version.tar/"`
+     echo "Moving $i -> $d"
+     mv -f $i ../../sources/$d || exit 1
   fi
 ) || exit 1

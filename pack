@@ -1,3 +1,7 @@
+# This is the main script.
+# Call it with the package name as argument, like:  ./pack kdelibs
+# Make sure to update the version numbers inside the script first.
+
 version=3.0-alpha1
 package=$1
 
@@ -70,8 +74,8 @@ cp -pr clean/$package dirty || exit 1
 
   echo "anon $package"
   ../anon $package || exit 1
- echo "docu $package"
- ../docu $package || exit 1
+  echo "docu $package"
+  ../docu $package || exit 1
   echo "dist $package"
   ../dist $package $version || exit 1
   echo "mv $package $package-$version"
