@@ -1,5 +1,5 @@
 Make the following directories:
-clean sources dirty
+clean sources-old sources dirty
 and optionally:
 test build done
 
