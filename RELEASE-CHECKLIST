@@ -17,6 +17,7 @@ Update version number
 Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well
 Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
+** remove the xx language! **
 Tag the CVS
 Make sure the admin directoies gets tagged as well
 Make tarballs using pack (includes doc creation). Start with kde-i18n. Do kdelibs/kdebase last.
