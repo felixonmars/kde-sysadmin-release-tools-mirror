@@ -24,6 +24,7 @@ cp -pr clean/$package dirty || exit 1
   if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
   ( cd $package 
     echo Removing non-released languages from package
+    test -f subdirs.orig || { echo "$package/subdirs.orig doest no exist"; exit 1; }
     cat subdirs.orig | while read lang; do
        if grep -q ^$lang\$ subdirs; then
           echo Keeping $lang
@@ -78,12 +79,21 @@ cp -pr clean/$package dirty || exit 1
   )
   fi
 
+  # Anonymize the CVS dirs
   echo "anon $package"
   ../anon $package || exit 1
-  echo "docu $package"
-  ../docu $package || exit 1
+
+  # Generate docu (except for kde-i18n)
+  if [ $package != "kde-i18n" -a $package != "koffice-i18n" ]; then
+      echo "docu $package"
+      ../docu $package || exit 1
+  fi
+
+  # Prepare for distribution
   echo "dist $package"
   ../dist $package $version || exit 1
+
+  # Final packaging
   echo "mv $package $package-$version"
   mv $package $package-$version || exit 1
   echo "tar cjf $package-$version.tar.bz2 $package-$version"
