@@ -12,11 +12,10 @@ case $package in
     version=3.0.5
     ;;
   arts) 
-    version=1.0.3
+    version=1.1.0
     ;;
   kdevelop)
-    version=2.1.3_for_KDE_3.0
-    #version=2.1.3_for_KDE_2.2
+    version=3.0a1
     ;;
   kdoc)
     version=2.0a54
@@ -28,7 +27,7 @@ case $package in
     version=1.2
     ;;
   *)
-    version=3.0.3a
+    version=3.0.9
     ;;
 esac
 
