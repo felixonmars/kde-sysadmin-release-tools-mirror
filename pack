@@ -22,10 +22,10 @@ case $package in
     version=2.0a54
     ;;
   koffice)
-    version=1.2.1
+    version=1.2.90
     ;;
   koffice-i18n)
-    version=1.2.1
+    version=1.2.90
     ;;
   quanta)
     version=3.1
