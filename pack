@@ -13,13 +13,10 @@ case $package in
     version=3.1_20021104
     ;;
   arts) 
-    version=1.2.0
-    ;;
-  kdoc)
-    version=2.0a54
+    version=1.2.90
     ;;
   kdevelop)
-    version=3.0.0
+    version=3.0.90
     ;;
   koffice)
     version=1.3.1
@@ -28,7 +25,7 @@ case $package in
     version=1.3.1
     ;;
   *)
-    version=3.2.0
+    version=3.2.90
     ;;
 esac
 
