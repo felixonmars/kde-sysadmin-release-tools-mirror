@@ -29,6 +29,7 @@ Update kdepackages in kdelibs/kdeui
 Make sure the meinproc in path is a version of the correct branch
 Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well (and are not symlinks)
+Run "fixuifiles" (kdepim, kdevelop and kdewebdev have lesser Qt requirement!)
 Copy the clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
 For koffice: rename kde-i18n to koffice-i18n (the script takes care of removing all the non-koffice stuff)
 Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
@@ -49,7 +50,7 @@ Test tarballs
 md5sum *.tar.bz2 kde-i18n/*.tar.bz2 > MD5SUMS
 gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
 Prepare a Changelog
-Ask Binner for announcement (this used to be done on the kde-pr mailing-list)
+Ask for/write announcement (this used to be done on the kde-pr mailing-list)
 
 When everything is ready:
 
