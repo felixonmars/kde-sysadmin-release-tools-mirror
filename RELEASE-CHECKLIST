@@ -3,6 +3,10 @@ clean sources dirty
 and optionally:
 test build done
 
+Choose version number: 
+ * remember that RPM is stupid and considers 5.0beta1 newer than
+   5.0, so always use "code versions" for the packages. Also
+   stuff like "-" etc is not working, so omit it
 
 Update version number
  * */*.lsm
