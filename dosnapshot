@@ -28,7 +28,7 @@ for i in `cat snapmodules`; do
       mv sources/$i*bz2 ftp
       if test "$i" = "kde-i18n"; then
           rm -f ftp/$i/$i*bz2
-          mv sources/$i/$i*bz2 ftp
+          mv sources/$i/$i*bz2 ftp/$i
       fi
   fi 
 
