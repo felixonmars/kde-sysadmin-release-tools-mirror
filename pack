@@ -11,7 +11,7 @@ case $package in
   qt-copy)
     version=3.0.5
     ;;
-  arts) 
+  arts)
     version=1.1.0
     ;;
   kdevelop)
@@ -21,10 +21,10 @@ case $package in
     version=2.0a54
     ;;
   koffice)
-    version=1.2
+    version=1.2.1
     ;;
   koffice-i18n)
-    version=1.2
+    version=1.2.1
     ;;
   *)
     version=3.0.9
@@ -39,7 +39,12 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
 test -d dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || { echo "create empty subdir sources"; exit 1; }
-test -d sources/kde-i18n || { echo "create empty subdir sources/kde-i18n"; exit 1; }
+if [ $package = kde-i18n ]; then
+  test -d sources/kde-i18n || { echo "create empty subdir sources/kde-i18n"; exit 1; }
+fi
+if [ $package = koffice-i18n ]; then
+  test -d sources/koffice-i18n || { echo "create empty subdir sources/koffice-i18n"; exit 1; }
+fi
 
 test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
 test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
