@@ -1,6 +1,8 @@
 version=3.0-alpha1
 package=$1
 
+CDPATH=""
+
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
 test -d dirty || { echo "create empty subdir dirty"; exit 1; }

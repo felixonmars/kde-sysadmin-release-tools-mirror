@@ -1,4 +1,5 @@
-(   
+( 
+  CDPATH=""  
   package=$1
   version=$2
   cd $package
