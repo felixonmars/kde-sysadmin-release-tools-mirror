@@ -31,8 +31,10 @@ cd_package()
      rm -rf templates
      cp subdirs subdirs.new
      cat subdirs | while read lang; do
-       ( cd $lang || exit 1
+       (
          found=""
+         test -d $lang && {
+         cd $lang
          # Look for koffice stuff in each of the 3 subdirs
          for subdir in data messages docs; do
            if test -d $subdir/koffice; then
@@ -48,11 +50,13 @@ cd_package()
              rm -rf $subdir
            fi
          done
+         cd ..
+         }
          if test -z "$found"; then
            echo "$lang has no koffice translation, removing"
            rm -rf $lang
-           sed -e "/^$lang/d" ../subdirs.new > ../subdirs.tmpnew
-           mv -f ../subdirs.tmpnew ../subdirs.new
+           sed -e "/^$lang/d" subdirs.new > subdirs.tmpnew
+           mv -f subdirs.tmpnew subdirs.new
          else
            echo "$lang: found$found"
          fi
