@@ -58,7 +58,8 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
        ( cd $lang  && \
 	 rm -rf messages/others && \
          rm -rf docs/others && \
-         rm -rf messages/kdenonbeta )
+         rm -rf messages/kdenonbeta && \
+         rm -rf docs/kdenonbeta )
      done
      echo "Removing koffice specific stuff"
      cat subdirs | while read lang; do
