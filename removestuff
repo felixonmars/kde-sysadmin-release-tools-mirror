@@ -95,8 +95,10 @@ cd_package()
          rm -rf messages/docs && \
          rm -rf messages/kdenonbeta && \
          rm -rf docs/kdenonbeta && \
-         rm -rf messages/kdeextragear-[1-9] && \
-         rm -rf docs/kdeextragear-[1-9] && \
+         rm -rf messages/kdeextragear-* && \
+         rm -rf docs/kdeextragear-* && \
+	 rm -rf messages/kdeextragear-libs-* && \
+	 rm -rf docs/kdeextragear-libs-* && \
          rm -rf messages/kdekiosk && \
          rm -rf docs/kdekiosk 
          test -e docs/common || rm -vr docs	
