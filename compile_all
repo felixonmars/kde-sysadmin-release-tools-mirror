@@ -1,0 +1,62 @@
+#!/bin/bash
+
+summary=~/.built_summary
+log=~/.built_log
+name=`basename $0`
+
+date > $summary
+date > $log
+config=`cat config.options`
+pwd=$PWD
+for a in `cat modules`; do 
+cd build
+echo "rm -rf $a*"
+rm -rf $a*
+cat ../sources/$a*.bz2 | bunzip2 | tar -xf -
+cd $a*
+  result=0
+  if [ -e nobuild ]; then
+     action="Skipping"
+     result=1
+  fi
+  if [ $result$name == 0compile_all ]; then
+     action="Configuring $PWD"
+     echo $action
+     rm config.cache >> $log 2>&1
+     ./configure $config >> $log 2>&1
+     result=$?
+  fi
+  if [ $result == 0 ]; then
+     action="Compiling $PWD"
+     echo $action
+     make >> $log 2>&1
+     result=$?
+  fi
+  if [ $result == 0 ]; then
+     action="Installing $PWD"
+     echo $action
+     make install >> $log 2>&1
+     result=$?
+  fi
+  if [ $result == 0 ]; then
+     action="Done"
+     echo $action
+  fi
+
+  if [ "$action" == "Skipping" ]; then
+     echo $PWD skipped.
+     echo $PWD skipped. >> $summary
+  elif [ "$action" == "Done" ]; then
+     echo $PWD build ok. >> $summary
+     touch nobuild
+  else
+     echo ERROR during $action
+     echo ERROR during $action >> $summary
+     if [ $a == kdelibs ]; then
+        echo Aborted!
+        echo Aborted! >> $summary
+        exit 1;
+     fi
+  fi
+  cd $pwd; 
+done

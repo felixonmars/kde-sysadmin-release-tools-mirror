@@ -1,0 +1,5 @@
+files=`find $1 -name Root|grep CVS/Root`
+
+for f in $files; do
+  echo ":pserver:anonymous@anoncvs.kde.org:/home/kde" > $f
+done
