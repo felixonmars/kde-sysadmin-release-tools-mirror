@@ -37,7 +37,7 @@ Tag the CVS
 Make sure the admin directories gets tagged as well
 Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase last.
 (for koffice-i18n, use the root and admin dir from KDE_3_1_BRANCH)
-Upload tarballs to their final location, as 'ftprelease' user.
+Upload tarballs to their final location, as 'ftprelease' user under a src/ directory.
 chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
 Test tarballs
