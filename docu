@@ -4,7 +4,7 @@ if test ! -x "`which meinproc`"; then
   echo "!!! No meinproc found. No docu generated.. !!!";
   echo ""
 else
-  files=`find $1/doc -name index.docbook`
+  files=`find $1 -name index.docbook | grep doc`
 
   for f in $files; do
     (
