@@ -19,7 +19,7 @@ Update version number
  * kdelibs/kdecore/ksycoca.h --> ksycoca version number
  * kdelibs/README
  * bugs/template/wizard/report.html.tmpl
- * for koffice: configure.in.in, ...
+ * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * pack script :)
 
 Check out or update everything with the correct branch tag
