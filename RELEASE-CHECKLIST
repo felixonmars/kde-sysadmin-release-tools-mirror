@@ -45,6 +45,7 @@ then use the version from the cache instead of regenerating it, saving a lot of 
 Upload tarballs to their final location, as 'ftprelease' user under a src/ directory.
 chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
+create contrib/ directory and make it g+w for group "packager"
 Test tarballs
 md5sum *.tar.bz2 kde-i18n/*.tar.bz2 > MD5SUMS
 gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
