@@ -16,8 +16,10 @@
     done
   fi
   if [ $package = "koffice-i18n" ]; then
-     d=`echo $i|sed -e "s/kde/koffice/;s/\.tar/-$version.tar/"`
-     echo "Moving $i -> $d"
-     mv -f $i ../../sources/$d || exit 1
+    for i in *.bz2; do
+      d=`echo $i|sed -e "s/kde/koffice/;s/\.tar/-$version.tar/"`
+      echo "Moving $i -> $d"
+      mv -f $i ../../sources/$d || exit 1
+    done
   fi
 ) || exit 1
