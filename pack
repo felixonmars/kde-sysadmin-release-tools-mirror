@@ -2,7 +2,7 @@
 # Call it with the package name as argument, like:  ./pack kdelibs
 # Make sure to update the version numbers inside the script first.
 
-version=3.0beta1
+version=3.0beta2
 package=$1
 
 CDPATH=""
