@@ -11,7 +11,7 @@
   fi
 
   # remove junk
-  find . -type d -name autom4te.cache | xargs rmdir
+  find . -type d -name autom4te.cache | xargs rm -rf
 
   # Move language tarballs out and rename them
   if [ $package = "kde-i18n" ]; then
