@@ -136,7 +136,7 @@ cd_package()
   (  
      cd_package
      echo "Removing non-released stuff"
-     rm -rf krita kdatabase kplato graphite kosoap kexi
+     rm -rf krita kdatabase kplato graphite kexi kdgantt
   )
   fi
 
