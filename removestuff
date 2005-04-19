@@ -27,7 +27,7 @@ cd_package()
   (
      cd_package
      echo "Removing non-koffice stuff"
-     perl -pi -e 's/kde-i18n/koffice-i18n/g; s/kdelibs.po/Makefile.am/g' Makefile.am.in
+     perl -pi -e 's/kde-i18n/koffice-i18n/g' Makefile.am.in
      rm -rf templates
      if grep -E -q '[a-z] +$' subdirs; then
        echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
@@ -49,9 +49,9 @@ cd_package()
              subdirlist="$subdirlist $subdir/docs/koffice"
            fi
            if test -n "$subdirlist"; then
+             rm -rf $subdir.orig &&
              mv $subdir $subdir.orig &&
              mkdir $subdir &&
-             mv $subdir.orig/Makefile.am $subdir/ &&
              mv $subdir.orig/CVS $subdir/ || exit 1
              mv $subdir.orig/.cvsignore $subdir/ 2>/dev/null
              for s in `echo $subdirlist`; do
@@ -121,8 +121,8 @@ cd_package()
   fi
 
   if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
-  ( 
-    cd_package 
+  (
+    cd_package
     echo Removing non-released languages from package
     test -f subdirs.orig || { echo "$package/subdirs.orig doesn't exist"; exit 1; }
     grep ^xx subdirs && { echo "$package/subdirs contains the xx language!"; exit 1; }
@@ -138,10 +138,10 @@ cd_package()
   fi
 
   if [ $package = "koffice" ]; then
-  (  
+  (
      cd_package
      echo "Removing non-released stuff"
-     rm -rf krita filters/krita kdatabase kplato graphite kexi kdgantt
+     rm -rf kplato
   )
   fi
 
