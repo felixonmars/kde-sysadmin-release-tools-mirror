@@ -1,5 +1,6 @@
 ( 
   CDPATH=""  
+  export UNSERMAKE=no
   package=$1
   version=$2
   export version
