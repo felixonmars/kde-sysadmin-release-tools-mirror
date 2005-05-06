@@ -30,7 +30,7 @@ Update kdepackages in kdelibs/kdeui
 Make sure the meinproc in path is a version of the correct branch
 Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well (and are not symlinks)
-Run "fixuifiles" (kdepim, kdevelop, kdewebdev and koffice have lesser Qt requirement!)
+Run "fixuifiles"
 Copy the clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
 For koffice: rename kde-i18n to koffice-i18n (the script takes care of removing all the non-koffice stuff)
 Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
