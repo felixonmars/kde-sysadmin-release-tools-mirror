@@ -6,7 +6,7 @@ export DOINGSNAPSHOT=yes
 
 renice 20 $$
 
-(cd ~/prod && svn -l up)
+(cd ~/prod && svn up -N)
 
 # lets go work
 cd ~/prod
