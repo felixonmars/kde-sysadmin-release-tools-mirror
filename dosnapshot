@@ -4,7 +4,7 @@ umask 022
 export VERBOSE=yes
 export DOINGSNAPSHOT=yes
 
-renice 20 $$
+renice 20 $$ &>/dev/null
 
 (cd ~/prod && svn up -N)
 
@@ -15,8 +15,13 @@ mkdir sources-old
 mkdir sources-old/kde-i18n
 # now lets populate the directory
 for i in `cat snapmodules`; do
- t=$(perl -e "print readlink 'ftp/$i.tar.bz2'")
- ln -s ../ftp/$t sources-old
+ t=`readlink "ftp/$i.tar.bz2"`
+ echo "symlinking $t to sources-old"
+ if test -n "$t"; then
+   test -r "ftp/$t" && ln -s "../ftp/$t" sources-old
+ else
+   echo "ERROR: $i does not exist in ftp/.";
+ fi
 done
 rm -rf sources
 mkdir sources
