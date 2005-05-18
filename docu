@@ -1,3 +1,4 @@
+CDPATH=
 
 if test ! -x "`which meinproc`"; then
   echo ""

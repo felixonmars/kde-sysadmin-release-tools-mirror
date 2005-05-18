@@ -1,0 +1,34 @@
+#!/bin/bash
+# Use this script to checkout the relevant parts of l10n
+# Call it with the option "kde", "koffice", or "extragear-kmyapp" (TODO)
+# Make sure to have the list of languages you want to release in language_list
+
+package=$1
+CDPATH=
+
+test -n "$package" || { echo "requires parameter"; exit 1; }
+test -n "$SVNURL" || { echo "requires SVNURL to be set"; exit 1; }
+test -d clean || { echo "create clean subdir"; exit 1; }
+cd clean
+
+if test "$package" = "koffice"; then
+  svn co -N $SVNURL/trunk/l10n koffice-l10n
+  cd koffice-l10n
+  svn up scripts
+
+  module=koffice
+  # Checkout only the $module part of each language
+  cat ../../language_list | while read lang; do
+    svn up -N $lang
+    svn up -N $lang/docs
+    svn up -N $lang/messages
+    svn up $lang/docs/$module
+    svn up $lang/messages/$module
+  done
+fi
+
+if test "$package" = "kde"; then
+  ## TODO: find or checkout a full kde-i18n
+  ##       then remove the koffice and other non-released stuff
+  ##       (i.e. call removestuff)
+fi

@@ -27,7 +27,6 @@ cd_package()
   (
      cd_package
      echo "Removing non-koffice stuff"
-     perl -pi -e 's/kde-l10n/koffice-l10n/g' Makefile.am.in
      rm -rf templates
      if grep -E -q '[a-z] +$' subdirs; then
        echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
@@ -49,16 +48,6 @@ cd_package()
              subdirlist="$subdirlist $subdir/docs/koffice"
            fi
            if test -n "$subdirlist"; then
-             rm -rf $subdir.orig &&
-             mv $subdir $subdir.orig &&
-             mkdir $subdir &&
-             mv $subdir.orig/CVS $subdir/ || exit 1
-             mv $subdir.orig/.cvsignore $subdir/ 2>/dev/null
-             for s in `echo $subdirlist`; do
-               orig=`echo $s | sed -e "s/^$subdir/$subdir.orig/"`
-               mv $orig $s || exit 1
-             done
-             rm -rf $subdir.orig || exit 1
              found="$found $subdirlist"
            else
              rm -rf $subdir

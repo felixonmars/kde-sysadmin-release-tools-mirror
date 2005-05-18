@@ -3,8 +3,8 @@
 # Call it with the package name as argument, like:  ./pack kdelibs
 # Make sure to update the version numbers inside the script first.
 #
-# Environment variables taht can be set
-# $scriptpath = path to kde-common/releases (by default: .. )
+# Environment variables that can be set
+# $scriptpath = path to kde-common/release (by default: .. )
 
 package=$1
 version=$2
@@ -22,10 +22,10 @@ case $package in
     version=3.2.0
     ;;
   koffice)
-    version=1.3.5
+    version=1.3.98
     ;;
   koffice-l10n)
-    version=1.3.5
+    version=1.3.98
     ;;
   *)
     version=3.4.0
@@ -34,13 +34,19 @@ esac
 
 fi
 
+isl10n=0
+case $package in
+  *-l10n)
+    isl10n=1
+    ;;
+esac
+
 if test -z "$scriptpath"; then
   scriptpath=".."
 fi
 
 CDPATH=""
-unset UNSERMAKE # very important for now :)
-export UNSERMAKE=no 
+export UNSERMAKE=no  # very important for now :)
 MEINPROCPATH=`type -p meinproc`
 if test -f "$MEINPROCPATH"; then
   MEINPROCPATH=`dirname $MEINPROCPATH`
@@ -54,11 +60,8 @@ test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
 test -d dirty || mkdir dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || mkdir sources || { echo "create empty subdir sources"; exit 1; }
 test -d sources-old || { echo "create empty subdir sources-old with reference files for xdelta"; exit 1; }
-if [ $package = kde-l10n ]; then
-  test -d sources/kde-l10n || { echo "create empty subdir sources/kde-l10n"; exit 1; }
-fi
-if [ $package = koffice-l10n ]; then
-  test -d sources/koffice-l10n || mkdir sources/koffice-l10n || { echo "create empty subdir sources/koffice-l10n"; exit 1; }
+if test $isl10n -eq 1; then
+  test -d sources/$package || mkdir sources/$package || { echo "create empty subdir sources/$package"; exit 1; }
 fi
 
 test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
@@ -77,7 +80,7 @@ fi
   cd dirty || exit 1
 
 if test -z "$DOINGSNAPSHOT"; then
-  if [ "$package" = "kde-l10n" ]; then
+  if test $isl10n -eq 1; then
     mv $package/subdirs $package/subdirs.orig
     cp ../language_list $package/subdirs
   fi
@@ -102,14 +105,25 @@ fi
   $scriptpath/dist $package $version || exit 1
 
   # Final packaging
-  echo "mv $package $package-$version"
-  mv $package $package-$version || exit 1
-  echo "tar cjf $package-$version.tar.bz2 $package-$version"
-  tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
+  if test $isl10n -eq 1; then
+    cd $package
+    echo "making per-language tarballs"
+    cat subdirs | while read lang; do
+      tar --owner=root --group=root -c --exclude autom4te.cache $lang | bzip2 -9 > ../../sources/$package/$package-$lang.tar.bz2
+    done
+    cd ..
+  else
+   echo "mv $package $package-$version"
+   mv $package $package-$version || exit 1
+   echo "tar cjf $package-$version.tar.bz2 $package-$version"
+   tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
+  fi
 
+  # Xdelta
   if test "$package" = "kde-l10n"; then
     cd ../sources
     # for kde-l10n we only generate xdelta for the small files
+    # #### double-check this code
     files=`cd ../sources/kde-l10n && ls -1 kde-l10n-*-$version.tar.bz2 2> /dev/null`
     for file in $files; do
 	lang=${file/kde-l10n-/}
@@ -146,9 +160,11 @@ fi
     fi
   fi
 
-  bzip2 -9 $package-$version.tar
-  mv $package-$version.tar.bz2 ../sources
-  rm -f $package*tar
-  rm -rf $package-$version
+  if test $isl10n -eq 0; then
+    bzip2 -9 $package-$version.tar
+    mv $package-$version.tar.bz2 ../sources
+    rm -f $package*tar
+    rm -rf $package-$version
+  fi
 }
 rm -rf dirty/$package || exit 1
