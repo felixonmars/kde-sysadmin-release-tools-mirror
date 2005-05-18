@@ -1,6 +1,6 @@
 # This is a helper script, which removes the useless stuff from some modules.
-# For instance it separates the koffice translations between kde-i18n and koffice-i18n.
-# Call it with the package name as argument, like:  ./removestuff kde-i18n
+# For instance it separates the koffice translations between kde-l10n and koffice-l10n.
+# Call it with the package name as argument, like:  ./removestuff kde-l10n
 # Usually, you'll want to do this before tagging.
 
 package=$1
@@ -23,11 +23,11 @@ cd_package()
 # before tagging.
 # but it can also act in dirty, for packaging
 
-  if [ $package = "koffice-i18n" ]; then
+  if [ $package = "koffice-l10n" ]; then
   (
      cd_package
      echo "Removing non-koffice stuff"
-     perl -pi -e 's/kde-i18n/koffice-i18n/g' Makefile.am.in
+     perl -pi -e 's/kde-l10n/koffice-l10n/g' Makefile.am.in
      rm -rf templates
      if grep -E -q '[a-z] +$' subdirs; then
        echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
@@ -56,10 +56,7 @@ cd_package()
              mv $subdir.orig/.cvsignore $subdir/ 2>/dev/null
              for s in `echo $subdirlist`; do
                orig=`echo $s | sed -e "s/^$subdir/$subdir.orig/"`
-               # This is for e.g. messages/docs/koffice, we need to create messages/docs first
-               parent=`echo $s | sed -e 's,/[^/]*$,,'`
-               mkdir -p $parent &&
-                   mv $orig $s || exit 1
+               mv $orig $s || exit 1
              done
              rm -rf $subdir.orig || exit 1
              found="$found $subdirlist"
@@ -83,8 +80,8 @@ cd_package()
   ) || exit 1
   fi
 
-  if [ $package = "kde-i18n" ]; then
-  (  
+  if [ $package = "kde-l10n" ]; then
+  (
      cd_package
      echo "Removing other stuff"
      cat subdirs | while read lang; do
@@ -92,7 +89,7 @@ cd_package()
 	 rm -rf messages/*/desktop_* && \
 	 rm -rf messages/others && \
          rm -rf docs/others && \
-         rm -rf messages/docs && \
+         rm -rf docmessages && \
          rm -rf messages/kdenonbeta && \
          rm -rf docs/kdenonbeta && \
          rm -rf messages/kdeextragear-* && \
@@ -103,10 +100,8 @@ cd_package()
          rm -rf docs/kdekiosk  && \
 	 rm -rf messages/www.kde.org && \
 	 rm -rf messages/kdeplay* && \
-	 rm -rf messages/docs/kdeplay* && \
 	 rm -rf messages/kdereview && \
-	 rm -rf messages/docs/kdereview && \
-         test -e docs/common || rm -fvr docs	
+         test -e docs/common || rm -fvr docs
 	)
      done
      echo "Removing template specific stuff"
@@ -115,12 +110,12 @@ cd_package()
      cat subdirs | while read lang; do
        ( cd $lang  && \
          rm -rf */koffice \
-         rm -rf messages/docs/koffice )
+         rm -rf docmessages/koffice )
      done
   )
   fi
 
-  if [ $package = "kde-i18n" -o $package = "koffice-i18n" ]; then
+  if [ $package = "kde-l10n" -o $package = "koffice-l10n" ]; then
   (
     cd_package
     echo Removing non-released languages from package

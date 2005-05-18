@@ -1,4 +1,7 @@
-#!/bin/bash -x 
+#!/bin/bash -x
+
+###### TODO port to SVN
+exit 1
 
 for i in `cat modules`; do
 
@@ -15,8 +18,8 @@ esac
 cd clean
 cvscheck -mucra $i | xargs rm -f
 cvs update $i
-if test "$i" = "kde-i18n"; then
-  cp ../language_list $i/subdirs 
+if test "$i" = "kde-l10n"; then
+  cp ../language_list $i/subdirs
 fi
 ../removestuff $i
 cvs rtag -d $tag $i 

@@ -24,7 +24,7 @@ case $package in
   koffice)
     version=1.3.5
     ;;
-  koffice-i18n)
+  koffice-l10n)
     version=1.3.5
     ;;
   *)
@@ -54,11 +54,11 @@ test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
 test -d dirty || mkdir dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || mkdir sources || { echo "create empty subdir sources"; exit 1; }
 test -d sources-old || { echo "create empty subdir sources-old with reference files for xdelta"; exit 1; }
-if [ $package = kde-i18n ]; then
-  test -d sources/kde-i18n || { echo "create empty subdir sources/kde-i18n"; exit 1; }
+if [ $package = kde-l10n ]; then
+  test -d sources/kde-l10n || { echo "create empty subdir sources/kde-l10n"; exit 1; }
 fi
-if [ $package = koffice-i18n ]; then
-  test -d sources/koffice-i18n || mkdir sources/koffice-i18n || { echo "create empty subdir sources/koffice-i18n"; exit 1; }
+if [ $package = koffice-l10n ]; then
+  test -d sources/koffice-l10n || mkdir sources/koffice-l10n || { echo "create empty subdir sources/koffice-l10n"; exit 1; }
 fi
 
 test -d clean/$package || { echo "clean/$package does not exist"; exit 1; }
@@ -77,7 +77,7 @@ fi
   cd dirty || exit 1
 
 if test -z "$DOINGSNAPSHOT"; then
-  if [ "$package" = "kde-i18n" ]; then
+  if [ "$package" = "kde-l10n" ]; then
     mv $package/subdirs $package/subdirs.orig
     cp ../language_list $package/subdirs
   fi
@@ -107,24 +107,24 @@ fi
   echo "tar cjf $package-$version.tar.bz2 $package-$version"
   tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
 
-  if test "$package" = "kde-i18n"; then
+  if test "$package" = "kde-l10n"; then
     cd ../sources
-    # for kde-i18n we only generate xdelta for the small files
-    files=`cd ../sources/kde-i18n && ls -1 kde-i18n-*-$version.tar.bz2 2> /dev/null`
+    # for kde-l10n we only generate xdelta for the small files
+    files=`cd ../sources/kde-l10n && ls -1 kde-l10n-*-$version.tar.bz2 2> /dev/null`
     for file in $files; do
-	lang=${file/kde-i18n-/}
+	lang=${file/kde-l10n-/}
 	lang=${lang/-$version.tar.bz2/}
-	oldlang=`ls -1 ../sources-old/kde-i18n/kde-i18n-$lang-*tar.bz2 2>/dev/null | tail -n 1`
+	oldlang=`ls -1 ../sources-old/kde-l10n/kde-l10n-$lang-*tar.bz2 2>/dev/null | tail -n 1`
 	if test -n "$oldlang" && test -r "$oldlang"; then
-	    cp $oldlang kde-i18n
-	    echo "bunzip2 kde-i18n/kde-i18n-$lang-$version.tar.bz2"
-	    bunzip2 kde-i18n/kde-i18n-$lang-$version.tar.bz2
-            cd kde-i18n 
-            ../$scriptpath/xdelta kde-i18n-$lang-*.bz2 kde-i18n-$lang-$version.tar
+	    cp $oldlang kde-l10n
+	    echo "bunzip2 kde-l10n/kde-l10n-$lang-$version.tar.bz2"
+	    bunzip2 kde-l10n/kde-l10n-$lang-$version.tar.bz2
+            cd kde-l10n 
+            ../$scriptpath/xdelta kde-l10n-$lang-*.bz2 kde-l10n-$lang-$version.tar
 	    cd ..
-	    rm -f kde-i18n/kde-i18n-$lang-*.bz2
-            echo "bzip2 kde-i18n/kde-i18n-$lang-$version.tar"
-	    bzip2 kde-i18n/kde-i18n-$lang-$version.tar
+	    rm -f kde-l10n/kde-l10n-$lang-*.bz2
+            echo "bzip2 kde-l10n/kde-l10n-$lang-$version.tar"
+	    bzip2 kde-l10n/kde-l10n-$lang-$version.tar
         fi
     done
     cd ../dirty
@@ -132,9 +132,9 @@ fi
   else
     # generate xdeltas
     if test "$package" = "koffice"; then
-        # For KOffice, the modules are named "koffice" and "koffice-i18n"
+        # For KOffice, the modules are named "koffice" and "koffice-l10n"
         # so search for koffice*tar.bz2 returns 2 files.
-        oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null | fgrep -v i18n`
+        oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null | fgrep -v l10n`
     else
         # Normal case, no problem with a pseudo-duplicate
         oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null | tail -n 1`
