@@ -1,3 +1,3 @@
-for f in `find -type d -name '.svn'; do
+for f in `find -type d -name '.svn'`; do
   rm -rf $f
 done
