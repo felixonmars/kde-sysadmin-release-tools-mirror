@@ -1,6 +1,3 @@
-files=`find $1 -name Root|grep CVS/Root`
-
-for f in $files; do
-  rm -f $f
-  echo ":pserver:anonymous@anoncvs.kde.org:/home/kde" > $f
+for f in `find -type d -name '.svn'; do
+  rm -rf $f
 done

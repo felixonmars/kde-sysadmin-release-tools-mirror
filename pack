@@ -87,7 +87,7 @@ if test -z "$DOINGSNAPSHOT"; then
   $scriptpath/removestuff $package $version || exit 1
 fi
 
-  # Anonymize the CVS dirs
+  # Anonymize checkout
   echo "anon $package"
   $scriptpath/anon $package || exit 1
  
