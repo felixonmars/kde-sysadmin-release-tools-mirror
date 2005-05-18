@@ -23,7 +23,6 @@ kdeextragear-libs-1
 kdeextragear-1
 kdeextragear-2
 kdeextragear-3
-kdeplayground-admin
 kdeplayground-artwork
 kdeplayground-base
 kdeplayground-edu
@@ -32,6 +31,7 @@ kdeplayground-ioslaves
 kdeplayground-multimedia
 kdeplayground-network
 kdeplayground-pim
+kdeplayground-sysadmin
 kdeplayground-utils
 kdereview
 koffice
