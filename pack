@@ -161,9 +161,12 @@ fi
   fi
 
   if test $isl10n -eq 0; then
+    echo "bzip2 -9 $package-$version.tar"
     bzip2 -9 $package-$version.tar
     mv $package-$version.tar.bz2 ../sources
+    echo "rm -f $package*tar"
     rm -f $package*tar
+    echo "rm -rf $package-$version"
     rm -rf $package-$version
   fi
 }
