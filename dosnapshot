@@ -33,20 +33,24 @@ for i in `cat snapmodules`; do
 (
   test -d clean/$i || { echo "$i doesn't exist"; exit 1; }
 
+  oldrev=`svn info clean/$i | grep -o 'Last Changed Rev:' | cut -d':' -f2`
+
   ( cd clean/$i && svn up >/dev/null )
 
-  if test -n "`find clean/$i -type f \! -path \"*/.svn*\" -mtime -1`"; then
-      ./pack $i $version
+  newrev=`svn info clean/$i | grep -o 'Last Changed Rev:' | cut -d':' -f2`
+
+  if test "$oldrev" -ne "$newrev"; then
+      ./pack $i $newrev
       rm -f ftp/$i*bz2
       mv -f sources/$i*bz2 ftp
-      ln -s $i-$version.tar.bz2 ftp/$i.tar.bz2
+      ln -s $i-$newrev.tar.bz2 ftp/$i.tar.bz2
       find ftp/ -name "$i*xdelta" -mtime +7 | xargs rm -f
       mv -f sources/$i*xdelta ftp
       if test "$i" = "kde-l10n"; then
           rm -f ftp/$i/$i*bz2
           for ki in sources/$i/$i*bz2; do
             mv $ki ftp/kde-i18n
-            ln -s `basename $ki` ftp/kde-i18n/`basename $ki -$version.tar.bz2`.tar.bz2
+            ln -s `basename $ki` ftp/kde-i18n/`basename $ki -$newrev.tar.bz2`.tar.bz2
           done
       fi
   fi
