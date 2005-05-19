@@ -12,7 +12,7 @@ renice 20 $$ &>/dev/null
 cd ~/prod
 rm -rf sources-old
 mkdir sources-old
-mkdir sources-old/kde-i18n
+mkdir sources-old/kde-l10n
 # now lets populate the directory
 for i in `cat snapmodules`; do
  t=`readlink "ftp/$i.tar.bz2"`
@@ -25,7 +25,7 @@ for i in `cat snapmodules`; do
 done
 rm -rf sources
 mkdir sources
-mkdir sources/kde-i18n
+mkdir sources/kde-l10n
 
 version=`date +%y%m%d`
 
