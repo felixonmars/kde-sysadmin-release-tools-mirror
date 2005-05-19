@@ -16,7 +16,6 @@ mkdir sources-old/kde-l10n
 # now lets populate the directory
 for i in `cat snapmodules`; do
  t=`readlink "ftp/$i.tar.bz2"`
- echo "symlinking $t to sources-old"
  if test -n "$t"; then
    test -r "ftp/$t" && ln -s "../ftp/$t" sources-old
  else
@@ -33,14 +32,16 @@ for i in `cat snapmodules`; do
 (
   test -d clean/$i || { echo "$i doesn't exist"; exit 1; }
 
-  oldrev=`svn info clean/$i | grep -o 'Last Changed Rev:' | cut -d':' -f2`
+  oldrev=`readlink ftp/$i.tar.bz2  | egrep -o '[0-9]+\.tar\.bz2' | cut -d. -f1`
+  test -n "$oldrev" || oldrev=0
 
   ( cd clean/$i && svn up >/dev/null )
 
-  newrev=`svn info clean/$i | grep -o 'Last Changed Rev:' | cut -d':' -f2`
+  newrev=`svn info clean/$i | grep 'Last Changed Rev:' | cut -d' ' -f4`
 
   if test "$oldrev" -ne "$newrev"; then
       ./pack $i $newrev
+      set -x
       rm -f ftp/$i*bz2
       mv -f sources/$i*bz2 ftp
       ln -s $i-$newrev.tar.bz2 ftp/$i.tar.bz2
@@ -53,6 +54,9 @@ for i in `cat snapmodules`; do
             ln -s `basename $ki` ftp/kde-i18n/`basename $ki -$newrev.tar.bz2`.tar.bz2
           done
       fi
+      set +x
+  else
+    echo "$i does not need to be updated"
   fi
 
   ( cd dirty && rm -rf $i* )
