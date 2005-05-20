@@ -50,8 +50,8 @@ for i in `cat snapmodules`; do
       if test "$i" = "kde-l10n"; then
           rm -f ftp/$i/$i*bz2
           for ki in sources/$i/$i*bz2; do
-            mv $ki ftp/kde-i18n
-            ln -s `basename $ki` ftp/kde-i18n/`basename $ki -$newrev.tar.bz2`.tar.bz2
+            mv $ki ftp/kde-l10n
+            ln -s `basename $ki` ftp/kde-l10n/`basename $ki -$newrev.tar.bz2`.tar.bz2
           done
       fi
       set +x
