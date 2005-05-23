@@ -1,28 +1,91 @@
-#!/bin/bash -x
+#!/bin/bash
 
-###### TODO port to SVN
-exit 1
+tagdir=tagging.$$
+
+BASE=svn+ssh://coolo@svn.kde.org/home/kde
+
+svn co -N $BASE $tagdir
+
+function co_subdir {
+	echo co_subdir $1
+	if test ! -d $tagdir/$1; then
+		co_subdir `dirname $1`
+		svn up -N $tagdir/$1
+	fi
+}
+
+function set_urls {
+case $1 in
+  arts)
+    HEADURL=branches/arts/1.4/$i
+    DESTURL=tags/arts/1.4.1/$i
+    subname=$1
+    ;;
+  kde-l10n)
+    HEADURL=branches/stable/l10n
+    DESTURL=tags/KDE/3.4.1/kde-i18n
+    subname=kde-i18n
+    ;;
+  *)
+    HEADURL=branches/KDE/3.4/$i
+    DESTURL=tags/KDE/3.4.1/$i
+    subname=$1
+    ;;
+esac
+
+}
+
+function replace_exts {
+svn pg svn:externals $1 | while read subdir url; do
+   test -n "$url" || continue
+   rm -rf $1/$subdir
+   svn copy $url $1/$subdir
+done
+svn pd svn:externals $1
+}
+
+co_subdir tags
 
 for i in `cat modules`; do
 
 (
-case $i in
-  arts)
-    tag=ARTS_1_4_0_BETA_2
-    ;;
-  *)
-    tag=KDE_3_4_0_BETA_2
-    ;;
-esac
+test -z "$ONLY_CLEANUP" || continue
 
-cd clean
-cvscheck -mucra $i | xargs rm -f
-cvs update $i
-if test "$i" = "kde-l10n"; then
-  cp ../language_list $i/subdirs
+set_urls $i
+
+co_subdir `dirname $HEADURL`
+tt=`dirname $DESTURL`
+tt2=`dirname $tt`
+if ! test -d $tagdir/$tt; then
+   svn up -N $tagdir/$tt2
+   svn mkdir $tagdir/$tt
 fi
-../removestuff $i
-cvs rtag -d $tag $i 
-cvs tag $tag $i
+svn up -N $tagdir/$HEADURL
+if test "$i" = "kde-l10n"; then
+  svn up $tagdir/$HEADURL/scripts
+fi
+svn copy $tagdir/$HEADURL $tagdir/$DESTURL
+if test "$i" = "l10n"; then
+  cp language_list $tagdir/$DESTURL/subdirs
+fi
+replace_exts $tagdir/$DESTURL
+
 )
 done
+set_urls kde-l10n
+replace_exts $tagdir/$DESTURL/scripts
+ 
+svn commit $tagdir
+rm -rf $tagdir
+
+cd clean
+for i in `cat modules`; do
+  set_urls $i
+  if test -d $i; then 
+	svn switch $BASE/$DESTURL $subname
+  else
+        svn co $BASE/$DESTURL $subname
+  fi
+  DO_SVN=1 ../removestuff $i
+done
+

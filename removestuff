@@ -10,6 +10,11 @@ CDPATH=""
 
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 
+rm_command="rm -rf"
+if test -n "$DO_SVN"; then
+  rm_command="svn rm"
+fi
+
 cd_package()
 {
   if test -n "$version" && test -d $package-$version; then
@@ -27,7 +32,7 @@ cd_package()
   (
      cd_package
      echo "Removing non-koffice stuff"
-     rm -rf templates
+     $rm_command templates
      if grep -E -q '[a-z] +$' subdirs; then
        echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
        exit 1
@@ -50,14 +55,14 @@ cd_package()
            if test -n "$subdirlist"; then
              found="$found $subdirlist"
            else
-             rm -rf $subdir
+             $rm_command $subdir
            fi
          done
          cd ..
          }
          if test -z "$found"; then
            echo "$lang has no koffice translation, removing"
-           rm -rf $lang
+           $rm_command $lang
            sed -e "/^$lang/d" subdirs.new > subdirs.tmpnew
            mv -f subdirs.tmpnew subdirs.new
          else
@@ -75,32 +80,26 @@ cd_package()
      echo "Removing other stuff"
      cat subdirs | while read lang; do
        ( cd $lang  && \
-	 rm -rf messages/*/desktop_* && \
-	 rm -rf messages/others && \
-         rm -rf docs/others && \
-         rm -rf docmessages && \
-         rm -rf messages/kdenonbeta && \
-         rm -rf docs/kdenonbeta && \
-         rm -rf messages/kdeextragear-* && \
-         rm -rf docs/kdeextragear-* && \
-	 rm -rf messages/kdeextragear-libs-* && \
-	 rm -rf docs/kdeextragear-libs-* && \
-         rm -rf messages/kdekiosk && \
-         rm -rf docs/kdekiosk  && \
-	 rm -rf messages/www.kde.org && \
-	 rm -rf messages/kdeplay* && \
-	 rm -rf messages/kdereview && \
-         test -e docs/common || rm -fvr docs
+         $rm_command internal && \
+	 $rm_command messages/*/desktop_* && \
+	 $rm_command messages/others && \
+         $rm_command docs/others && \
+         $rm_command docmessages && \
+         $rm_command messages/kdenonbeta && \
+         $rm_command docs/kdenonbeta && \
+         $rm_command messages/extragear-* && \
+         $rm_command docs/extragear-* && \
+         $rm_command messages/kdekiosk && \
+         $rm_command docs/kdekiosk  && \
+	 $rm_command webmessages && \
+	 $rm_command messages/play* && \
+	 $rm_command messages/kdereview && \
+	 $rm_command */koffice && \
+         test -e docs/common || $rm_command docs
 	)
      done
      echo "Removing template specific stuff"
-     rm -rf templates
-     echo "Removing koffice specific stuff"
-     cat subdirs | while read lang; do
-       ( cd $lang  && \
-         rm -rf */koffice \
-         rm -rf docmessages/koffice )
-     done
+     $rm_command templates
   )
   fi
 
@@ -115,7 +114,7 @@ cd_package()
           echo Keeping $lang
        else
           echo Deleting $lang
-          rm -rf $lang
+          $rm_command $lang
        fi
     done
     ) || exit 1
@@ -125,7 +124,7 @@ cd_package()
   (
      cd_package
      echo "Removing non-released stuff"
-     rm -rf kplato
+     $rm_command kplato
   )
   fi
 
@@ -133,6 +132,6 @@ cd_package()
   (
      cd_package
      echo "removing Makefile.cvs"
-     rm -f Makefile.cvs
+     $rm_command Makefile.cvs
   )
 
