@@ -86,6 +86,6 @@ for i in `cat ../modules`; do
   else
         svn co $BASE/$DESTURL $subname
   fi
-  DO_SVN=1 ../removestuff $i
+  DO_SVN=1 ../removestuff $subname
 done
 
