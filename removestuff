@@ -74,48 +74,49 @@ cd_package()
   ) || exit 1
   fi
 
-  if [ $package = "kde-l10n" ]; then
+  if [ $package = "kde-l10n" -o $package = "kde-i18n" ]; then
   (
      cd_package
      echo "Removing other stuff"
      cat subdirs | while read lang; do
-       ( cd $lang  && \
-         $rm_command internal && \
-	 $rm_command messages/*/desktop_* && \
-	 $rm_command messages/others && \
-         $rm_command docs/others && \
-         $rm_command docmessages && \
-         $rm_command messages/kdenonbeta && \
-         $rm_command docs/kdenonbeta && \
-         $rm_command messages/extragear-* && \
-         $rm_command docs/extragear-* && \
-         $rm_command messages/kdekiosk && \
-         $rm_command docs/kdekiosk  && \
-	 $rm_command webmessages && \
-	 $rm_command messages/play* && \
-	 $rm_command messages/kdereview && \
-	 $rm_command */koffice && \
-         test -e docs/common || $rm_command docs
-	)
+       cd $lang || continue
+       $rm_command internal 
+       $rm_command messages/*/desktop_* 
+       $rm_command messages/others 
+       $rm_command docs/others 
+       $rm_command docmessages 
+       $rm_command messages/kdenonbeta 
+       $rm_command docs/kdenonbeta 
+       $rm_command messages/extragear-* 
+       $rm_command docs/extragear-* 
+       $rm_command messages/kdekiosk
+       $rm_command docs/kdekiosk 
+       $rm_command webmessages 
+       $rm_command messages/play* 
+       $rm_command messages/kdereview 
+       $rm_command */koffice 
+       test -d docs/common || $rm_command docs
+       cd ..
      done
      echo "Removing template specific stuff"
      $rm_command templates
   )
   fi
 
-  if [ $package = "kde-l10n" -o $package = "koffice-l10n" ]; then
+  if [ $package = "kde-l10n" -o $package = "koffice-l10n" -o $package = "kde-i18n" ]; then
   (
     cd_package
     echo Removing non-released languages from package
-    test -f subdirs.orig || { echo "$package/subdirs.orig doesn't exist"; exit 1; }
     grep ^xx subdirs && { echo "$package/subdirs contains the xx language!"; exit 1; }
-    cat subdirs.orig | while read lang; do
-       if grep -q ^$lang\$ subdirs; then
-          echo Keeping $lang
-       else
-          echo Deleting $lang
-          $rm_command $lang
-       fi
+    for dir in *; do
+	if test -d $dir/messages -o -d $dir/docs; then
+            if grep -q ^$dir\$ subdirs; then
+                 echo Keeping $dir
+            else
+                 echo Deleting $dir
+                 $rm_command $dir
+	    fi
+        fi
     done
     ) || exit 1
   fi

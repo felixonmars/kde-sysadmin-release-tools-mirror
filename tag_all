@@ -4,8 +4,6 @@ tagdir=tagging.$$
 
 BASE=svn+ssh://coolo@svn.kde.org/home/kde
 
-svn co -N $BASE $tagdir
-
 function co_subdir {
 	echo co_subdir $1
 	if test ! -d $tagdir/$1; then
@@ -39,12 +37,15 @@ function replace_exts {
 svn pg svn:externals $1 | while read subdir url; do
    test -n "$url" || continue
    rm -rf $1/$subdir
-   svn copy $url $1/$subdir
+   svn copy ${url/https:\/\//svn+ssh://coolo@} $1/$subdir
 done
 svn pd svn:externals $1
 }
 
-co_subdir tags
+if test -z "$ONLY_CLEANUP"; then
+  svn co -N $BASE $tagdir
+  co_subdir tags
+fi
 
 for i in `cat modules`; do
 
@@ -62,24 +63,23 @@ if ! test -d $tagdir/$tt; then
 fi
 svn up -N $tagdir/$HEADURL
 if test "$i" = "kde-l10n"; then
-  svn up $tagdir/$HEADURL/scripts
+  svn up -N $tagdir/$HEADURL/scripts
 fi
 svn copy $tagdir/$HEADURL $tagdir/$DESTURL
-if test "$i" = "l10n"; then
-  cp language_list $tagdir/$DESTURL/subdirs
-fi
 replace_exts $tagdir/$DESTURL
 
 )
 done
-set_urls kde-l10n
-replace_exts $tagdir/$DESTURL/scripts
- 
-svn commit $tagdir
-rm -rf $tagdir
+if test -z "$ONLY_CLEANUP"; then
+  set_urls kde-l10n
+  cp language_list $tagdir/$DESTURL/subdirs
+  replace_exts $tagdir/$DESTURL/scripts
+  svn commit $tagdir || exit 1
+  rm -rf $tagdir
+fi
 
 cd clean
-for i in `cat modules`; do
+for i in `cat ../modules`; do
   set_urls $i
   if test -d $i; then 
 	svn switch $BASE/$DESTURL $subname
