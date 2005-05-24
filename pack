@@ -100,7 +100,7 @@ fi
     cat subdirs | while read lang; do
       rsubdir=$package-$lang-$version
       mv $lang $rsubdir
-      tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | bzip2 -9 > ../../sources/$package/$package-$version-$lang.tar.bz2
+      tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | bzip2 -9 > ../../sources/$package/$rsubdir.tar.bz2
       mv $rsubdir $lang
     done
     cd ..
