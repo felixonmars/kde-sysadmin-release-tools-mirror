@@ -19,7 +19,7 @@ case $package in
     version=1.4.1
     ;;
   kdevelop)
-    version=3.2.0
+    version=3.2.1
     ;;
   koffice)
     version=1.3.98
@@ -36,7 +36,7 @@ fi
 
 isl10n=0
 case $package in
-  *-l10n)
+  *-l10n|*-i18n)
     isl10n=1
     ;;
 esac
@@ -98,10 +98,14 @@ fi
     cd $package
     echo "making per-language tarballs"
     cat subdirs | while read lang; do
-      tar --owner=root --group=root -c --exclude autom4te.cache $lang | bzip2 -9 > ../../sources/$package/$package-$lang.tar.bz2
+      rsubdir=$package-$lang-$version
+      mv $lang $rsubdir
+      tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | bzip2 -9 > ../../sources/$package/$package-$version-$lang.tar.bz2
+      mv $rsubdir $lang
     done
     cd ..
   else
+
    echo "mv $package $package-$version"
    mv $package $package-$version || exit 1
    echo "tar cjf $package-$version.tar.bz2 $package-$version"
@@ -109,25 +113,25 @@ fi
   fi
 
   # Xdelta
-  if test "$package" = "kde-l10n"; then
+  if test "$package" = "kde-l10n" -o "$package" = "kde-i18n"; then
     cd ../sources
     # for kde-l10n we only generate xdelta for the small files
     # #### double-check this code
-    files=`cd ../sources/kde-l10n && ls -1 kde-l10n-*-$version.tar.bz2 2> /dev/null`
+    files=`cd $package && ls -1 $package-*-$version.tar.bz2 2> /dev/null`
     for file in $files; do
-	lang=${file/kde-l10n-/}
+	lang=${file/$package-/}
 	lang=${lang/-$version.tar.bz2/}
-	oldlang=`ls -1 ../sources-old/kde-l10n/kde-l10n-$lang-*tar.bz2 2>/dev/null | tail -n 1`
+	oldlang=`ls -1 ../sources-old/$package/$package-$lang-*tar.bz2 2>/dev/null | tail -n 1`
 	if test -n "$oldlang" && test -r "$oldlang"; then
-	    cp $oldlang kde-l10n
-	    echo "bunzip2 kde-l10n/kde-l10n-$lang-$version.tar.bz2"
-	    bunzip2 kde-l10n/kde-l10n-$lang-$version.tar.bz2
-            cd kde-l10n 
-            ../$scriptpath/xdelta kde-l10n-$lang-*.bz2 kde-l10n-$lang-$version.tar
+	    cp $oldlang $package
+	    echo "bunzip2 $package/$package-$lang-$version.tar.bz2"
+	    bunzip2 $package/$package-$lang-$version.tar.bz2
+            cd $package
+            ../$scriptpath/xdelta $package-$lang-*.bz2 $package-$lang-$version.tar
 	    cd ..
-	    rm -f kde-l10n/kde-l10n-$lang-*.bz2
-            echo "bzip2 kde-l10n/kde-l10n-$lang-$version.tar"
-	    bzip2 kde-l10n/kde-l10n-$lang-$version.tar
+	    rm -f $package/$package-$lang-*.bz2
+            echo "bzip2 $package/$package-$lang-$version.tar"
+	    bzip2 $package/$package-$lang-$version.tar
         fi
     done
     cd ../dirty

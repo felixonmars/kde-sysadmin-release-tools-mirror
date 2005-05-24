@@ -8,7 +8,7 @@
 
   isl10n=0
   case $package in
-    *-l10n)
+    *-l10n|kde-i18n)
       isl10n=1
       ;;
   esac
