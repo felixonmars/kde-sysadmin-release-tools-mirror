@@ -8,7 +8,7 @@ echo '</tr>'
 for i in *.tar.bz2; do 
     echo '<tr valign="top">'
     l=`echo $i | sed -e "s#.tar.bz2##"`
-    echo '   <td><a href="http://download.kde.org/unstable/3.3.92/src/'$i'">'$l'</a></td>'
+    echo '   <td><a href="http://download.kde.org/stable/3.4.1/src/'$i'">'$l'</a></td>'
     size=`stat -c "%s" $i`
     size=`echo "$size / 1024" | bc`
     if test "$size" -lt 1024; then
