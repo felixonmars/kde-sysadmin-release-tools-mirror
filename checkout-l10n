@@ -12,23 +12,55 @@ test -d clean || { echo "create clean subdir"; exit 1; }
 cd clean
 
 if test "$package" = "koffice"; then
-  svn co -N $SVNURL/trunk/l10n koffice-l10n
+  ### Note that we're checking out stable
+  L10N=$SVNURL/branches/stable/l10n
+  svn co -N $L10N koffice-l10n
   cd koffice-l10n
   svn up scripts
 
   module=koffice
   # Checkout only the $module part of each language
-  cat ../../language_list | while read lang; do
-    svn up -N $lang
-    svn up -N $lang/docs
-    svn up -N $lang/messages
-    svn up $lang/docs/$module
-    svn up $lang/messages/$module
+  #cat ../../language_list | while read lang; do
+  for lang in `svn ls $L10N`; do
+    svn up -N $lang && test -d $lang && {
+      svn up -N $lang/docs
+      svn up -N $lang/messages
+      svn up $lang/docs/$module
+      svn up $lang/messages/$module
+    }
   done
+
+  # Now select the languages with enough translations
+  cp -f /dev/null ../../language_list.new
+  total=0
+  for i in en_GB/messages/koffice/*.po; do
+    n=`msgfmt --statistics -o /dev/null $i 2>&1 | sed -e 's/,.*$//' | cut -d' ' -f1`
+    total=$((total + $n))
+  done
+  required=$((total * 70 / 100))
+  required=`echo $required | sed -e 's/\..*//'`
+  echo "$total messages to translate, $required required as a minimum."
+  for lang in *; do
+    sum=0
+    if test "$lang" != "templates" -a -d $lang/messages/koffice; then
+      for i in $lang/messages/koffice/*.po; do
+        n=`msgfmt --statistics -o /dev/null $i 2>&1 | sed -e 's/,.*$//' | cut -d' ' -f1`
+        sum=$((sum + $n))
+      done
+      if test $sum -gt $required; then
+        echo $lang: $sum/$total, keeping
+        echo $lang >> ../../language_list.new
+      else
+        echo $lang: $sum/$total, dropping
+        rm -rf $lang
+      fi
+    fi
+  done
+  echo "Languages selected, consider doing \"mv language_list.new language_list\" if OK"
 fi
 
-if test "$package" = "kde"; then
+#if test "$package" = "kde"; then
   ## TODO: find or checkout a full kde-i18n
   ##       then remove the koffice and other non-released stuff
   ##       (i.e. call removestuff)
-fi
+#fi
