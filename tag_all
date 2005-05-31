@@ -1,5 +1,7 @@
 #!/bin/bash
 # This script tags all modules listed in the "modules" file.
+# (make sure to do all of them in one go, since the script assumes that the destination tag has to be created)
+#
 # Make sure to fix the set_urls function so that it uses the right tags.
 # language_list becomes the subdirs file in the l10n module.
 # Once it's all done, the script checks out the tagged directories under clean/.

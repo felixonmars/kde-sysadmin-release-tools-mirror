@@ -47,10 +47,11 @@ cd_package()
            test $i != "koffice" -a $i != "Makefile.am" && $rm_command $i
          done
          cd ..
+         files=`ls -1 $sub | wc -l`
+         test $files -eq 0 && $rm_command $sub
        done
        cd ..
      done
-     mv -f subdirs.new subdirs
      echo "Removing template specific stuff"
      $rm_command templates
      echo "Removing documentation links"
