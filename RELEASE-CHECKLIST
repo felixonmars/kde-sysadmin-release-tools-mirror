@@ -31,19 +31,11 @@ Make sure the meinproc in path is a version of the correct branch
 Check out or update everything with the correct branch tag
 Make sure all admin directories are up to date as well (and are not symlinks)
 Run "fixuifiles"
-Copy the clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
-For koffice: rename kde-i18n to koffice-i18n (the script takes care of removing all the non-koffice stuff)
-Put list of languages into kde-i18n's subdirs, after backing up the existing one into subdirs.orig
-Make sure the xx language isn't listed in "subdirs"
-Run "removestuff <module>", which removes subdirs that shouldn't be tagged (pack does that)
-   (currently used for kde-i18n, koffice and koffice-i18n only)
-Tag the CVS
-(For branching koffice: copy kdelibs/kde.pot to koffice/kde.pot)
-Make sure the admin directories gets tagged as well
+Use tag_all to get clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
 Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase last.
 If you have to redo a tarball because of a code change and don't want to wait for meinproc to complete,
-extract the old tarball inside cache/<module> before calling "pack". The docu script will
-then use the version from the cache instead of regenerating it, saving a lot of time.
+ extract the old tarball inside cache/<module> before calling "pack". The docu script will
+ then use the version from the cache instead of regenerating it, saving a lot of time.
 Upload tarballs to their final location, as 'ftprelease' user under a src/ directory.
 chmod o-rwx any new dir (so that they're not yet public)
 chmod g+w the new directory where packagers will put their files
