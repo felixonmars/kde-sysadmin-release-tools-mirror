@@ -1,8 +1,19 @@
 #!/bin/bash
+# This script tags all modules listed in the "modules" file.
+# Make sure to fix the set_urls function so that it uses the right tags.
+# language_list becomes the subdirs file in the l10n module.
+# Once it's all done, the script checks out the tagged directories under clean/.
 
+#SVNUSER=coolo
+#SVNPROTOCOL=svn+ssh
+
+test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
+test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
+
+BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
+
+# Temporary checkout directory
 tagdir=tagging.$$
-
-BASE=svn+ssh://coolo@svn.kde.org/home/kde
 
 function co_subdir {
 	echo co_subdir $1
@@ -15,8 +26,8 @@ function co_subdir {
 function set_urls {
 case $1 in
   arts)
-    HEADURL=branches/arts/1.4/$i
-    DESTURL=tags/arts/1.4.1/$i
+    HEADURL=branches/arts/1.4/arts
+    DESTURL=tags/arts/1.4.1/arts
     subname=$1
     ;;
   kde-l10n)
@@ -24,9 +35,14 @@ case $1 in
     DESTURL=tags/KDE/3.4.1/kde-i18n
     subname=kde-i18n
     ;;
+  koffice-l10n)
+    HEADURL=branches/stable/l10n
+    DESTURL=tags/koffice/1.4-rc1/koffice-l10n
+    subname=koffice-l10n
+    ;;
   *)
-    HEADURL=branches/KDE/3.4/$i
-    DESTURL=tags/KDE/3.4.1/$i
+    HEADURL=branches/KDE/3.4/$1
+    DESTURL=tags/KDE/3.4.1/$1
     subname=$1
     ;;
 esac
@@ -34,12 +50,12 @@ esac
 }
 
 function replace_exts {
-svn pg svn:externals $1 | while read subdir url; do
+ svn pg svn:externals $1 | while read subdir url; do
    test -n "$url" || continue
    rm -rf $1/$subdir
-   svn copy ${url/https:\/\//svn+ssh://coolo@} $1/$subdir
-done
-svn pd svn:externals $1
+   svn copy ${url/https:\/\//$SVNPROTOCOL://$SVNUSER@} $1/$subdir
+ done
+ svn pd svn:externals $1
 }
 
 if test -z "$ONLY_CLEANUP"; then
@@ -47,31 +63,41 @@ if test -z "$ONLY_CLEANUP"; then
   co_subdir tags
 fi
 
+l10n_module=""
 for i in `cat modules`; do
+  test -z "$ONLY_CLEANUP" || continue
 
-(
-test -z "$ONLY_CLEANUP" || continue
+  isl10n=0
+  case $i in
+    *-l10n|*-i18n)
+      isl10n=1
+      l10n_module=$i
+      ;;
+  esac
 
-set_urls $i
+  set_urls $i
 
-co_subdir `dirname $HEADURL`
-tt=`dirname $DESTURL`
-tt2=`dirname $tt`
-if ! test -d $tagdir/$tt; then
-   svn up -N $tagdir/$tt2
-   svn mkdir $tagdir/$tt
-fi
-svn up -N $tagdir/$HEADURL
-if test "$i" = "kde-l10n"; then
-  svn up -N $tagdir/$HEADURL/scripts
-fi
-svn copy $tagdir/$HEADURL $tagdir/$DESTURL
-replace_exts $tagdir/$DESTURL
-
-)
+  co_subdir `dirname $HEADURL`
+  tt=`dirname $DESTURL`
+  tt2=`dirname $tt`
+  if ! test -d $tagdir/$tt; then
+     svn up -N $tagdir/$tt2
+     svn mkdir $tagdir/$tt
+  fi
+  svn up -N $tagdir/$HEADURL
+  if test $isl10n -eq 1; then
+    svn up -N $tagdir/$HEADURL/scripts
+  fi
+  if test -d $tagdir/$DESTURL; then
+    echo "$tagdir/$DESTURL exists already"
+  else
+    svn copy $tagdir/$HEADURL $tagdir/$DESTURL
+  fi
+  replace_exts $tagdir/$DESTURL
 done
-if test -z "$ONLY_CLEANUP"; then
-  set_urls kde-l10n
+
+if test -z "$ONLY_CLEANUP" -a -n "$l10n_module"; then
+  set_urls $l10n_module
   cp language_list $tagdir/$DESTURL/subdirs
   replace_exts $tagdir/$DESTURL/scripts
   svn commit $tagdir || exit 1
