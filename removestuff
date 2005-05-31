@@ -1,7 +1,8 @@
 # This is a helper script, which removes the useless stuff from some modules.
 # For instance it separates the koffice translations between kde-l10n and koffice-l10n.
 # Call it with the package name as argument, like:  ./removestuff kde-l10n
-# Usually, you'll want to do this before tagging.
+
+# This is called by tag_all with DO_SVN=1 in order to remove unused stuff from a tag.
 
 package=$1
 version=$2
@@ -24,10 +25,6 @@ cd_package()
   fi
 }
 
-# Unlike "pack", this script acts on clean/, because it's supposed to be run
-# before tagging.
-# but it can also act in dirty, for packaging
-
   if [ $package = "koffice-l10n" ]; then
   (
      cd_package
@@ -37,40 +34,25 @@ cd_package()
        echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
        exit 1
      fi
-     cp subdirs subdirs.new
      cat subdirs | while read lang; do
-       (
-         found=""
-         test -d $lang && {
-         cd $lang
-         # Look for koffice stuff in subdirs
-         for subdir in data messages docs; do
-           subdirlist=""
-           if test -d $subdir/koffice; then
-             subdirlist="$subdirlist $subdir/koffice"
-           fi
-           if test -d $subdir/docs/koffice; then
-             subdirlist="$subdirlist $subdir/docs/koffice"
-           fi
-           if test -n "$subdirlist"; then
-             found="$found $subdirlist"
-           else
-             $rm_command $subdir
-           fi
+       cd $lang || continue
+       echo $lang
+       $rm_command internal 
+       $rm_command docmessages 
+       $rm_command webmessages 
+       for sub in messages docs data; do
+         test -d $sub || continue
+         cd $sub
+         for i in *; do
+           test $i != "koffice" && $rm_command $i
          done
          cd ..
-         }
-         if test -z "$found"; then
-           echo "$lang has no koffice translation, removing"
-           $rm_command $lang
-           sed -e "/^$lang/d" subdirs.new > subdirs.tmpnew
-           mv -f subdirs.tmpnew subdirs.new
-         else
-           echo "$lang: found$found"
-         fi
-       )
+       done
+       cd ..
      done
      mv -f subdirs.new subdirs
+     echo "Removing template specific stuff"
+     $rm_command templates
   ) || exit 1
   fi
 
@@ -81,21 +63,24 @@ cd_package()
      cat subdirs | while read lang; do
        cd $lang || continue
        $rm_command internal 
+       $rm_command docmessages 
+       $rm_command webmessages 
        $rm_command messages/*/desktop_* 
        $rm_command messages/others 
        $rm_command docs/others 
-       $rm_command docmessages 
        $rm_command messages/kdenonbeta 
        $rm_command docs/kdenonbeta 
        $rm_command messages/extragear-* 
        $rm_command docs/extragear-* 
        $rm_command messages/kdekiosk
        $rm_command docs/kdekiosk 
-       $rm_command webmessages 
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
-       test -d docs/common || $rm_command docs
+       test -d docs/common || {
+            echo "$lang/docs/common not translated, removing" 
+            $rm_command docs 
+       }
        cd ..
      done
      echo "Removing template specific stuff"
