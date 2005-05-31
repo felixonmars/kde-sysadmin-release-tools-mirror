@@ -17,7 +17,7 @@
     make -f Makefile.cvs || exit 1
   elif test $isl10n -eq 1; then
     cat subdirs | while read lang; do
-      scripts/autogen.sh $lang
+      scripts/autogen.sh $lang || exit 1
     done
   else
     make -f admin/Makefile.common dist || exit 1

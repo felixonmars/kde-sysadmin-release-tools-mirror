@@ -5,7 +5,7 @@ if test ! -x "`which meinproc`"; then
   echo "!!! No meinproc found. No docu generated.. !!!";
   echo ""
 else
-  adir=`pwd`
+  adir=`dirname $0`
   files=`cd $1 && find . -type f -path "*doc*index.docbook"`
   for f in $files; do
     (
