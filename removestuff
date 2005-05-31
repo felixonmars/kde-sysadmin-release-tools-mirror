@@ -44,7 +44,7 @@ cd_package()
          test -d $sub || continue
          cd $sub
          for i in *; do
-           test $i != "koffice" && $rm_command $i
+           test $i != "koffice" -a $i != "Makefile.am" && $rm_command $i
          done
          cd ..
        done
@@ -53,6 +53,9 @@ cd_package()
      mv -f subdirs.new subdirs
      echo "Removing template specific stuff"
      $rm_command templates
+     echo "Removing documentation links"
+     $rm_command documentation
+     $rm_command debian
   ) || exit 1
   fi
 
@@ -85,6 +88,8 @@ cd_package()
      done
      echo "Removing template specific stuff"
      $rm_command templates
+     echo "Removing documentation links"
+     $rm_command documentation
   )
   fi
 

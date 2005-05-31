@@ -40,6 +40,11 @@ case $1 in
     DESTURL=tags/koffice/1.4-rc1/koffice-l10n
     subname=koffice-l10n
     ;;
+  koffice)
+    HEADURL=branches/koffice/1.4/koffice
+    DESTURL=tags/koffice/1.4-rc1/$1
+    subname=$1
+    ;;
   *)
     HEADURL=branches/KDE/3.4/$1
     DESTURL=tags/KDE/3.4.1/$1
@@ -100,6 +105,9 @@ if test -z "$ONLY_CLEANUP" -a -n "$l10n_module"; then
   set_urls $l10n_module
   cp language_list $tagdir/$DESTURL/subdirs
   replace_exts $tagdir/$DESTURL/scripts
+fi
+
+if test -z "$ONLY_CLEANUP"; then
   svn commit $tagdir || exit 1
   rm -rf $tagdir
 fi

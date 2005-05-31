@@ -1,7 +1,11 @@
 #!/bin/bash
 # Use this script to checkout the relevant parts of l10n
-# Call it with the option "kde", "koffice", or "extragear-kmyapp" (TODO)
-# Make sure to have the list of languages you want to release in language_list
+# Call it with the option "kde", "koffice", or "extragear-kmyapp"
+# Currently only koffice is supported.
+
+# This script generates the list of languages to be released,
+# but after that you need to tag_all / removestuff anyway,
+# so better package the tagged directory instead.
 
 package=$1
 CDPATH=
@@ -25,8 +29,10 @@ if test "$package" = "koffice"; then
     svn up -N $lang && test -d $lang && {
       svn up -N $lang/docs
       svn up -N $lang/messages
+      svn up -N $lang/data
       svn up $lang/docs/$module
       svn up $lang/messages/$module
+      svn up $lang/data/$module
     }
   done
 
