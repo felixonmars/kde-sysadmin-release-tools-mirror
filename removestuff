@@ -4,12 +4,7 @@
 
 # This is called by tag_all with DO_SVN=1 in order to remove unused stuff from a tag.
 
-package=$1
-version=$2
-
-CDPATH=""
-
-test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
+source `dirname $0`/common $1 $2
 
 rm_command="rm -rf"
 if test -n "$DO_SVN"; then
@@ -125,5 +120,6 @@ cd_package()
      cd_package
      echo "removing Makefile.cvs"
      $rm_command Makefile.cvs
+     $rm_command svn-commit*.*
   )
 

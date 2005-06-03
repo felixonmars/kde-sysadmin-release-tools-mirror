@@ -1,17 +1,6 @@
 (
-  CDPATH=""
-  export UNSERMAKE=no
-  package=$1
-  version=$2
-  export version
+  source `dirname $0`/common $1 $2
   cd $package
-
-  isl10n=0
-  case $package in
-    *-l10n|kde-i18n)
-      isl10n=1
-      ;;
-  esac
 
   if [ $package = "qt-copy" ] || [ $package = "kdoc" ]; then
     make -f Makefile.cvs || exit 1
