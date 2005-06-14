@@ -120,6 +120,6 @@ cd_package()
      cd_package
      echo "removing Makefile.cvs"
      $rm_command Makefile.cvs
-     $rm_command svn-commit*.*
+     rm -f svn-commit*.*
   )
 

@@ -1,6 +1,5 @@
 #!/bin/bash
 # This script tags all modules listed in the "modules" file.
-# (make sure to do all of them in one go, since the script assumes that the destination tag has to be created)
 #
 # Make sure to fix the set_urls function so that it uses the right tags.
 # language_list becomes the subdirs file in the l10n module.
@@ -39,12 +38,12 @@ case $1 in
     ;;
   koffice-l10n)
     HEADURL=branches/stable/l10n
-    DESTURL=tags/koffice/1.4-rc1/koffice-l10n
+    DESTURL=tags/koffice/1.4.0/koffice-l10n
     subname=koffice-l10n
     ;;
   koffice)
     HEADURL=branches/koffice/1.4/koffice
-    DESTURL=tags/koffice/1.4-rc1/$1
+    DESTURL=tags/koffice/1.4.0/$1
     subname=$1
     ;;
   *)
@@ -88,8 +87,11 @@ for i in `cat modules`; do
   tt=`dirname $DESTURL`
   tt2=`dirname $tt`
   if ! test -d $tagdir/$tt; then
-     svn up -N $tagdir/$tt2
-     svn mkdir $tagdir/$tt
+    svn up -N $tagdir/$tt2
+    svn up -N $tagdir/$tt
+    if ! test -d $tagdir/$tt; then
+      svn mkdir $tagdir/$tt
+    fi
   fi
   svn up -N $tagdir/$HEADURL
   if test $isl10n -eq 1; then
@@ -118,7 +120,7 @@ cd clean
 for i in `cat ../modules`; do
   set_urls $i
   if test -d $i; then 
-	svn switch $BASE/$DESTURL $subname
+        svn switch $BASE/$DESTURL $subname
   else
         svn co $BASE/$DESTURL $subname
   fi
