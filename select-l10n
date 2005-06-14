@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Select the languages with enough translations for a single-module release (e.g. koffice)
+# Run this script *first* (on a complete l10n checkout), before running tag_all.
+module=koffice
+
+cp -f /dev/null ../../language_list.new
+total=0
+for i in en_GB/messages/$module/*.po; do
+  n=`msgfmt --statistics -o /dev/null $i 2>&1 | sed -e 's/,.*$//' | cut -d' ' -f1`
+  total=$((total + $n))
+done
+required=$((total * 70 / 100))
+required=`echo $required | sed -e 's/\..*//'`
+echo "$total messages to translate, $required required as a minimum."
+for lang in *; do
+  sum=0
+  if test "$lang" != "templates" -a -d $lang/messages/$module; then
+    for i in $lang/messages/$module/*.po; do
+      n=`msgfmt --statistics -o /dev/null $i 2>&1 | sed -e 's/,.*$//' | cut -d' ' -f1`
+      sum=$((sum + $n))
+    done
+    if test $sum -gt $required; then
+      echo $lang: $sum/$total, keeping
+      echo $lang >> ../../language_list.new
+    else
+      echo $lang: $sum/$total, dropping
+      rm -rf $lang
+    fi
+  fi
+done
+echo "Languages selected, consider doing \"mv language_list.new language_list\" if OK"
+

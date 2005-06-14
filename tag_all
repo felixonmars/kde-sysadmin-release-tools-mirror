@@ -2,7 +2,7 @@
 # This script tags all modules listed in the "modules" file.
 #
 # Make sure to fix the set_urls function so that it uses the right tags.
-# language_list becomes the subdirs file in the l10n module.
+# language_list becomes the subdirs file in the l10n module, make sure it's uptodate.
 # Once it's all done, the script checks out the tagged directories under clean/.
 
 #SVNUSER=coolo
@@ -126,4 +126,6 @@ for i in `cat ../modules`; do
   fi
   DO_SVN=1 ../removestuff $subname
 done
+
+echo "All done, now commit from clean/"
 
