@@ -1,34 +1,35 @@
 CDPATH=
 
-if test ! -x "`which meinproc`"; then
-  echo ""
-  echo "!!! No meinproc found. No docu generated.. !!!";
-  echo ""
-else
-  adir=`dirname $0`
-  files=`cd $1 && find . -type f -path "*doc*index.docbook"`
-  for f in $files; do
-    (
+adir=`dirname $0`
+files=`cd $1 && find . -type f -path "*doc*index.docbook"`
+for f in $files; do
+  (
         dir=`dirname $f`
-    
+
         # is it cached ?
         if test -f ../cache/$1/$dir/index.cache.bz2; then
            cp ../cache/$1/$dir/index.cache.bz2 $1/$dir
-        fi 
-
-  	cd $1/$dir
-	echo `pwd`
-
-        if test ! -f index.cache.bz2; then 
-            echo Running `which meinproc` --cache index.cache.bz2 index.docbook
-	    meinproc --cache index.cache.bz2 index.docbook
-	    if test "$?" != 0; then
-		echo $1/$f >> $adir/source/FAILED
-	    fi
         fi
-    ) 
-  done
 
-  # make sure we leave no corefiles behind
-  find $1 -type f -name "core" | xargs rm -f
-fi
+        cd $1/$dir
+        echo `pwd`
+
+        if test ! -f index.cache.bz2; then
+
+            if test ! -x "`which meinproc`"; then
+                echo ""
+                echo "!!! No meinproc found. No docu generated.. !!!";
+                echo ""
+            else
+                echo Running `which meinproc` --cache index.cache.bz2 index.docbook
+                meinproc --cache index.cache.bz2 index.docbook
+                if test "$?" != 0; then
+                    echo $1/$f >> $adir/source/FAILED
+                fi
+            fi
+        fi
+  )
+done
+
+# make sure we leave no corefiles behind
+find $1 -type f -name "core" | xargs rm -f
