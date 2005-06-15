@@ -25,7 +25,7 @@ for lang in *; do
       echo $lang >> ../../language_list.new
     else
       echo $lang: $sum/$total, dropping
-      rm -rf $lang
+      #rm -rf $lang
     fi
   fi
 done
