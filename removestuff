@@ -32,9 +32,10 @@ cd_package()
      cat subdirs | while read lang; do
        cd $lang || continue
        echo $lang
-       $rm_command internal 
-       $rm_command docmessages 
-       $rm_command webmessages 
+       $rm_command internal
+       $rm_command docmessages
+       $rm_command webmessages
+       $rm_command */messages/koffice/kdgantt.po
        for sub in messages docs data; do
          test -d $sub || continue
          cd $sub
