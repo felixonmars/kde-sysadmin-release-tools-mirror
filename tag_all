@@ -31,7 +31,7 @@ case $1 in
     DESTURL=tags/arts/1.4.2/arts
     subname=$1
     ;;
-  kde-l10n)
+  kde-l10n|kde-i18n)
     HEADURL=branches/stable/l10n
     DESTURL=tags/KDE/3.4.2/kde-i18n
     subname=kde-i18n

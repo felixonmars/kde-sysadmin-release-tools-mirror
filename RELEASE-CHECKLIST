@@ -29,7 +29,6 @@ Update version number
 Update kdepackages in kdelibs/kdeui
 Make sure the meinproc in path is a version of the correct branch
 Check out or update everything with the correct branch tag
-Run "fixuifiles"
 Use tag_all to get clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
 Make tarballs using "pack <module>". Start with kde-i18n. Do kdelibs/kdebase last.
 If you have to redo a tarball because of a code change and don't want to wait for meinproc to complete,
