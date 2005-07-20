@@ -28,12 +28,12 @@ function set_urls {
 case $1 in
   arts)
     HEADURL=branches/arts/1.4/arts
-    DESTURL=tags/arts/1.4.1/arts
+    DESTURL=tags/arts/1.4.2/arts
     subname=$1
     ;;
   kde-l10n)
     HEADURL=branches/stable/l10n
-    DESTURL=tags/KDE/3.4.1/kde-i18n
+    DESTURL=tags/KDE/3.4.2/kde-i18n
     subname=kde-i18n
     ;;
   koffice-l10n)
@@ -48,7 +48,7 @@ case $1 in
     ;;
   *)
     HEADURL=branches/KDE/3.4/$1
-    DESTURL=tags/KDE/3.4.1/$1
+    DESTURL=tags/KDE/3.4.2/$1
     subname=$1
     ;;
 esac
