@@ -29,7 +29,7 @@ Update version number
  * bugs/bugz/wizard_config.pl
  * www/areas/enterprise/bizcase/form.inc (major KDE versions only)
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
- * versions script :)
+ * common and versions scripts
 
 Update kdepackages in kdelibs/kdeui
 Run "fixuifiles"
