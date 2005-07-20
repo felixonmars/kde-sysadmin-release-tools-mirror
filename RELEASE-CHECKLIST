@@ -8,6 +8,11 @@ Choose version number:
    5.0, so always use "code versions" for the packages. Also
    stuff like "-" etc is not working, so omit it
 
+Checkout branch:
+ fix the paths in versions script
+ use the checkout script
+ clean up the cache/ directory from previous builds
+
 Update version number
  * */*.lsm
  * arts/configure.in.in
@@ -24,7 +29,7 @@ Update version number
  * bugs/bugz/wizard_config.pl
  * www/areas/enterprise/bizcase/form.inc (major KDE versions only)
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
- * pack script :)
+ * versions script :)
 
 Update kdepackages in kdelibs/kdeui
 Run "fixuifiles"

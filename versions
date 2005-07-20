@@ -1,0 +1,31 @@
+function set_urls {
+case $1 in
+  arts)
+    HEADURL=branches/arts/1.4/arts
+    DESTURL=tags/arts/1.4.2/arts
+    subname=$1
+    ;;
+  kde-l10n|kde-i18n)
+    HEADURL=branches/stable/l10n
+    DESTURL=tags/KDE/3.4.2/kde-i18n
+    subname=kde-i18n
+    ;;
+  koffice-l10n)
+    HEADURL=branches/stable/l10n
+    DESTURL=tags/koffice/1.4.0/koffice-l10n
+    subname=koffice-l10n
+    ;;
+  koffice)
+    HEADURL=branches/koffice/1.4/koffice
+    DESTURL=tags/koffice/1.4.0/$1
+    subname=$1
+    ;;
+  *)
+    HEADURL=branches/KDE/3.4/$1
+    DESTURL=tags/KDE/3.4.2/$1
+    subname=$1
+    ;;
+esac
+
+}
+

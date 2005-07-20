@@ -1,0 +1,27 @@
+#!/bin/bash
+# This script tags all modules listed in the "modules" file.
+#
+# Make sure to fix the set_urls function so that it uses the right tags.
+# language_list becomes the subdirs file in the l10n module, make sure it's uptodate.
+# Once it's all done, the script checks out the tagged directories under clean/.
+
+#SVNUSER=coolo
+#SVNPROTOCOL=svn+ssh
+
+test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
+test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
+
+BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
+
+. versions
+
+cd clean
+for i in `cat ../modules`; do
+  set_urls $i
+  if test -d $subname; then 
+        svn switch $BASE/$HEADURL $subname
+  else
+        svn co $BASE/$HEADURL $subname
+  fi
+done
+
