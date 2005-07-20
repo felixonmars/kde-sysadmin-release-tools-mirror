@@ -90,7 +90,7 @@ fi
 cd clean
 for i in `cat ../modules`; do
   set_urls $i
-  if test -d $i; then 
+  if test -d $subname; then 
         svn switch $BASE/$DESTURL $subname
   else
         svn co $BASE/$DESTURL $subname
