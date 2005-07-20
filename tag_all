@@ -91,6 +91,8 @@ cd clean
 for i in `cat ../modules`; do
   set_urls $i
   if test -d $subname; then 
+	# svn switch has problems with externals replaced with copies
+	rm -rf $subname/admin $subname/scripts/admin $subname/libltdl
         svn switch $BASE/$DESTURL $subname
   else
         svn co $BASE/$DESTURL $subname
