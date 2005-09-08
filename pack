@@ -40,7 +40,59 @@ fi
 echo "cd dirty"
 cd dirty || exit 1
 
-# Anonymize checkout
+# Switch svn server to anonsvn.
+
+# TODO: Find out the old revision path.
+echo "svn switch --relocate 'svn+ssh://mueller@svn.kde.org/' 'svn://anonsvn.kde.org/' $package"
+svn switch --relocate 'svn+ssh://mueller@svn.kde.org/' 'svn://anonsvn.kde.org/' $package
+
+# Add documentation for a README.
+cat > $package/README.svn-nightly <<EOF
+Subversion revision: $version
+
+This directory contains a checkout of the KDE Subversion repository for the
+$package module.  It is already configured to update from the KDE anonymous
+Subversion repository.
+
+You may notice that the directory appears empty.  This is because Subversion
+duplicates the files, and only one copy was included in the tarball.  To
+restore the directory to normal, run "svn revert -R .", which will cause
+Subversion to fix the directory to have the files duplicated as normal.
+
+After this, you can run svn update as normal.  You may wish to do so now to
+pick up the changes you may have missed between now and when this module was
+packaged.
+
+If you wish to switch to a different Subversion repository, please run
+"svn switch --relocate svn://anonsvn.kde.org/ <NEW REPO URL>"
+
+Subversion-over-SSH users would use something like:
+"svn switch --relocate svn://anonsvn.kde.org/ svn+ssh://<username>@svn.kde.org/"
+
+HTTPS users would do:
+"svn switch --relocate svn://anonsvn.kde.org/ https://<username>@svn.kde.org/"
+EOF
+
+# We've switched, compile list of files that need to be tarred up.
+echo "find $package -path '*/.svn/*' > $package-files"
+find $package -path '*/.svn/*' > $package-files
+
+# Add README to the file list.
+echo "$package/README.svn-nightly" >> $package-files
+
+# Create the tarball.
+echo "tar cjf $package-svn-$version.tar.bz2"
+tar --owner=root --group=root -T $package-files -cf $package-svn-$version.tar || exit 1
+bzip2 -9 $package-svn-$version.tar
+
+echo "mv $package-svn-$version.tar.bz2 ../sources"
+mv $package-svn-$version.tar.bz2 ../sources
+
+# Cleanup
+rm $package/README.svn-nightly
+rm $package-files
+
+# Anonymize checkout by removing the SVN information from it.
 echo "anon $package"
 $scriptpath/anon $package || exit 1
 
