@@ -4,34 +4,47 @@ umask 022
 export VERBOSE=yes
 export DOINGSNAPSHOT=yes
 
+# Use lowest priority.
 renice 20 $$ &>/dev/null
 
+# Perform svn update
 (cd ~/prod && svn up -N)
 
 # lets go work
 cd ~/prod
+
+# We don't need this, we're about to replace it with ./sources
 rm -rf sources-old
 mkdir sources-old
 mkdir sources-old/kde-l10n
-# now lets populate the directory
-for i in `cat snapmodules`; do
+
+# List of modules to take snapshots of:
+snapmodules=`cat snapmodules`
+
+# Now lets populate the directory
+for i in $snapmodules; do
+ # Find module nightly tarball, and if it exists symlink it into sources-old.
  t=`readlink "ftp/$i.tar.bz2"`
+
  if test -n "$t"; then
    test -r "ftp/$t" && ln -s "../ftp/$t" sources-old
  else
    echo "ERROR: $i does not exist in ftp/.";
  fi
 done
+
+# sources-old is ready, clean out sources
 rm -rf sources
 mkdir sources
 mkdir sources/kde-l10n
 
 version=`date +%y%m%d`
 
-for i in `cat snapmodules`; do 
+for i in $snapmodules; do
 (
   test -d clean/$i || { echo "$i doesn't exist"; exit 1; }
 
+  # Find the SVN revision used by the existing tarball.
   oldrev=`readlink ftp/$i.tar.bz2  | egrep -o '[0-9]+\.tar\.bz2' | cut -d. -f1`
   test -n "$oldrev" || oldrev=0
 
@@ -41,12 +54,17 @@ for i in `cat snapmodules`; do
 
   if test "$oldrev" -ne "$newrev"; then
       ./pack $i $newrev
+
       set -x
+
       rm -f ftp/$i*bz2
       mv -f sources/$i*bz2 ftp
       ln -s $i-$newrev.tar.bz2 ftp/$i.tar.bz2
+      ln -s $i-svn-$newrev.tar.bz2 ftp/$i-svn.tar.bz2
+
       find ftp/ -name "$i*xdelta" -mtime +7 | xargs rm -f
       mv -f sources/$i*xdelta ftp
+
       if test "$i" = "kde-l10n"; then
           rm -f ftp/$i/$i*bz2
           for ki in sources/$i/$i*bz2; do
@@ -54,6 +72,7 @@ for i in `cat snapmodules`; do
             ln -s `basename $ki` ftp/kde-l10n/`basename $ki -$newrev.tar.bz2`.tar.bz2
           done
       fi
+
       set +x
   else
     echo "$i does not need to be updated"
