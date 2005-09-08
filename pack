@@ -17,7 +17,7 @@ if test -n "$MEINPROCPATH"; then
   echo "PATH changed to $PATH"
 fi
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
-test -d clean || { echo "create clean subdir with cvs checkout"; exit 1; }
+test -d clean || { echo "create clean subdir with svn checkout"; exit 1; }
 test -d dirty || mkdir dirty || { echo "create empty subdir dirty"; exit 1; }
 test -d sources || mkdir sources || { echo "create empty subdir sources"; exit 1; }
 test -d sources-old || { echo "create empty subdir sources-old with reference files for xdelta"; exit 1; }
