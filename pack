@@ -40,12 +40,6 @@ fi
 echo "cd dirty"
 cd dirty || exit 1
 
-# Switch svn server to anonsvn.
-
-# TODO: Find out the old revision path.
-echo "svn switch --relocate 'svn+ssh://mueller@svn.kde.org/' 'svn://anonsvn.kde.org/' $package"
-svn switch --relocate 'svn+ssh://mueller@svn.kde.org/' 'svn://anonsvn.kde.org/' $package
-
 # Add documentation for a README.
 cat > $package/README.svn-nightly <<EOF
 Subversion revision: $version
@@ -82,8 +76,7 @@ echo "$package/README.svn-nightly" >> $package-files
 
 # Create the tarball.
 echo "tar cjf $package-svn-$version.tar.bz2"
-tar --owner=root --group=root -T $package-files -cf $package-svn-$version.tar || exit 1
-bzip2 -9 $package-svn-$version.tar
+tar --owner=root --group=root -T $package-files -cjf $package-svn-$version.tar.bz2 || exit 1
 
 echo "mv $package-svn-$version.tar.bz2 ../sources"
 mv $package-svn-$version.tar.bz2 ../sources
