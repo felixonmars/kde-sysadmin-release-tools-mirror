@@ -35,7 +35,7 @@ cd_package()
        $rm_command internal
        $rm_command docmessages
        $rm_command webmessages
-       $rm_command */messages/koffice/kdgantt.po
+       test -f messages/koffice/kdgantt.po && $rm_command messages/koffice/kdgantt.po
        for sub in messages docs data; do
          test -d $sub || continue
          cd $sub
@@ -50,8 +50,6 @@ cd_package()
      done
      echo "Removing template specific stuff"
      $rm_command templates
-     echo "Removing documentation links"
-     $rm_command documentation
      $rm_command debian
   ) || exit 1
   fi
@@ -85,8 +83,6 @@ cd_package()
      done
      echo "Removing template specific stuff"
      $rm_command templates
-     echo "Removing documentation links"
-     $rm_command documentation
   )
   fi
 
