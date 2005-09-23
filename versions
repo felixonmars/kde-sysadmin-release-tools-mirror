@@ -12,12 +12,12 @@ case $1 in
     ;;
   koffice-l10n)
     HEADURL=branches/stable/l10n
-    DESTURL=tags/koffice/1.4.0/koffice-l10n
+    DESTURL=tags/koffice/1.4.2/koffice-l10n
     subname=koffice-l10n
     ;;
   koffice)
     HEADURL=branches/koffice/1.4/koffice
-    DESTURL=tags/koffice/1.4.0/$1
+    DESTURL=tags/koffice/1.4.2/$1
     subname=$1
     ;;
   *)
