@@ -1,9 +1,20 @@
 #!/bin/bash
 # This script tags all modules listed in the "modules" file.
 #
-# Make sure to fix the set_urls function so that it uses the right tags.
-# language_list becomes the subdirs file in the l10n module, make sure it's uptodate.
-# Once it's all done, the script checks out the tagged directories under clean/.
+# PRE-REQUISITES:
+# - Set the environment variables SVNUSER and SVNPROTOCOL
+# - Make sure to fix the "versions" script so that it uses the right tags.
+# - language_list becomes the subdirs file in the l10n module, make sure it's uptodate
+#     (see e.g. select-l10n for releases of a single module)
+# - List the modules to be tagged in the "modules" file
+#
+# INVOCATION:
+#    ./tag_all 2>&1 | tee tag_all.log
+#
+# INFORMATION FOR NEXT STEPS:
+#  Once it's all done, the script checks out the tagged directories under clean/,
+#  which is where the "pack" script gets its sources.
+#
 
 #SVNUSER=coolo
 #SVNPROTOCOL=svn+ssh
