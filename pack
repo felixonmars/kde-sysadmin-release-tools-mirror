@@ -40,8 +40,11 @@ fi
 echo "cd dirty"
 cd dirty || exit 1
 
-# Add documentation for a README.
-cat > $package/README.svn-nightly <<EOF
+# svn tarball for nightly snapshots
+if test -n "$DOINGSNAPSHOT"; then
+
+  # Add documentation for a README.
+  cat > $package/README.svn-nightly <<EOF
 Subversion revision: $version
 
 This directory contains a checkout of the KDE Subversion repository for the
@@ -67,23 +70,24 @@ HTTPS users would do:
 "svn switch --relocate svn://anonsvn.kde.org/ https://<username>@svn.kde.org/"
 EOF
 
-# We've switched, compile list of files that need to be tarred up.
-echo "find $package -path '*/.svn/*' > $package-files"
-find $package -path '*/.svn/*' > $package-files
+  # We've switched, compile list of files that need to be tarred up.
+  echo "find $package -path '*/.svn/*' > $package-files"
+  find $package -path '*/.svn/*' > $package-files
 
-# Add README to the file list.
-echo "$package/README.svn-nightly" >> $package-files
+  # Add README to the file list.
+  echo "$package/README.svn-nightly" >> $package-files
 
-# Create the tarball.
-echo "tar cjf $package-svn-$version.tar.bz2"
-tar --owner=root --group=root -T $package-files -cjf $package-svn-$version.tar.bz2 || exit 1
+  # Create the tarball.
+  echo "tar cjf $package-svn-$version.tar.bz2"
+  tar --owner=root --group=root -T $package-files -cjf $package-svn-$version.tar.bz2 || exit 1
 
-echo "mv $package-svn-$version.tar.bz2 ../sources"
-mv $package-svn-$version.tar.bz2 ../sources
+  echo "mv $package-svn-$version.tar.bz2 ../sources"
+  mv $package-svn-$version.tar.bz2 ../sources
 
-# Cleanup
-rm $package/README.svn-nightly
-rm $package-files
+  # Cleanup
+  rm $package/README.svn-nightly
+  rm $package-files
+fi
 
 # Anonymize checkout by removing the SVN information from it.
 echo "anon $package"
