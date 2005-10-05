@@ -115,8 +115,6 @@ cd_package()
   # generic stuff
   (
      cd_package
-     echo "removing Makefile.cvs"
-     $rm_command Makefile.cvs
      rm -f svn-commit*.*
   )
 
