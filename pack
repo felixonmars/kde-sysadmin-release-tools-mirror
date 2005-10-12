@@ -43,6 +43,9 @@ cd dirty || exit 1
 # svn tarball for nightly snapshots
 if test -n "$DOINGSNAPSHOT"; then
 
+  echo "SVN tarball generation"
+  date
+
   # Add documentation for a README.
   cat > $package/README.svn-nightly <<EOF
 Subversion revision: $version
@@ -87,6 +90,9 @@ EOF
   # Cleanup
   rm $package/README.svn-nightly
   rm $package-files
+
+  echo "-- SVN tarball generation done"
+  date
 fi
 
 # Anonymize checkout by removing the SVN information from it.
