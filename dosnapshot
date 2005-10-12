@@ -53,6 +53,11 @@ for i in $snapmodules; do
   newrev=`svn info clean/$i | grep 'Last Changed Rev:' | cut -d' ' -f4`
 
   if test "$oldrev" -ne "$newrev"; then
+      echo "-------------------------------------------------------------"
+      date
+      echo "... packaging $i
+      echo "-------------------------------------------------------------"
+
       ./pack $i $newrev
 
       set -x
