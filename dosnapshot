@@ -55,7 +55,7 @@ for i in $snapmodules; do
   if test "$oldrev" -ne "$newrev"; then
       echo "-------------------------------------------------------------"
       date
-      echo "... packaging $i
+      echo "... packaging $i"
       echo "-------------------------------------------------------------"
 
       ./pack $i $newrev
