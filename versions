@@ -16,8 +16,8 @@ case $1 in
     subname=koffice-l10n
     ;;
   koffice)
-    HEADURL=branches/koffice/1.4/koffice
-    DESTURL=tags/koffice/1.4.2/$1
+    HEADURL=trunk/koffice
+    DESTURL=tags/koffice/1.4.90/$1
     subname=$1
     ;;
   *)

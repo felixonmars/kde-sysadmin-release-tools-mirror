@@ -108,7 +108,6 @@ cd_package()
   (
      cd_package
      echo "Removing non-released stuff"
-     $rm_command kplato
   )
   fi
 
