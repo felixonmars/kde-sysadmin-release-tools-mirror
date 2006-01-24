@@ -107,6 +107,7 @@ cd_package()
   if [ $package = "koffice" ]; then
   (
      cd_package
+     $rm_command ascend
      echo "Removing non-released stuff"
   )
   fi
