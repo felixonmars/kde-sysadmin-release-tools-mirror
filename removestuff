@@ -108,7 +108,6 @@ cd_package()
   (
      cd_package
      $rm_command ascend
-     $rm_command kugar
      echo "Removing non-released stuff"
   )
   fi
