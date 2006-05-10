@@ -1,0 +1,120 @@
+#!/bin/sh
+# koffice-l10n - Creates a copy of branches/stable/l10n that contains
+#                only the koffice l10n files.  Useful for tagging 
+#                koffice-l10n without checkout out entire KDE l10n.
+#
+#                Set ALT_LANGS to a space-delimited list of language
+#                codes for languages for which trunk/l10n should be used.
+#
+# Usage (tagging):
+# Firstly:
+#  echo koffice-l10n > modules
+#  In versions, update DESTURL; and
+#    set HEADURL to branches/work/koffice/koffice-l10n-<version>
+#  Update version numbers in common
+#  Run this (setting ALT_LANGS if necessary)
+#  cd clean/branches-work/koffice/koffice-l10n* && sh $OLDPWD/select-l10n
+
+# Then (if tagging):
+#  Move language_list.new to kde-common/release/language_list
+#  (Apply any changes requested by translators)
+#  Check that subdirs is in the work directory, and to be committed
+#  (if not copy and svn add language_list - is there a bug here?).
+#  Commit clean/branches-work
+#  cp -r clean/branches-work/koffice/koffice-l10n* clean/koffice-l10n
+#  tag_all
+#  pack koffice-l10n
+
+# Or (if testing):
+#  Rename language_list.new to subdirs
+#  (Apply any changes requested by translators)
+#  sed -i 's/svn rm/svn rm --force/' removestuff
+#  cp -r clean/branches-work/koffice/koffice-l10n* clean/koffice-l10n
+#  cd clean && DO_SVN=1 ../removestuff koffice-l10n
+#  pack koffice-l10n
+
+
+#SVNUSER=martin
+#SVNPROTOCOL=https
+#ALT_LANGS=""
+KOFFICE_L10N=branches/stable/l10n
+KOFFICE_L10N_ALT=trunk/l10n
+
+test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
+test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
+BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
+
+set -e
+
+# Get the version number from the versions script
+. versions
+set_urls koffice-l10n
+VERSION=`echo $DESTURL|sed 's#^tags/koffice/\(.*\)/koffice-l10n#\1#'`
+
+# Check the version number is sane
+if test 0 -ne `(echo "$VERSION" | grep -c "[^0-9\.]") || true` ; then
+  echo "Didn't understand koffice-l10n version number: $VERSION"
+  exit 1
+fi
+
+echo "Preparing checkout for koffice-l10n-$VERSION"
+
+# Create the checkout dir if it doesn't exist
+if test ! -d clean ; then
+  mkdir clean
+fi
+
+# Now checkout branches/work as branches-work, and in
+# a koffice subdirectory, create a temporary directory
+# koffice-l10n-$VERSION within it.
+TMPDIR=koffice-l10n-$VERSION
+cd clean
+echo "Creating a work directory..."
+svn co -N $BASE/branches/work branches-work
+cd branches-work
+REV=`svnversion`
+svn up -r $REV koffice
+if test ! -d koffice ; then
+  svn mkdir koffice
+fi
+cd koffice
+svn mkdir $TMPDIR
+cd $TMPDIR
+
+# Copy the top level l10n files ...
+L10N=$BASE/$KOFFICE_L10N
+L10N_ALT=$BASE/$KOFFICE_L10N_ALT
+
+echo "Copying top level l10n files from $KOFFICE_L10N."
+for d in COPYING INSTALL README subdirs teamnames ; do
+   svn cp -r $REV $L10N/$d .
+done
+
+#svn ls $L10N | grep -v "/$" | xargs -I{} sh -c \
+#  "echo Copying {}... ; \
+#   svn cp $L10N/{} ."
+
+svn cp -r $REV $L10N/scripts .
+
+# Now copy the language packs
+for lang in `cat subdirs` ; do
+ 
+  # Should we grab the language pack from the alternative location?
+  use_alt_loc=`(echo "$ALT_LANGS" | grep -wc "$lang") || true`
+  if test $use_alt_loc -eq 0 ; then
+    URL=$L10N
+  else
+    URL=$L10N_ALT
+  fi
+
+  echo Copying language files for $lang from $URL
+  svn mkdir $lang
+  for sub in data docs messages ; do
+    # According to the removestuff script, anything except Makefile.am
+    # and the koffice dir are deleted anyway, so lets just get them.
+    svn mkdir $lang/$sub
+    svn cp -r $REV $URL/$lang/$sub/koffice $lang/$sub || true
+    svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
+  done
+done
+

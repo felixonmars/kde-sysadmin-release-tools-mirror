@@ -77,6 +77,10 @@ for i in `cat modules`; do
       svn mkdir $tagdir/$tt
     fi
   fi
+
+  # Do a non-recursive checkout of the module.
+  # The svn copy command below copies just the top level files
+  # in the module on disk, but the repository gets a deep copy.
   svn up -N $tagdir/$HEADURL
   if test $isl10n -eq 1; then
     svn up -N $tagdir/$HEADURL/scripts
