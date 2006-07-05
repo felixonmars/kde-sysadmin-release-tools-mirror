@@ -11,8 +11,8 @@ case $1 in
     subname=kde-i18n
     ;;
   koffice-l10n)
-    HEADURL=branches/work/koffice/koffice-l10n-1.5.1
-    DESTURL=tags/koffice/1.5.1/koffice-l10n
+    HEADURL=branches/stable/l10n
+    DESTURL=tags/koffice/1.5.2/koffice-l10n
     subname=koffice-l10n
     ;;
   koffice)

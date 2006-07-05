@@ -100,6 +100,14 @@ cd_package()
                  $rm_command $dir
 	    fi
         fi
+
+        # For KOffice, some languages directories may be entirely empty
+        # by this point.
+        if test -d $dir ; then
+          files=`ls -1 $dir | wc -l`
+          test $files -eq 0 && $rm_command $dir
+        fi
+
     done
     ) || exit 1
   fi

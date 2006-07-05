@@ -18,10 +18,10 @@ case $package in
     version=3.2.2
     ;;
   koffice)
-    version=1.5.1
+    version=1.5.2
     ;;
   koffice-l10n)
-    version=1.5.1
+    version=1.5.2
     ;;
   *)
     version=3.4.2
