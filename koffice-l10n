@@ -9,30 +9,31 @@
 # Usage (tagging):
 # Firstly:
 #  echo koffice-l10n > modules
-#  In versions, update DESTURL; and
-#    set HEADURL to branches/work/koffice/koffice-l10n-<version>
-#  Update version numbers in common
-#  Run this (setting ALT_LANGS if necessary)
-#  cd clean/branches-work/koffice/koffice-l10n* && sh $OLDPWD/select-l10n
-
-# Then (if tagging):
-#  Move language_list.new to kde-common/release/language_list
+#  Update DESTURL in the `versions' file
+#  Update version numbers in `common' file
+#  Run this (setting ALT_LANGS first if necessary): ./koffice-l10n
+#  cd clean/tags-koffice/*/koffice-l10n && sh $OLDPWD/select-l10n
+#  mv language_list.new subdirs
 #  (Apply any changes requested by translators)
-#  Check that subdirs is in the work directory, and to be committed
-#  (if not copy and svn add language_list - is there a bug here?).
-#  Commit clean/branches-work
-#  cp -r clean/branches-work/koffice/koffice-l10n* clean/koffice-l10n
-#  tag_all
-#  pack koffice-l10n
 
-# Or (if testing):
-#  Rename language_list.new to subdirs
-#  (Apply any changes requested by translators)
-#  sed -i 's/svn rm/svn rm --force/' removestuff
-#  cp -r clean/branches-work/koffice/koffice-l10n* clean/koffice-l10n
+# Then (two commit version):
+#  Commit in clean/tags-koffice
+#  mv clean/tags-koffice/*/koffice-l10n clean
 #  cd clean && DO_SVN=1 ../removestuff koffice-l10n
-#  pack koffice-l10n
+#  Commit in clean/koffice-l10n
 
+# Or (hairy one commit version):
+#  sed -i 's/svn rm/svn rm --force/' removestuff
+#  mv clean/tags-koffice/*/koffice-l10n* clean/koffice-l10n
+#  cd clean && DO_SVN=1 ../removestuff koffice-l10n
+#  mv clean/koffice-l10n clean/tags-koffice/*/koffice-l10n*
+#  Commit in clean/tags-koffice
+#  mv clean/tags-koffice/*/koffice-l10n* clean/koffice-l10n
+
+# Finally:
+# From release/, ./pack koffice-l10n
+# (Pack requires kdelibs, bzip2, automake and - to avoid stupid
+#  warnings - libtool :o) )
 
 #SVNUSER=martin
 #SVNPROTOCOL=https
@@ -43,6 +44,7 @@ KOFFICE_L10N_ALT=trunk/l10n
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
 test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
 BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
+#BASE=svn://anonsvn.kde.org/home/kde
 
 set -e
 
@@ -64,22 +66,21 @@ if test ! -d clean ; then
   mkdir clean
 fi
 
-# Now checkout branches/work as branches-work, and in
-# a koffice subdirectory, create a temporary directory
-# koffice-l10n-$VERSION within it.
-TMPDIR=koffice-l10n-$VERSION
+STARTDATE=`date -R`
+(
+echo "Started tagging at $STARTDATE"
+
 cd clean
 echo "Creating a work directory..."
-svn co -N $BASE/branches/work branches-work
-cd branches-work
+svn co -N $BASE/tags/koffice tags-koffice
+cd tags-koffice
 REV=`svnversion`
-svn up -r $REV koffice
-if test ! -d koffice ; then
-  svn mkdir koffice
+svn up -N $VERSION
+if test ! -d $VERSION ; then
+  svn mkdir $VERSION
 fi
-cd koffice
-svn mkdir $TMPDIR
-cd $TMPDIR
+svn mkdir $VERSION/koffice-l10n
+cd $VERSION/koffice-l10n
 
 # Copy the top level l10n files ...
 L10N=$BASE/$KOFFICE_L10N
@@ -90,13 +91,18 @@ for d in COPYING INSTALL README subdirs teamnames ; do
    svn cp -r $REV $L10N/$d .
 done
 
-#svn ls $L10N | grep -v "/$" | xargs -I{} sh -c \
-#  "echo Copying {}... ; \
-#   svn cp $L10N/{} ."
-
+echo "Copying the l10n scripts"
 svn cp -r $REV $L10N/scripts .
 
-# Now copy the language packs
+echo "Replacing l10n external admin dir with a copy"
+svn propget svn:externals scripts | while read subdir url; do
+  test -n "$url" || continue
+  rm -rf scripts/$subdir
+  svn copy ${url/https:\/\//$SVNPROTOCOL://$SVNUSER@} scripts/$subdir
+done
+svn propdel svn:externals scripts
+
+echo "Copying the language packs"
 for lang in `cat subdirs` ; do
  
   # Should we grab the language pack from the alternative location?
@@ -107,14 +113,20 @@ for lang in `cat subdirs` ; do
     URL=$L10N_ALT
   fi
 
-  echo Copying language files for $lang from $URL
+  echo "Copying language files for $lang from $URL"
   svn mkdir $lang
   for sub in data docs messages ; do
     # According to the removestuff script, anything except Makefile.am
     # and the koffice dir are deleted anyway, so lets just get them.
     svn mkdir $lang/$sub
     svn cp -r $REV $URL/$lang/$sub/koffice $lang/$sub || true
-    svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
+    if [ "$sub" = data ] ; then
+      svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
+    fi
   done
 done
 
+FINISHDATE=`date -R`
+echo "Finished tagging at $FINISHDATE"
+
+) | tee koffice-l10n-`date --date "$STARTDATE" +%Y%m%d%-k%M%S`.log

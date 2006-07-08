@@ -1,0 +1,102 @@
+KOffice tagging HOWTO.
+----------------------
+
+* OVERVIEW
+
+Recently, we've had two people preparing KOffice releases: one tagging
+trunk or the branch, the other tagging the l10n files.  The former is
+done using the tag_all script, see 'TAGGING TRUNK/BRANCHES' below.
+The latter is done using the koffice-l10n script, which can be used to
+tag koffice-l10n without downloading the entire l10n tree.  This is
+described in TAGGING L10N below.
+
+Things to look out for:
+
+The tag_all script will create the tags/koffice/x.y.z directory, if it
+doesn't exist.  So will koffice-l10n.  Co-ordinate with anyone else
+tagging to avoid two people doing the `svn mkdir', otherwise you'll
+get conflicts.  Particularly, if someone else is doing the l10n tag,
+you should check that they are not already preparing their tag because
+l10n tagging takes longer.
+
+
+
+* TAGGING TRUNK/BRANCHES
+
+1. Get the latest sources with "svn up" and check if builds with
+   unsermake and automake.  Also check if it compiles with
+   --enable-final and with builddir!=srcdir.
+
+2. Checkout trunk/KDE/kde-common/release. The files in that directory
+   will support you in creating the tarball.
+
+3. Create directories as per checklist, under the directory that
+   contains the scripts from kde-common/release;
+     cd release
+     mkdir clean sources-old sources dirty test build done
+
+4. Change the version in the "common" file.
+
+5. Change the version of koffice in the "version" script that is
+   called from tag_all;
+     HEADURL=branches/koffice/1.5
+     DESTURL=tags/koffice/1.5.2/$1
+
+5. Make sure the "modules" file only contains koffice.
+     echo "koffice" > modules
+
+6. Use the "checkout" script to create a KOffice checkout of the
+   named brached in the "clean/koffice" directory.
+   You may need to define (where mysvnusername needs to be replaced
+   with your kde-svn username);
+     export SVNUSER="mysvnusername"
+     export SVNPROTOCOL="https"
+
+7. Update to new version-number, e.g. at
+     configure.in.in
+     koffice/koffice.lsm
+     koffice/configure.in.in
+     lib/kofficecore/kofficeversion.h
+     kexi/kexi_version.h
+     kplato/kptaboutdata.h
+
+8. Run the "fixuifiles" script (from kdesdk).
+     cd clean/koffice
+     find . -type f -name "*.ui" -exec fixuifiles {} ';'
+
+9. Commit all changes.
+
+10. Run the "tag_all" script.
+
+11. Now it's simply a matter of uploading and signing, as per
+    RELEASE_CHECKLIST.
+
+12. Also don't forget to add a new section at bugs.kde.org for the new
+    version.
+
+
+* TAGGING L10N
+
+The instructions for this are at the top of the koffice-l10n script.
+The script avoids downloading the entire l10n tree, but does end up
+making hundreds of connections to the svn server.
+
+It seems it _might_ be a good idea make the script checkout from
+anonsvn first.  For this, simply change the line that begins "BASE="
+in the script, then use:
+  svn switch --relocate \
+    svn://anonsvn.kde.org/home/kde/tags/koffice \
+    $SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde/tags/koffice
+
+... after running the script.  However, as the script stands, it just
+checkout from svn.kde.org server.  Note that `svn switch --relocate'
+is _very_ slow for what it appears to be doing.  If you're not
+convinced it's doing anything, the value from the following should be
+decreasing:
+
+find clean/tags-koffice -type d -a ! -regex .*svn.*| \
+  (xargs -I{} svn info {})|grep ^URL.*anon|wc
+
+If you have problems when running ./pack, you should ensure that you
+have the latest customizations directory from kdelibs/kdoctools in the
+current KDE branch.
