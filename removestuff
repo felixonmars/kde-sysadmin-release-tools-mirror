@@ -22,6 +22,9 @@ cd_package()
 
   if [ $package = "koffice-l10n" ]; then
   (
+     # Most of this is redundant if you use the koffice-l10n script.
+     # However, the removing kdgantt.po part is necessary, and the rest is
+     # harmless.
      cd_package
      echo "Removing non-koffice stuff"
      $rm_command templates

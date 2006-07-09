@@ -89,10 +89,13 @@ in the script, then use:
     $SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde/tags/koffice
 
 ... after running the script.  However, as the script stands, it just
-checkout from svn.kde.org server.  Note that `svn switch --relocate'
-is _very_ slow for what it appears to be doing.  If you're not
-convinced it's doing anything, the value from the following should be
-decreasing:
+checkout from svn.kde.org server.  The problem with this method is
+that copying the admin directory in scripts doesn't get added to the
+tag.  Fix the script, or copy it manually if you use this technique.
+
+Note that `svn switch --relocate' is _very_ slow for what it appears
+to be doing.  If you're not convinced it's doing anything, the value
+from the following should be decreasing:
 
 find clean/tags-koffice -type d -a ! -regex .*svn.*| \
   (xargs -I{} svn info {})|grep ^URL.*anon|wc
