@@ -39,7 +39,7 @@ l10n tagging takes longer.
 
 5. Change the version of koffice in the "version" script that is
    called from tag_all;
-     HEADURL=branches/koffice/1.5
+     HEADURL=branches/koffice/1.6/koffice
      DESTURL=tags/koffice/1.5.2/$1
 
 5. Make sure the "modules" file only contains koffice.
