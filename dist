@@ -2,17 +2,10 @@
   source `dirname $0`/common $1 $2
   cd $package
 
-  if [ $package = "qt-copy" ] || [ $package = "kdoc" ]; then
-    make -f Makefile.cvs || exit 1
-  elif test $isl10n -eq 1; then
+  if test $isl10n -eq 1; then
     cat subdirs | while read lang; do
       scripts/autogen.sh $lang || exit 1
     done
-  else
-    make -f admin/Makefile.common dist || exit 1
   fi
-
-  # remove junk
-  find . -maxdepth 3 -type d -name autom4te.cache | xargs rm -rf
 
 ) || exit 1

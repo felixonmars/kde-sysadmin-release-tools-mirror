@@ -1,1 +1,1 @@
---enable-final
+-DCMAKE_INSTALL_PREFIX=$PWD/install

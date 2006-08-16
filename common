@@ -11,9 +11,6 @@ case $package in
   qt-copy)
     version=3.1_20021104
     ;;
-  arts)
-    version=1.4.2
-    ;;
   kdevelop)
     version=3.2.2
     ;;
@@ -24,7 +21,7 @@ case $package in
     version=1.5.2
     ;;
   *)
-    version=3.4.2
+    version=3.80.1
     ;;
 esac
 
@@ -42,6 +39,5 @@ if test -z "$scriptpath"; then
 fi
 
 export CDPATH=""
-export UNSERMAKE=no  # very important for now :)
 export package version scriptpath isl10n
 
