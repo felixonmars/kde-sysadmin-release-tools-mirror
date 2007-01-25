@@ -68,10 +68,12 @@ l10n tagging takes longer.
 
 10. Run the "tag_all" script.
 
-11. Now it's simply a matter of uploading and signing, as per
+11. Run ./pack koffice
+
+12. Now it's simply a matter of uploading and signing, as per
     RELEASE_CHECKLIST.
 
-12. Also don't forget to add a new section at bugs.kde.org for the new
+13. Also don't forget to add a new section at bugs.kde.org for the new
     version.
 
 
