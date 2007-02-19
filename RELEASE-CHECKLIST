@@ -18,17 +18,13 @@ Checkout branch:
  clean up the cache/ directory from previous builds
 
 Update version number
- * */*.lsm
- * arts/configure.in.in
- * kdewebdev/quanta/src/quanta.h
  * kdevelop/configure.in.in
  * kdebase/konqueror/version.h
- * kdebase/startkde 
- * kde-common/admin/cvs.sh has VERSION="3.x"
- * kdelibs/kdecore/kdeversion.h
- * kdelibs/kdecore/ksycoca.h --> ksycoca version number
+ * kdebase/workspace/startkde
+ * kdelibs/kdecore/util/kdeversion.h
+ * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
  * kdelibs/README
- * kdenetwork/kopete/kopete/main.cpp
+ * kdenetwork/kopete/libkopete/kopeteversion.h
  * bugs/template/wizard/report.html.tmpl
  * bugs/bugz/wizard_config.pl
  * www/areas/enterprise/bizcase/form.inc (major KDE versions only)

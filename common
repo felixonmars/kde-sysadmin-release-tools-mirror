@@ -11,9 +11,6 @@ case $package in
   qt-copy)
     version=3.1_20021104
     ;;
-  kdevelop)
-    version=3.2.2
-    ;;
   koffice)
     version=1.6.0
     ;;
@@ -21,7 +18,7 @@ case $package in
     version=1.6.0
     ;;
   *)
-    version=3.80.1
+    version=3.80.3
     ;;
 esac
 
