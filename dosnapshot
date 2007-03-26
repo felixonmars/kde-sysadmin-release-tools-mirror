@@ -47,6 +47,7 @@ for i in $snapmodules; do
   # Find the SVN revision used by the existing tarball.
   oldrev=`readlink ftp/$i.tar.bz2  | egrep -o '[0-9]+\.tar\.bz2' | cut -d. -f1`
   test -n "$oldrev" || oldrev=0
+  test -f "ftp/$i.tar.bz2" || oldrev=0
 
   ( cd clean/$i && svn up >/dev/null )
 
@@ -59,8 +60,6 @@ for i in $snapmodules; do
       echo "-------------------------------------------------------------"
 
       ./pack $i $newrev
-
-      set -x
 
       rm -f ftp/$i*bz2
       mv -f sources/$i*bz2 ftp
@@ -77,8 +76,6 @@ for i in $snapmodules; do
             ln -s `basename $ki` ftp/kde-l10n/`basename $ki -$newrev.tar.bz2`.tar.bz2
           done
       fi
-
-      set +x
   else
     echo "$i does not need to be updated"
   fi
