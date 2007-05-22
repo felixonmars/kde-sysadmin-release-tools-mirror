@@ -70,8 +70,12 @@ When everything is ready:
 
 When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
-Add an entry to www/index.php, www/announcements/index.php, www/info/releases.php,
-www/download/index.php and www/whatiskde/project.php
+Add an entry to 
+  * www/index.php, 
+  * www/announcements/index.php, 
+  * www/info/releases.php,
+  * www/download/index.php and 
+  * www/whatiskde/project.php
 
 Post announcement in text to kde-announce@kde.org
 Post news bit to
