@@ -19,7 +19,6 @@ Checkout branch:
 
 Update version number
  * kdevelop/configure.in.in
- * kdebase/konqueror/version.h
  * kdebase/workspace/startkde
  * kdelibs/kdecore/util/kdeversion.h
  * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
