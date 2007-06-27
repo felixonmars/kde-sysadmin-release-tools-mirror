@@ -12,13 +12,13 @@ case $package in
     version=3.1_20021104
     ;;
   koffice)
-    version=1.6.0
+    version=1.9.91
     ;;
   koffice-l10n)
     version=1.6.0
     ;;
   *)
-    version=3.90.1
+    version=3.91.0
     ;;
 esac
 
