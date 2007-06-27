@@ -16,13 +16,13 @@ for f in $files; do
 
         if test ! -f index.cache.bz2; then
 
-            if test ! -x "`which meinproc`"; then
+            if test ! -x "`which meinproc4`"; then
                 echo ""
-                echo "!!! No meinproc found. No docu generated.. !!!";
+                echo "!!! No meinproc4 found. No docu generated.. !!!";
                 echo ""
             else
-                echo Running `which meinproc` --cache index.cache.bz2 index.docbook
-                meinproc --cache index.cache.bz2 index.docbook
+                echo Running `which meinproc4` --cache index.cache.bz2 index.docbook
+                meinproc4 --cache index.cache.bz2 index.docbook
                 if test "$?" != 0; then
                     echo $1/$f >> $adir/source/FAILED
                 fi
