@@ -12,13 +12,13 @@ case $package in
     version=3.1_20021104
     ;;
   koffice)
-    version=1.9.91
+    version=1.9.92
     ;;
   koffice-l10n)
     version=1.6.0
     ;;
   *)
-    version=3.91.0
+    version=3.92.0
     ;;
 esac
 
@@ -26,7 +26,7 @@ fi
 
 isl10n=0
 case $package in
-  *-l10n|*-i18n)
+  *-l10n|*-i18n|l10n|l10n-kde4)
     isl10n=1
     ;;
 esac
