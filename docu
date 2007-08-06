@@ -1,5 +1,8 @@
 CDPATH=
 
+# make sure we leave no corefiles behind
+ulimit -c 0
+
 adir=`dirname $0`
 files=`cd $1 && find . -type f -path "*doc*index.docbook"`
 for f in $files; do
@@ -30,6 +33,3 @@ for f in $files; do
         fi
   )
 done
-
-# make sure we leave no corefiles behind
-find $1 -type f -name "core" | xargs rm -f
