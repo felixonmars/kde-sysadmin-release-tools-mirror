@@ -1,7 +1,7 @@
-cd clean/kde-i18n
+cd clean/kde-l10n
 find . -name index.docbook | while read file; do
-	cdir=`dirname $file | sed -e "s,.*/kde-i18n,,"`
-	dir=../../cache/kde-i18n/$cdir
+	cdir=`dirname $file | sed -e "s,.*/kde-l10n,,"`
+	dir=../../cache/kde-l10n/$cdir
 	mkdir -p $dir
 	echo meinproc --check --cache $dir/index.cache.bz2 $file
 	meinproc --check --cache $dir/index.cache.bz2 $file 2>/dev/null || echo "ERROR $file"
