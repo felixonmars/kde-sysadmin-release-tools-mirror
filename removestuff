@@ -78,6 +78,8 @@ cd_package()
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
+#       $rm_command messages/kdenetwork/kopete*
+#       $rm_command docs/kdenetwork/kopete*
        test -d docs/common || {
             echo "$lang/docs/common not translated, removing" 
             $rm_command docs 
@@ -120,6 +122,32 @@ cd_package()
      cd_package
      $rm_command ascend
      echo "Removing non-released stuff"
+  )
+  fi
+
+  if [ $package = "kdenetwork" ]; then
+  (
+     cd_package
+#     $rm_command kopete
+#     $rm_command doc/kopete
+#     echo "Removing kopete from kdenetwork"
+  )
+  fi
+
+  if [ $package = "kdebase" ]; then
+  (
+     cd_package
+     $rm_command workspace
+     echo "Removing workspace from kdebase"
+  )
+  fi
+
+  if [ $package = "kdebase-workspace" ]; then
+  (
+     cd_package
+     $rm_command runtime
+     $rm_command apps
+     echo "Removing runtime,apps from kdebase-workspace"
   )
   fi
 
