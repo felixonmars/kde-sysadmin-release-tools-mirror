@@ -27,7 +27,7 @@ l10n tagging takes longer.
    unsermake and automake.  Also check if it compiles with
    --enable-final and with builddir!=srcdir.
 
-2. Checkout trunk/KDE/kde-common/release. The files in that directory
+2. Checkout trunk/kde-common/release. The files in that directory
    will support you in creating the tarball.
 
 3. Create directories as per checklist, under the directory that
