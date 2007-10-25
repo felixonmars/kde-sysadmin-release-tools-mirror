@@ -138,7 +138,8 @@ cd_package()
   (
      cd_package
      $rm_command workspace
-     echo "Removing workspace from kdebase"
+     $rm_command runtime
+     echo "Removing workspace/runtime from kdebase"
   )
   fi
 

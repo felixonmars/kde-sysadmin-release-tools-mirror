@@ -1,8 +1,9 @@
 (
   source `dirname $0`/common $1 $2
 
+  ../removestuff $package
+
   if test $isl10n -eq 1; then
-    ../removestuff $package
     cd $package
     cat subdirs | while read lang; do
       scripts/autogen.sh $lang || exit 1
