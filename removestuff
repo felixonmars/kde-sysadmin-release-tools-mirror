@@ -134,22 +134,24 @@ cd_package()
   )
   fi
 
-  if [ $package = "kdebase" ]; then
-  (
-     cd_package
-     $rm_command workspace
-     $rm_command runtime
-     echo "Removing workspace/runtime from kdebase"
-  )
-  fi
+  if test -z "$DO_SVN"; then
+    if [ $package = "kdebase" ]; then
+    (
+       cd_package
+       $rm_command workspace
+       $rm_command runtime
+       echo "Removing workspace/runtime from kdebase"
+    )
+    fi
 
-  if [ $package = "kdebase-workspace" ]; then
-  (
-     cd_package
-     $rm_command runtime
-     $rm_command apps
-     echo "Removing runtime,apps from kdebase-workspace"
-  )
+    if [ $package = "kdebase-workspace" ]; then
+    (
+       cd_package
+       $rm_command runtime
+       $rm_command apps
+       echo "Removing runtime,apps from kdebase-workspace"
+    )
+    fi
   fi
 
   # generic stuff
