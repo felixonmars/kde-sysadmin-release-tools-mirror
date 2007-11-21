@@ -80,10 +80,10 @@ cd_package()
        $rm_command */koffice 
 #       $rm_command messages/kdenetwork/kopete*
 #       $rm_command docs/kdenetwork/kopete*
-       test -d docs/common || {
-            echo "$lang/docs/common not translated, removing" 
-            $rm_command docs 
-       }
+#       test -d docs/common || {
+#            echo "$lang/docs/common not translated, removing" 
+#            $rm_command docs 
+#       }
        cd ..
      done
      echo "Removing template specific stuff"

@@ -6,9 +6,9 @@ case $1 in
     subname=$1
     ;;
   kde-l10n|kde-i18n)
-    HEADURL=branches/stable/l10n
-    DESTURL=tags/KDE/3.4.2/kde-i18n
-    subname=kde-i18n
+    HEADURL=trunk/l10n-kde4
+    DESTURL=tags/KDE/3.96/kde-l10n
+    subname=kde-l10n
     ;;
   koffice-l10n)
     HEADURL=branches/stable/l10n
@@ -21,8 +21,8 @@ case $1 in
     subname=$1
     ;;
   *)
-    HEADURL=branches/KDE/3.4/$1
-    DESTURL=tags/KDE/3.4.2/$1
+    HEADURL=trunk/KDE/$1
+    DESTURL=tags/KDE/3.96/$1
     subname=$1
     ;;
 esac
