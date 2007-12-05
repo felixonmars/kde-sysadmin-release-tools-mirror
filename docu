@@ -3,33 +3,9 @@ CDPATH=
 # make sure we leave no corefiles behind
 ulimit -c 0
 
-adir=`dirname $0`
-files=`cd $1 && find . -type f -path "*doc*index.docbook"`
-for f in $files; do
-  (
-        dir=`dirname $f`
+adir=$(cd $(dirname $0); echo $PWD)
+pushd $1
 
-        # is it cached ?
-        if test -f ../cache/$1/$dir/index.cache.bz2; then
-           cp ../cache/$1/$dir/index.cache.bz2 $1/$dir
-        fi
-
-        cd $1/$dir
-        echo `pwd`
-
-        if test ! -f index.cache.bz2; then
-
-            if test ! -x "`which meinproc4`"; then
-                echo ""
-                echo "!!! No meinproc4 found. No docu generated.. !!!";
-                echo ""
-            else
-                echo Running `which meinproc4` --cache index.cache.bz2 index.docbook
-                meinproc4 --cache index.cache.bz2 index.docbook
-                if test "$?" != 0; then
-                    echo $1/$f >> $adir/source/FAILED
-                fi
-            fi
-        fi
-  )
-done
+NUM_PROC=$(($(grep -c processor /proc/cpuinfo)+1))
+make -k -f $adir/Makefile.docu -j$NUM_PROC SOURCE_DIR=$adir/sources
+popd
