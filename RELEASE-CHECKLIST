@@ -69,7 +69,8 @@ When everything is ready:
 When most of the mirrors behind http://download.kde.org have updated:
 Commit announcement (after adding PHP header/footer)
 Add an entry to 
-  * www/index.php, 
+  * www/index.php,
+  * www/menu.inc,
   * www/announcements/index.php, 
   * www/info/releases.php,
   * www/download/index.php and 
@@ -77,6 +78,8 @@ Add an entry to
 
 Post announcement in text to kde-announce@kde.org
 Post news bit to
+  * kde-press-announce (may also do so before the release under EMBARGO, then lift it with
+    another email, if in doubt, ask sebas or kde-ev-marketing)
   * dot.kde.org (editors@kdenews.org)
   * freshmeat.net
   * newsgroups, optionally
