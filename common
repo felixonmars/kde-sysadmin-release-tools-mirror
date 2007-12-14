@@ -9,13 +9,13 @@ if test -z "$version"; then
 
 case $package in
   koffice)
-    version=1.9.95
+    version=1.9.95.1
     ;;
   koffice-l10n)
     version=1.6.0
     ;;
   *)
-    version=3.96.1
+    version=3.97.1
     ;;
 esac
 

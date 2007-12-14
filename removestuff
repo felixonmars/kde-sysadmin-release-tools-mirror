@@ -154,6 +154,16 @@ cd_package()
     fi
   fi
 
+  if [ $package = "kdewebdev" ]; then
+  (
+     cd_package
+     $rm_command quanta
+     $rm_command kommander
+     $rm_command kxsldbg
+     echo "Removing quanta,kommander,kxsldbg from kdewebdev"
+  )
+  fi
+
   # generic stuff
   (
      cd_package
