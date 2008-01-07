@@ -30,11 +30,11 @@ test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -
 test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package; }
 
 if test -z "$HARDLINKS"; then
-  echo "cp -pr clean/$package dirty"
-  cp -pr clean/$package dirty || exit 1
+  echo "cp -pr clean/$package/ dirty"
+  cp -pr clean/$package/ dirty || exit 1
 else
-  echo "cp -prl clean/$package dirty"
-  cp -prl clean/$package dirty || exit 1
+  echo "cp -prl clean/$package/ dirty"
+  cp -prl clean/$package/ dirty || exit 1
 fi
 
 echo "cd dirty"
