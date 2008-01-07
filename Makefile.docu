@@ -9,6 +9,6 @@ DOCBOOK_DST=$(patsubst %.docbook, %.cache.bz2, $(DOCBOOK_SRC))
 .PHONY: all
 
 %.cache.bz2: %.docbook
-	@$(MEINPROC) --cache $@ $< || echo $< >> $(SOURCE_DIR)/FAILED
+	@$(MEINPROC) --cache $@ $< || echo $(shell dirname $<) >> $(SOURCE_DIR)/FAILED
 
 all: $(DOCBOOK_DST)
