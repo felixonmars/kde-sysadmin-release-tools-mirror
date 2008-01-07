@@ -15,7 +15,7 @@ case $package in
     version=1.6.0
     ;;
   *)
-    version=3.97.1
+    version=4.0.0
     ;;
 esac
 
