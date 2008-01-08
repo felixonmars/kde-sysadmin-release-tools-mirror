@@ -78,6 +78,15 @@ cd_package()
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
+       $rm_command messages/kdepim
+       $rm_command docs/kdepim
+       $rm_command messages/kdevelop
+       $rm_command docs/kdevelop
+       $rm_command messages/kdevplatform
+       $rm_command docs/kdevplatform
+       $rm_command docs/kdewebdev/{kommander,kxsldbg,quanta}*
+       $rm_command messages/kdewebdev/{kommander,kxsldbg,quanta}*
+
 #       $rm_command messages/kdenetwork/kopete*
 #       $rm_command docs/kdenetwork/kopete*
 #       test -d docs/common || {
