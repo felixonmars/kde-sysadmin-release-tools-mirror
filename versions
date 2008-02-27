@@ -2,7 +2,7 @@ function set_urls {
 case $1 in
   kde-l10n|kde-i18n)
     HEADURL=branches/stable/l10n-kde4
-    DESTURL=tags/KDE/4.0.1/kde-l10n
+    DESTURL=tags/KDE/4.0.2/kde-l10n
     subname=kde-l10n
     ;;
   koffice-l10n)
@@ -17,7 +17,7 @@ case $1 in
     ;;
   *)
     HEADURL=branches/KDE/4.0/$1
-    DESTURL=tags/KDE/4.0.1/$1
+    DESTURL=tags/KDE/4.0.2/$1
     subname=$1
     ;;
 esac
