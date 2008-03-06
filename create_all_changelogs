@@ -1,8 +1,10 @@
 . versions
 
+mydir=$(dirname $0)
+
 mkdir changelogs
 for mod in `cat modules`; do
    set_urls $mod
-   svn log -v --stop-on-copy --xml -r623900:664573 $SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde/$HEADURL | python svn2log.py  &&
+   svn log -v --stop-on-copy --xml -r768944:780206 $BASE/$HEADURL | python $mydir/svn2log.py  &&
 	mv ChangeLog changelogs/$mod.txt
 done
