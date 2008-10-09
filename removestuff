@@ -130,7 +130,9 @@ cd_package()
   if [ $package = "koffice" ]; then
   (
      cd_package
-     $rm_command ascend
+     $rm_command kexi
+     $rm_command kivio
+     $rm_command kformula
      echo "Removing non-released stuff"
   )
   fi
