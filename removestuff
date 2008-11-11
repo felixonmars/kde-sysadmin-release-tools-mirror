@@ -54,7 +54,8 @@ cd_package()
      echo "Removing template specific stuff"
      $rm_command templates
      $rm_command debian
-  ) || exit 1
+  )
+  # || exit 1
   fi
 
   if [ $package = "kde-l10n" -o $package = "kde-i18n" ]; then
