@@ -17,6 +17,11 @@ class ReleaseKoffice
     checkFileContains('versions', "DESTURL=#{svnDestinationPath()}")
     if(@release_l10n)
       checkFileContains('versions', "DESTURL=#{svnL10nDestinationPath()}")
+      if(@release_source == "branch")
+        checkFileContains('versions', "HEADURL=branch/stable/l10n-kde4")
+      else
+        checkFileContains('versions', "HEADURL=trunk/l10n-kde4")
+      end
     end
     puts "================== Checking 'common' file =================="
     checkFileContains('common', "koffice)\n    version=#{@koffice_version}")
@@ -42,6 +47,8 @@ class ReleaseKoffice
     
     puts "========================= tag_all =========================="
     executeCommand("./tag_all")
+    puts "======================== removestuff ======================="
+    executeCommand("cd clean; ../removestuff koffice; svn commit koffice; cd ..");
     if(@release_katelier)
       puts "========================= KAtelier ========================="
       executeCommand(<<KATELIER_TAG
