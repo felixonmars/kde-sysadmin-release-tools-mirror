@@ -74,7 +74,7 @@ cd clean
 echo "Creating a work directory..."
 svn co -N $BASE/tags/koffice tags-koffice
 cd tags-koffice
-REV=`svnversion`
+REV=`svnversion | sed 's#[MPS]##'`
 svn up -N $VERSION
 if test ! -d $VERSION ; then
   svn mkdir $VERSION
@@ -87,7 +87,7 @@ L10N=$BASE/$KOFFICE_L10N
 L10N_ALT=$BASE/$KOFFICE_L10N_ALT
 
 echo "Copying top level l10n files from $KOFFICE_L10N."
-for d in COPYING INSTALL README subdirs teamnames ; do
+for d in COPYING README subdirs teamnames ; do
    svn cp -r $REV $L10N/$d .
 done
 
