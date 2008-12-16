@@ -12,6 +12,11 @@ Choose version number:
    5.0, so always use "code versions" for the packages. Also
    stuff like "-" etc is not working, so omit it
 
+Make sure that dependencies are met:
+ * new phonon release needed?
+ * new soprano release needed?
+ * new akonadi release needed (check kdepimlibs/akonadi/session_p.h)
+
 Checkout branch:
  fix the paths in versions script
  use the checkout script
