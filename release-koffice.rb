@@ -77,6 +77,7 @@ KATELIER_TAG
     if(@release_l10n)
       checkFileContains('modules', "koffice-l10n")
       executeCommand("./koffice-l10n")
+      executeCommand("cd clean/tags-koffice/1.9.98.4/koffice-l10n/en_GB/messages/koffice; svn rm kexi.po kformula.po kivio.po ; cd ../../../../../../../")
       executeCommand("cd clean/tags-koffice/*/koffice-l10n && sh $OLDPWD/select-l10n")
       executeCommand("mv language_list.new subdirs")
       executeCommand("svn commit clean/tags-koffice")
@@ -104,7 +105,7 @@ KATELIER_TAG
     # TODO do l10n
     puts "========================= signing =========================="
     if(@release_l10n)
-      kde_i18n_files = "kde-i18n/*.tar.bz2"
+      kde_i18n_files = "koffice-l10n/*.tar.bz2"
     else
       kde_i18n_files = ""
     end
@@ -271,4 +272,36 @@ KATELIER_TAG
   end
 end
 
-ReleaseKoffice.new
+class TestL10n
+  def initialize
+    system("cd test")
+    dirname = "sources/koffice-l10n"
+    d = Dir.new(dirname)
+    d.entries.each() { |x|
+      unless( x== "." or x == "..")
+        name = x.clone
+        name[".tar.bz2"] = ""
+        system("cd test;tar -xjf ../#{dirname}/#{x}")
+        if(system("cd test/#{name};cmake . &>/dev/null; make &>/dev/null"))
+          puts "#{name} has succeed"
+        else
+          puts "#{name} has failed"
+        end
+        system("rm -rf test/#{name}")
+      end
+    }
+  end
+end
+
+if( ARGV.size == 0 )
+  ReleaseKoffice.new
+else
+  if( ARGV[0] == "--release" )
+    ReleaseKoffice.new
+  elsif( ARGV[0] == "--test-l10n")
+    TestL10n.new
+  else
+    puts "Unknown argument: #{ARGV[0]}"
+  end
+end
+
