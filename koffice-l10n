@@ -124,6 +124,15 @@ for lang in `cat subdirs` ; do
     if [ "$sub" = data ] ; then
       svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
     fi
+    if test -f $lang/messages/koffice/kexi.po; then
+      svn rm $lang/messages/koffice/kexi.po
+    fi
+    if test -f $lang/messages/koffice/kformula.po; then
+      svn rm $lang/messages/koffice/kformula.po
+    fi
+    if test -f $lang/messages/koffice/kivio.po; then
+      svn rm $lang/messages/koffice/kivio.po
+    fi
   done
 done
 
