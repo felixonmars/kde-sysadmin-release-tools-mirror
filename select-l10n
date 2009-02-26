@@ -15,7 +15,7 @@ module=koffice
 
 cp -f /dev/null language_list.new
 total=0
-for i in en_GB/messages/$module/*.po; do
+for i in nl/messages/$module/*.po; do
   n=`msgfmt --statistics -o /dev/null $i 2>&1 | sed -e 's/,.*$//' | cut -d' ' -f1`
   total=$((total + $n))
 done
