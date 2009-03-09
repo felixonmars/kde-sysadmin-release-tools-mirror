@@ -29,7 +29,7 @@ Update version number
  * kdelibs/README
  * kdenetwork/kopete/libkopete/kopeteversion.h
  * branches/bugs/3.2/template/wizard/report.html.tmpl
- * branches/bugs/3.2/bugz/wizard_config.pl (then use `svnmerge merge` in tags/bugs/stable)
+ * branches/bugs/3.2/bugz/wizard.cgi (then use `svnmerge merge` in tags/bugs/stable)
  * www/areas/enterprise/bizcase/form.inc (major KDE versions only)
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * common and versions scripts
