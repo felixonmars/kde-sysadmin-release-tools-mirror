@@ -25,6 +25,8 @@ Checkout branch:
 Update version number
  * kdevelop/configure.in.in
  * kdelibs/CMakeLists.txt
+ * kdepimlibs/CMakeLists.txt
+ * kdebase/workspace/KDE4Workspace.cmake.in
  * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
  * kdelibs/README
  * kdenetwork/kopete/libkopete/kopeteversion.h
