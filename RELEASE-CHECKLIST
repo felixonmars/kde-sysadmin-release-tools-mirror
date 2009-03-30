@@ -26,6 +26,9 @@ Update version number
  * kdevelop/configure.in.in
  * kdelibs/CMakeLists.txt
  * kdepimlibs/CMakeLists.txt
+ * kdebase/apps/CMakeLists.txt
+ * kdebase/runtime/CMakeLists.txt
+ * kdebase/workspace/CMakeLists.txt
  * kdebase/workspace/KDE4Workspace.cmake.in
  * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
  * kdelibs/README
