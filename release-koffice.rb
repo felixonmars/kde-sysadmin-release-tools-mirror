@@ -1,6 +1,62 @@
 #!/usr/bin/ruby
 
-class ReleaseKoffice
+class ReleaseBase
+  def executeCommand( command )
+    puts "Execute the following command : '#{command}' ? (y/n)"
+    if( askOk)
+      system("#{command}")
+      puts "Done executing '#{command}'."
+      return true
+    else
+      return false
+    end
+  end
+  def writeInFile(filename, string)
+    puts "Write '#{string}' in '#{filename}' ? (y/n)"
+    return unless askOk
+    file = File.new(filename, "w")
+    file.write(string)
+    file.close
+  end
+  def checkFileContains(filename, string)
+    file = File.new(filename, "r")
+    filecontent = file.readlines
+    if( not filecontent.join().include?(string) )
+      puts "File '#{filename}' doesn't contains '#{string}'. (press enter once fixed)"
+      gets
+      checkFileContains(filename, string)
+    end
+  end
+  def checkFileContainsOnly(filename, string)
+    file = File.new(filename, "r")
+    filecontent = file.readlines
+    if( not filecontent.join() == string )
+      puts "File '#{filename}' isn't equal to '#{string}'. (press enter once fixed)"
+      gets
+      checkFileContains(filename, string)
+    end
+  end
+  
+  def checkDirectory( directory )
+    if( not File.directory?(directory) )
+      puts "Directory #{directory} not found."
+      executeCommand( "mkdir #{directory}")
+      checkDirectory( directory )
+    end
+  end
+  def askOk
+    a = gets.chomp
+    if( a == 'y' or a == 'yes')
+      return true
+    elsif( a == 'n' or a == 'no')
+      return false
+    end
+    puts "Please answer by 'yes' or 'no'."
+    return askOk
+  end
+end
+
+class ReleaseKoffice < ReleaseBase
   def initialize
     puts "Release KOffice script will help you to go step-by-step to release KOffice"
     askQuestions()
@@ -55,12 +111,11 @@ class ReleaseKoffice
           cd dirty;
           svn -N co #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/ tagging;
           svn cp #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/koffice tagging/katelier;
+          svn cp ../clean/koffice tagging/katelier;
           cd tagging/katelier;
           svn rm kexi kchart kformula kivio kplato kpresenter kspread kword kdgantt;
-          rm -rf kexi kchart kformula kivio kplato kpresenter kspread kword kdgantt;
           cd filters;
-          svn rm kchart kformula/ kivio/ kpresenter/ kspread/ kugar/ kword/ liboofilter/ xsltfilter/ libdialogfilter/;
-          rm -rf  kchart kformula/ kivio/ kpresenter/ kspread/ kugar/ kword/ liboofilter/ xsltfilter/ libdialogfilter/;
+          svn rm kchart kformula/ kivio/ kpresenter/ kspread/ kword/ liboofilter/ xsltfilter/ libdialogfilter/;
           cd ../..;
           svn commit;
           mv katelier ../../clean;
@@ -113,49 +168,6 @@ KATELIER_TAG
     executeCommand("cd sources;gpg --clearsign -a MD5SUMS; cd ..")
   end
 
-  def executeCommand( command )
-    puts "Execute the following command : '#{command}' ? (y/n)"
-    if( askOk)
-      system("#{command}")
-      puts "Done executing '#{command}'."
-      return true
-    else
-      return false
-    end
-  end
-  def writeInFile(filename, string)
-    puts "Write '#{string}' in '#{filename}' ? (y/n)"
-    return unless askOk
-    file = File.new(filename, "w")
-    file.write(string)
-    file.close
-  end
-  def checkFileContains(filename, string)
-    file = File.new(filename, "r")
-    filecontent = file.readlines
-    if( not filecontent.join().include?(string) )
-      puts "File '#{filename}' doesn't contains '#{string}'. (press enter once fixed)"
-      gets
-      checkFileContains(filename, string)
-    end
-  end
-  def checkFileContainsOnly(filename, string)
-    file = File.new(filename, "r")
-    filecontent = file.readlines
-    if( not filecontent.join() == string )
-      puts "File '#{filename}' isn't equal to '#{string}'. (press enter once fixed)"
-      gets
-      checkFileContains(filename, string)
-    end
-  end
-  
-  def checkDirectory( directory )
-    if( not File.directory?(directory) )
-      puts "Directory #{directory} not found."
-      executeCommand( "mkdir #{directory}")
-      checkDirectory( directory )
-    end
-  end
   def askQuestions()
     askVersion()
     askBranchOrTrunk()
@@ -228,16 +240,6 @@ KATELIER_TAG
     puts "Release KAtelier ? (y/n)"
     @release_katelier = askOk
   end
-  def askOk
-    a = gets.chomp
-    if( a == 'y' or a == 'yes')
-      return true
-    elsif( a == 'n' or a == 'no')
-      return false
-    end
-    puts "Please answer by 'yes' or 'no'."
-    return askOk
-  end
   def branchRelease?()
     return @release_source == "branch"
   end
@@ -293,15 +295,73 @@ class TestL10n
   end
 end
 
+class BranchL10n < ReleaseBase
+  def initialize
+    puts "Branch l10n this script will make you go step by step for copying translation into stable branch"
+    subdirs = [ "data", "docmessages", "docs", "internal", "messages" ]
+    subdirsSvnList = subdirs.join(" ")
+    subdirsKOfficeSvnList = subdirs.join("/koffice ") + "/koffice"
+    
+    blacklist = [ "README", "subdirs", "teamnames" ]
+    # Checkout branch
+    executeCommand("svn -N co #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/branches/stable/l10n-kde4 l10n-kde4-stable")
+    dirs = `svn ls #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/branches/stable/l10n-kde4`
+    dirs.each() { |x|
+      x = x[0, x.size-1]
+      unless(blacklist.include?(x))
+        system("cd l10n-kde4-stable; svn -N up #{x}")
+        system("cd l10n-kde4-stable/#{x}; svn -N up #{subdirsSvnList}; svn up #{subdirsKOfficeSvnList};")
+        subdirs.each() { |y|
+          if( File.exists?("l10n-kde4-stable/#{x}/#{y}/koffice") )
+            system("svn rm l10n-kde4-stable/#{x}/#{y}/koffice")
+          end
+        }
+      end
+    }
+    executeCommand("svn commit l10n-kde4-stable")
+    # Checkout trunk
+    executeCommand("svn -N co #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/trunk/l10n-kde4 l10n-kde4-trunk")
+    dirs = `svn ls #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/trunk/l10n-kde4`
+    dirs.each() { |x|
+      x = x[0, x.size-1]
+      unless(blacklist.include?(x))
+        system("cd l10n-kde4-trunk; svn -N up #{x}")
+        system("cd l10n-kde4-trunk/#{x}; svn -N up #{subdirsSvnList}; svn up #{subdirsKOfficeSvnList};")
+        subdirs.each() { |y|
+          if( File.exists?("l10n-kde4-trunk/#{x}/#{y}/koffice") )
+            unless(File.exists?("l10n-kde4-stable/#{x}/#{y}"))
+              system("svn mkdir 10n-kde4-stable/#{x}/#{y}")
+            end
+            system("svn cp l10n-kde4-trunk/#{x}/#{y}/koffice l10n-kde4-stable/#{x}/#{y}")
+          end
+        }
+      end
+    }
+    executeCommand("svn commit l10n-kde4-stable")
+    
+  end
+end
+
+def printHelp
+  print "--release      start a release of KOffice"
+  print "--test-l10n    test that l10n packages build"
+  print "--branch-l10n  branch l10n of KOffice"
+end
+
 if( ARGV.size == 0 )
-  ReleaseKoffice.new
+  printHelp
 else
-  if( ARGV[0] == "--release" )
+  what = ARGV[0]
+  ARGV.clear
+  if( what == "--release" )
     ReleaseKoffice.new
-  elsif( ARGV[0] == "--test-l10n")
+  elsif( what == "--test-l10n")
     TestL10n.new
+  elsif( what == "--branch-l10n")
+    BranchL10n.new
   else
     puts "Unknown argument: #{ARGV[0]}"
+    printHelp
   end
 end
 
