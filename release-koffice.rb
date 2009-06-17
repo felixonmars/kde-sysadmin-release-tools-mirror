@@ -74,7 +74,7 @@ class ReleaseKoffice < ReleaseBase
     if(@release_l10n)
       checkFileContains('versions', "DESTURL=#{svnL10nDestinationPath()}")
       if(@release_source == "branch")
-        checkFileContains('versions', "HEADURL=branch/stable/l10n-kde4")
+        checkFileContains('versions', "HEADURL=branches/stable/l10n-kde4")
       else
         checkFileContains('versions', "HEADURL=trunk/l10n-kde4")
       end
@@ -103,6 +103,8 @@ class ReleaseKoffice < ReleaseBase
     
     puts "========================= tag_all =========================="
     executeCommand("./tag_all")
+    # Often tag all don't correctly do the switch
+    executeCommand("cd clean/koffice; svn switch https://svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/koffice; cd ../..")
     puts "======================== removestuff ======================="
     executeCommand("cd clean; ../removestuff koffice; svn commit koffice; cd ..");
     if(@release_katelier)
@@ -110,7 +112,6 @@ class ReleaseKoffice < ReleaseBase
       executeCommand(<<KATELIER_TAG
           cd dirty;
           svn -N co #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/ tagging;
-          svn cp #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/koffice tagging/katelier;
           svn cp ../clean/koffice tagging/katelier;
           cd tagging/katelier;
           svn rm kexi kchart kformula kivio kplato kpresenter kspread kword kdgantt;
@@ -131,6 +132,15 @@ KATELIER_TAG
     end
     if(@release_l10n)
       checkFileContains('modules', "koffice-l10n")
+      case @release_source
+        when "trunk"
+          checkFileContains('koffice-l10n', "# KOFFICE_L10N=branches/stable/l10n-kde4")
+          checkFileContains('koffice-l10n', "KOFFICE_L10N=trunk/l10n-kde4")
+        when "branch"
+          checkFileContains('koffice-l10n', "KOFFICE_L10N=branches/stable/l10n-kde4")
+          checkFileContains('koffice-l10n', "# KOFFICE_L10N=trunk/l10n-kde4")
+      end
+      
       executeCommand("./koffice-l10n")
 #       executeCommand("cd clean/tags-koffice/1.9.98.4/koffice-l10n/en_GB/messages/koffice; svn rm kexi.po kformula.po kivio.po ; cd ../../../../../../../")
       executeCommand("cd clean/tags-koffice/*/koffice-l10n && sh $OLDPWD/select-l10n")
@@ -251,7 +261,7 @@ KATELIER_TAG
       when "trunk"
         return "trunk/koffice"
       when "branch"
-        return "branch/koffice/#{@koffice_version_major}.#{@koffice_version_minor}/koffice"
+        return "branches/koffice/#{@koffice_version_major}.#{@koffice_version_minor}/koffice"
     end
   end
   def svnDestinationPath()

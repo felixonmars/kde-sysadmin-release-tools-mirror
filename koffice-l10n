@@ -38,8 +38,8 @@
 #SVNUSER=martin
 #SVNPROTOCOL=https
 #ALT_LANGS=""
-# KOFFICE_L10N=branches/stable/l10n-kde4
-KOFFICE_L10N=trunk/l10n-kde4
+KOFFICE_L10N=branches/stable/l10n-kde4
+# KOFFICE_L10N=trunk/l10n-kde4
 KOFFICE_L10N_ALT=trunk/l10n-kde4
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
