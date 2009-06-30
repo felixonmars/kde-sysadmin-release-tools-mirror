@@ -53,9 +53,8 @@ cd_package()
      done
      echo "Removing template specific stuff"
      $rm_command templates
-     $rm_command debian
-  )
-  # || exit 1
+     $rm_command debian || true
+  ) || exit 1
   fi
 
   if [ $package = "kde-l10n" -o $package = "kde-i18n" ]; then
@@ -69,25 +68,26 @@ cd_package()
        $rm_command webmessages 
        $rm_command messages/*/desktop_* 
        $rm_command messages/others 
+       $rm_command messages/index.lokalize
        $rm_command docs/others 
        $rm_command messages/kdenonbeta 
        $rm_command docs/kdenonbeta 
        $rm_command messages/extragear-*
+       $rm_command messages/playground-*
        $rm_command messages/no-auto-merge
        $rm_command docs/extragear-* 
+       $rm_command docs/playground-*
        $rm_command messages/kdekiosk
        $rm_command docs/kdekiosk 
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
-       $rm_command messages/kdepim
-       $rm_command docs/kdepim
        $rm_command messages/kdevelop
        $rm_command docs/kdevelop
        $rm_command messages/kdevplatform
        $rm_command docs/kdevplatform
-       $rm_command docs/kdewebdev/{kommander,kxsldbg,quanta}*
-       $rm_command messages/kdewebdev/{kommander,kxsldbg,quanta}*
+       $rm_command docs/kdewebdev/quanta*
+       $rm_command messages/kdewebdev/quanta*
 
 #       $rm_command messages/kdenetwork/kopete*
 #       $rm_command docs/kdenetwork/kopete*
@@ -165,15 +165,29 @@ cd_package()
        echo "Removing runtime,apps from kdebase-workspace"
     )
     fi
+
+    if [ $package = "kdelibs" ]; then
+    (
+       cd_package
+       $rm_command experimental
+       echo "Removing experimental from kdelibs"
+    )
+    fi
+
+    if [ $package = "kdepim" ]; then
+    (
+       cd_package
+       $rm_command akonadi
+       echo "Removing akonadi from kdepim"
+    )
+    fi
   fi
 
   if [ $package = "kdewebdev" ]; then
   (
      cd_package
      $rm_command quanta
-     $rm_command kommander
-     $rm_command kxsldbg
-     echo "Removing quanta,kommander,kxsldbg from kdewebdev"
+     echo "Removing quanta from kdewebdev"
   )
   fi
 
