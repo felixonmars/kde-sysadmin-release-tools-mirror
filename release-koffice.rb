@@ -353,9 +353,9 @@ class BranchL10n < ReleaseBase
 end
 
 def printHelp
-  print "--release      start a release of KOffice"
-  print "--test-l10n    test that l10n packages build"
-  print "--branch-l10n  branch l10n of KOffice"
+  puts "--release      start a release of KOffice"
+  puts "--test-l10n    test that l10n packages build"
+  puts "--branch-l10n  branch l10n of KOffice"
 end
 
 if( ARGV.size == 0 )
