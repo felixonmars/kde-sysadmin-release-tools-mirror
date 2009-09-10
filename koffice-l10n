@@ -38,8 +38,8 @@
 #SVNUSER=martin
 #SVNPROTOCOL=https
 #ALT_LANGS=""
-KOFFICE_L10N=branches/stable/l10n-kde4
-# KOFFICE_L10N=trunk/l10n-kde4
+# KOFFICE_L10N=branches/stable/l10n-kde4
+KOFFICE_L10N=trunk/l10n-kde4
 KOFFICE_L10N_ALT=trunk/l10n-kde4
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
@@ -101,7 +101,7 @@ svn propget svn:externals scripts | while read subdir url; do
   rm -rf scripts/$subdir
   svn copy ${url/https:\/\//$SVNPROTOCOL://$SVNUSER@} scripts/$subdir
 done
-svn propdel svn:externals scripts
+# svn propdel svn:externals scripts
 
 echo "Copying the language packs"
 for lang in `cat subdirs` ; do
@@ -114,26 +114,31 @@ for lang in `cat subdirs` ; do
     URL=$L10N_ALT
   fi
 
-  echo "Copying language files for $lang from $URL"
-  svn mkdir $lang
-  for sub in data docs messages ; do
-    # According to the removestuff script, anything except Makefile.am
-    # and the koffice dir are deleted anyway, so lets just get them.
-    svn mkdir $lang/$sub
-    svn cp -r $REV $URL/$lang/$sub/koffice $lang/$sub || true
-    if [ "$sub" = data ] ; then
-      svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
-    fi
-    if test -f $lang/messages/koffice/kexi.po; then
-      svn rm $lang/messages/koffice/kexi.po
-    fi
-    if test -f $lang/messages/koffice/kformula.po; then
-      svn rm $lang/messages/koffice/kformula.po
-    fi
-    if test -f $lang/messages/koffice/kivio.po; then
-      svn rm $lang/messages/koffice/kivio.po
-    fi
-  done
+  # with svn 1.6.5 svn mkdir with a "@" fails, since none of the following language is ever released with koffice...
+  if test $lang = "be@latin" -o $lang = "ca@valencia" -o $lang = "sr@latin" -o $lang = "uz@cyrillic"; then
+    echo "Ignorring $lang"
+  else
+    echo "Copying language files for $lang from $URL"
+    svn mkdir $lang
+    for sub in data docs messages ; do
+      # According to the removestuff script, anything except Makefile.am
+      # and the koffice dir are deleted anyway, so lets just get them.
+      svn mkdir $lang/$sub
+      svn cp -r $REV $URL/$lang/$sub/koffice $lang/$sub || true
+      if [ "$sub" = data ] ; then
+        svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
+      fi
+      if test -f $lang/messages/koffice/kexi.po; then
+        svn rm $lang/messages/koffice/kexi.po
+      fi
+#       if test -f $lang/messages/koffice/kformula.po; then
+#         svn rm $lang/messages/koffice/kformula.po
+#       fi
+      if test -f $lang/messages/koffice/kivio.po; then
+        svn rm $lang/messages/koffice/kivio.po
+      fi
+    done
+  fi
 done
 
 FINISHDATE=`date -R`
