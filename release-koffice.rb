@@ -40,7 +40,7 @@ class ReleaseBase
   def checkDirectory( directory )
     if( not File.directory?(directory) )
       puts "Directory #{directory} not found."
-      executeCommand( "mkdir #{directory}")
+      system("mkdir #{directory}")
       checkDirectory( directory )
     end
   end
@@ -113,6 +113,7 @@ class ReleaseKoffice < ReleaseBase
           cd dirty;
           svn -N co #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/ tagging;
           svn cp ../clean/koffice tagging/katelier;
+          svn commit tagging/katelier;
           cd tagging/katelier;
           svn rm kexi kchart kformula kivio kplato kpresenter kspread kword kdgantt;
           cd filters;
