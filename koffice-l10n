@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # koffice-l10n - Creates a copy of branches/stable/l10n that contains
 #                only the koffice l10n files.  Useful for tagging 
 #                koffice-l10n without checkout out entire KDE l10n.
@@ -38,9 +38,9 @@
 #SVNUSER=martin
 #SVNPROTOCOL=https
 #ALT_LANGS=""
-# KOFFICE_L10N=branches/stable/l10n-kde4
-KOFFICE_L10N=trunk/l10n-kde4
-KOFFICE_L10N_ALT=trunk/l10n-kde4
+KOFFICE_L10N=branches/stable/l10n-kde4
+# KOFFICE_L10N=trunk/l10n-kde4
+# KOFFICE_L10N_ALT=trunk/l10n-kde4
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
 test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
