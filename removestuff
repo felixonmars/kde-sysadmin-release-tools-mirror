@@ -133,7 +133,6 @@ cd_package()
      cd_package
      $rm_command kexi
      $rm_command kivio
-     $rm_command kformula
      echo "Removing non-released stuff"
   )
   fi
