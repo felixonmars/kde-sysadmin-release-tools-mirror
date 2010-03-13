@@ -24,7 +24,7 @@ required=`echo $required | sed -e 's/\..*//'`
 echo "$total messages to translate, $required required as a minimum."
 for lang in *; do
   sum=0
-  if test "$lang" != "templates" -a -d $lang/messages/$module -a "$lang" != "x-test"; then
+  if test "$lang" != "templates" -a -d $lang/messages/$module -a "$lang" != "x-test" -a "$lang" != "ast"; then
     for i in $lang/messages/$module/*.po; do
       n=`msgfmt --statistics -o /dev/null $i 2>&1 | sed -e 's/,.*$//' | cut -d' ' -f1`
       sum=$((sum + $n))
