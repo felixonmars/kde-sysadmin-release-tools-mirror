@@ -115,30 +115,30 @@ for lang in `cat subdirs` ; do
   fi
 
   # with svn 1.6.5 svn mkdir with a "@" fails, since none of the following language is ever released with koffice...
-  if test $lang = "be@latin" -o $lang = "ca@valencia" -o $lang = "sr@latin" -o $lang = "uz@cyrillic" -o $lang = "sr@ijekavian" -o $lang = "sr@ijekavianlatin"; then
-    echo "Ignorring $lang"
-  else
+#  if test $lang = "be@latin" -o $lang = "ca@valencia" -o $lang = "sr@latin" -o $lang = "uz@cyrillic" -o $lang = "sr@ijekavian" -o $lang = "sr@ijekavianlatin"; then
+#    echo "Ignorring $lang"
+#  else
     echo "Copying language files for $lang from $URL"
     svn mkdir $lang
     for sub in data docs messages ; do
       # According to the removestuff script, anything except Makefile.am
       # and the koffice dir are deleted anyway, so lets just get them.
       svn mkdir $lang/$sub
-      svn cp -r $REV $URL/$lang/$sub/koffice $lang/$sub || true
+      svn cp -r $REV $URL/$lang@/$sub/koffice $lang/$sub || true
       if [ "$sub" = data ] ; then
-        svn cp -r $REV $URL/$lang/$sub/Makefile.am $lang/$sub || true
+        svn cp -r $REV $URL/$lang@/$sub/Makefile.am $lang/$sub || true
       fi
-      if test -f $lang/messages/koffice/kexi.po; then
-        svn rm $lang/messages/koffice/kexi.po
-      fi
+#      if test -f $lang/messages/koffice/kexi.po; then
+#        svn rm $lang/messages/koffice/kexi.po
+#      fi
 #       if test -f $lang/messages/koffice/kformula.po; then
 #         svn rm $lang/messages/koffice/kformula.po
 #       fi
       if test -f $lang/messages/koffice/kivio.po; then
-        svn rm $lang/messages/koffice/kivio.po
+        svn rm $lang@/messages/koffice/kivio.po
       fi
     done
-  fi
+#  fi
 done
 
 FINISHDATE=`date -R`
