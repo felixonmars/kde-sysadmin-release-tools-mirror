@@ -131,8 +131,9 @@ cd_package()
   if [ $package = "koffice" ]; then
   (
      cd_package
-     $rm_command kexi
+#     $rm_command kexi
      $rm_command kivio
+     $rm_command tools/f-office
      echo "Removing non-released stuff"
   )
   fi
