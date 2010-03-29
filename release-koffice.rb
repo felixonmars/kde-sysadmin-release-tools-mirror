@@ -286,9 +286,11 @@ KATELIER_TAG
 end
 
 class TestL10n
+  attr_reader :failed
   def initialize
     system("cd test")
     dirname = "sources/koffice-l10n"
+    @failed = 0
     d = Dir.new(dirname)
     d.entries.each() { |x|
       unless( x== "." or x == "..")
@@ -299,6 +301,7 @@ class TestL10n
           puts "#{name} has succeed"
         else
           puts "#{name} has failed"
+          @failed += 1
         end
         system("rm -rf test/#{name}")
       end
@@ -367,7 +370,8 @@ else
   if( what == "--release" )
     ReleaseKoffice.new
   elsif( what == "--test-l10n")
-    TestL10n.new
+    test = TestL10n.new
+    exit(test.failed)
   elsif( what == "--branch-l10n")
     BranchL10n.new
   else
