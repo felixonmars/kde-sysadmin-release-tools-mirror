@@ -38,8 +38,8 @@
 #SVNUSER=martin
 #SVNPROTOCOL=https
 #ALT_LANGS=""
-# KOFFICE_L10N=branches/stable/l10n-kde4
-KOFFICE_L10N=trunk/l10n-kde4
+KOFFICE_L10N=branches/stable/l10n-kde4
+# KOFFICE_L10N=trunk/l10n-kde4
 # KOFFICE_L10N_ALT=trunk/l10n-kde4
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
@@ -119,14 +119,14 @@ for lang in `cat subdirs` ; do
 #    echo "Ignorring $lang"
 #  else
     echo "Copying language files for $lang from $URL"
-    svn mkdir $lang
+    svn mkdir $lang@
     for sub in data docs messages ; do
       # According to the removestuff script, anything except Makefile.am
       # and the koffice dir are deleted anyway, so lets just get them.
       svn mkdir $lang/$sub
-      svn cp -r $REV $URL/$lang@/$sub/koffice $lang/$sub || true
+      svn cp -r $REV $URL/$lang/$sub/koffice@ $lang/$sub || true
       if [ "$sub" = data ] ; then
-        svn cp -r $REV $URL/$lang@/$sub/Makefile.am $lang/$sub || true
+        svn cp -r $REV $URL/$lang/$sub/Makefile.am@ $lang/$sub || true
       fi
 #      if test -f $lang/messages/koffice/kexi.po; then
 #        svn rm $lang/messages/koffice/kexi.po
