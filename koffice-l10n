@@ -38,8 +38,8 @@
 #SVNUSER=martin
 #SVNPROTOCOL=https
 #ALT_LANGS=""
-KOFFICE_L10N=branches/stable/l10n-kde4
-# KOFFICE_L10N=trunk/l10n-kde4
+# KOFFICE_L10N=branches/stable/l10n-kde4
+KOFFICE_L10N=trunk/l10n-kde4
 # KOFFICE_L10N_ALT=trunk/l10n-kde4
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
@@ -123,7 +123,7 @@ for lang in `cat subdirs` ; do
     for sub in data docs messages ; do
       # According to the removestuff script, anything except Makefile.am
       # and the koffice dir are deleted anyway, so lets just get them.
-      svn mkdir $lang/$sub
+      svn mkdir $lang/$sub@
       svn cp -r $REV $URL/$lang/$sub/koffice@ $lang/$sub || true
       if [ "$sub" = data ] ; then
         svn cp -r $REV $URL/$lang/$sub/Makefile.am@ $lang/$sub || true
@@ -135,7 +135,7 @@ for lang in `cat subdirs` ; do
 #         svn rm $lang/messages/koffice/kformula.po
 #       fi
       if test -f $lang/messages/koffice/kivio.po; then
-        svn rm $lang@/messages/koffice/kivio.po
+        svn rm $lang/messages/koffice/kivio.po
       fi
     done
 #  fi
