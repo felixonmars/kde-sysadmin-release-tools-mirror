@@ -1,0 +1,17 @@
+Helper to create KDE Release Schedules.
+
+Compile:
+Should be nothing more than:
+- qmake
+- make
+- ./releaseschedule
+
+License:
+GPL
+
+Author:
+toma@kde.org - Tom Albers.
+
+Copyright:
+2010 Omat Holding B.V. <info@omat.nl>
+
