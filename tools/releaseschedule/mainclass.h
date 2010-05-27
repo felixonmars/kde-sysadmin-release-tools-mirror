@@ -2,6 +2,8 @@
 #define MAINCLASS_H
 
 #include <QtGui/QMainWindow>
+#include <QMultiMap>
+#include <QDate>
 
 namespace Ui
 {
@@ -21,9 +23,11 @@ public:
     ~MainClass();
 
 private slots:
-    void slotGenerate();
+    void slotGenerateTechbase();
+    void slotGenerateICal();
 
 private:
+    QMultiMap<QDate, QPair<QString, QString> > generateTimeline();
     QPair<QString, QString> makePair( Events event, const QString& version = QString() );
     QString title( Events event, const QString& version = QString() );
     QString explanation( Events event );

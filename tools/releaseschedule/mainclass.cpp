@@ -9,7 +9,9 @@ MainClass::MainClass(QWidget *parent)
 {
     ui->setupUi(this);
     connect( ui->generateButton, SIGNAL(clicked()),
-             SLOT( slotGenerate() ) );
+             SLOT( slotGenerateTechbase() ) );
+    connect( ui->icalButton, SIGNAL(clicked()),
+             SLOT( slotGenerateICal() ) );
 }
 
 MainClass::~MainClass()
@@ -187,7 +189,7 @@ QPair<QString, QString> MainClass::makePair( Events event, const QString& versio
     return qMakePair( title( event, version ), explanation( event ) );
 }
 
-void MainClass::slotGenerate()
+QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
 {
     QMultiMap<QDate, QPair<QString, QString> > timeline;
     QDate release = ui->releaseDate->date();
@@ -244,16 +246,46 @@ void MainClass::slotGenerate()
                      makePair( safreeze ) );
     timeline.insert( timelinePoint.addDays( ui->softMessageFreeze->value() * -7 ),
                      makePair( smfreeze ) );
+    return timeline;
+}
 
-    // create the schedule
-    // Dates in english, sigh...
-    QLocale english( QLocale::English );
+void MainClass::slotGenerateTechbase()
+{
+    QMultiMap<QDate, QPair<QString, QString> > timeline = generateTimeline();
+
+    QLocale english( QLocale::English );     // Dates in english
     QString text;
     QMap<QDate, QPair<QString, QString> >::const_iterator i;
     for (i = timeline.constBegin(); i != timeline.constEnd(); ++i)
-     text.append( english.toString( i.key() ) + " - " + i.value().first + "\n" +
+     text.append( "=== " + english.toString( i.key() ) + ": " + i.value().first + " ===\n" +
                   i.value().second + "\n\n");
 
     ui->schedule->setText( text );
 }
 
+void MainClass::slotGenerateICal()
+{
+    QMultiMap<QDate, QPair<QString, QString> > timeline = generateTimeline();
+    QLocale english( QLocale::English );     // Dates in english
+    QString text;
+    text.append( "BEGIN:VCALENDAR\n" );
+    text.append( "VERSION:2.0\n");
+    text.append( "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\n\n");
+
+    QMap<QDate, QPair<QString, QString> >::const_iterator i;
+    for (i = timeline.constBegin(); i != timeline.constEnd(); ++i) {
+        text.append( "BEGIN:VEVENT\n");
+        QDateTime dt( i.key() );
+        dt.setTime( QTime( 23, 59 ) );
+        text.append( "DTSTART: " + dt.toString( Qt::ISODate ) + "Z\n" );
+        text.append( "SUMMARY: " + i.value().first + "\n" );
+        QString desc(i.value().second);
+        desc.remove("\n"," ");
+        text.append( "DESCRIPTION: " + desc + "\n" );
+        text.append( "END:VEVENT\n\n");
+
+    }
+
+    text.append( "END:VCALENDAR\n");
+    ui->schedule->setText( text );
+}
