@@ -67,7 +67,7 @@ QString MainClass::explanation( Events event )
                        "in strings can be fixed. No major new strings changes should "
                        "be done. It is ok to remove strings. Exception: Artwork "
                        "(try to keep the number of new strings low anyways). "
-                       "Exception: Typo fixes can be fixed until Beta2 is released "
+                       "Exception: Typo fixes can be fixed until the Hard Message Freeze, "
                        "but you have to mail kde-i18n-doc saying you made a typo fix "
                        "change.";
                 break;
@@ -280,7 +280,7 @@ void MainClass::slotGenerateICal()
         text.append( "DTSTART: " + dt.toString( Qt::ISODate ) + "Z\n" );
         text.append( "SUMMARY: " + i.value().first + "\n" );
         QString desc(i.value().second);
-        desc.remove("\n"," ");
+        desc.replace('\n',' ');
         text.append( "DESCRIPTION: " + desc + "\n" );
         text.append( "END:VEVENT\n\n");
 
