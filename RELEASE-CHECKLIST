@@ -33,6 +33,7 @@ Update version number
  * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
  * kdelibs/README
  * kdenetwork/kopete/libkopete/kopeteversion.h
+ * kdegraphics/gwenview/app/main.cpp
  * branches/bugs/3.2/template/wizard/report.html.tmpl
  * branches/bugs/3.2/bugz/wizard.cgi (then use `svnmerge merge` in tags/bugs/stable)
  * www/areas/enterprise/bizcase/form.inc (major KDE versions only)
