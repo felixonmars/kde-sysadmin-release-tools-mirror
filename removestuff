@@ -92,6 +92,8 @@ cd_package()
        $rm_command docs/playground-*
        $rm_command messages/kdekiosk
        $rm_command docs/kdekiosk 
+       $rm_command messages/kdepim
+       $rm_command docs/kdepim
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
