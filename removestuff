@@ -45,7 +45,7 @@ cd_package()
        echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
        exit 1
      fi
-     cat subdirs | while read lang; do
+     cat */pack-with-variants subdirs | sort -u | while read lang; do
        cd $lang || continue
        echo $lang
        $rm_command internal
