@@ -74,8 +74,9 @@ QString MainClass::explanation( Events event )
         case hmfreeze :
                 desc = "Up to now you were able to do typo changes, but you had "
                        "to mail kde-i18n-doc saying you made a typo fix change. "
-                       "From this moment on you need an explicit ok beforehand from "
-                       "kde-i18n-doc for every single string change.";
+                       "From this moment on you need to contact kde-i18n-doc for "
+                       "every single string change, if noone objects in 5 days you "
+                       "can commit the change.";
                 break;
         case betatag :
                 desc = "Trunk is frozen for beta release tagging. Only urgent fixes, "
