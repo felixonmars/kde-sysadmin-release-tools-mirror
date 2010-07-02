@@ -248,8 +248,9 @@ KATELIER_TAG
     @release_l10n = askOk
   end
   def askKAtelier()
-    puts "Release KAtelier ? (y/n)"
-    @release_katelier = askOk
+#     puts "Release KAtelier ? (y/n)"
+#     @release_katelier = askOk
+    @release_katelier = false
   end
   def branchRelease?()
     return @release_source == "branch"
