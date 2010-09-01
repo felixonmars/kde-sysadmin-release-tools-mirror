@@ -41,6 +41,7 @@ Update version number
  * common and versions scripts
 
 Update kdepackages in kdelibs/kdeui
+In the stable branch, remove the MALLOC_CHECK_ block from kdebase/workspace/startkde.cmake
 Run "fixuifiles"
 Make sure the meinproc in path is a version of the correct branch
 Use tag_all to get clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
