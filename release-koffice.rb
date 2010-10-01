@@ -104,7 +104,7 @@ class ReleaseKoffice < ReleaseBase
     puts "========================= tag_all =========================="
     executeCommand("./tag_all")
     # Often tag all don't correctly do the switch
-    executeCommand("cd clean/koffice; svn switch https://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/koffice; cd ../..")
+    executeCommand("cd clean/koffice; svn switch  #{ENV['SVNPROTOCOL']}://#{ENV['SVNUSER']}@svn.kde.org/home/kde/tags/koffice/#{@koffice_version}/koffice; cd ../..")
     puts "======================== removestuff ======================="
     executeCommand("cd clean; DO_SVN=1 ../removestuff koffice; svn commit koffice; cd ..");
     if(@release_katelier)
