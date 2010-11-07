@@ -269,24 +269,24 @@ void MainClass::slotGenerateICal()
     QMultiMap<QDate, QPair<QString, QString> > timeline = generateTimeline();
     QLocale english( QLocale::English );     // Dates in english
     QString text;
-    text.append( "BEGIN:VCALENDAR\n" );
-    text.append( "VERSION:2.0\n");
-    text.append( "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\n\n");
+    text.append( "BEGIN:VCALENDAR\r\n" );
+    text.append( "VERSION:2.0\r\n");
+    text.append( "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r\n\r\n");
 
     QMap<QDate, QPair<QString, QString> >::const_iterator i;
     for (i = timeline.constBegin(); i != timeline.constEnd(); ++i) {
-        text.append( "BEGIN:VEVENT\n");
+        text.append( "BEGIN:VEVENT\r\n");
         QDateTime dt( i.key() );
         dt.setTime( QTime( 23, 59 ) );
-        text.append( "DTSTART: " + dt.toString( Qt::ISODate ) + "Z\n" );
-        text.append( "SUMMARY: " + i.value().first + "\n" );
+        text.append( "DTSTART: " + dt.toString( Qt::ISODate ).remove(":").remove("-") + "Z\r\n" );
+        text.append( "SUMMARY: " + i.value().first + "\r\n" );
         QString desc(i.value().second);
         desc.replace('\n',' ');
-        text.append( "DESCRIPTION: " + desc + "\n" );
-        text.append( "END:VEVENT\n\n");
+        text.append( "DESCRIPTION: " + desc + "\r\n" );
+        text.append( "END:VEVENT\r\n\r\n");
 
     }
 
-    text.append( "END:VCALENDAR\n");
+    text.append( "END:VCALENDAR\r\n");
     ui->schedule->setText( text );
 }
