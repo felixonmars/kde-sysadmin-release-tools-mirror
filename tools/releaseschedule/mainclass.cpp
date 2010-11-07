@@ -278,11 +278,11 @@ void MainClass::slotGenerateICal()
         text.append( "BEGIN:VEVENT\r\n");
         QDateTime dt( i.key() );
         dt.setTime( QTime( 23, 59 ) );
-        text.append( "DTSTART: " + dt.toString( Qt::ISODate ).remove(":").remove("-") + "Z\r\n" );
-        text.append( "SUMMARY: " + i.value().first + "\r\n" );
+        text.append( "DTSTART:" + dt.toString( Qt::ISODate ).remove(":").remove("-") + "Z\r\n" );
+        text.append( "SUMMARY:" + i.value().first + "\r\n" );
         QString desc(i.value().second);
         desc.replace('\n',' ');
-        text.append( "DESCRIPTION: " + desc + "\r\n" );
+        text.append( "DESCRIPTION:" + desc + "\r\n" );
         text.append( "END:VEVENT\r\n\r\n");
 
     }
