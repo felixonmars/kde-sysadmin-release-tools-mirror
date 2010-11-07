@@ -277,8 +277,8 @@ void MainClass::slotGenerateICal()
     for (i = timeline.constBegin(); i != timeline.constEnd(); ++i) {
         text.append( "BEGIN:VEVENT\r\n");
         QDateTime dt( i.key() );
-        dt.setTime( QTime( 23, 59 ) );
-        text.append( "DTSTART:" + dt.toString( Qt::ISODate ).remove(":").remove("-") + "Z\r\n" );
+        text.append( "DTSTART;VALUE=DATE:" + dt.toString( "yyyyMMdd" ) + "\r\n" );
+        text.append( "DTEND;VALUE=DATE:" + dt.addDays(1).toString( "yyyyMMdd" ) + "\r\n" );
         text.append( "SUMMARY:" + i.value().first + "\r\n" );
         QString desc(i.value().second);
         desc.replace('\n',' ');
