@@ -298,7 +298,7 @@ class TestL10n
         name = x.clone
         name[".tar.bz2"] = ""
         system("cd test;tar -xjf ../#{dirname}/#{x}")
-        if(system("cd test/#{name};cmake . &>/dev/null; make &>/dev/null"))
+        if(system("zsh -c 'cd test/#{name};cmake . &>/dev/null; make &>/dev/null'"))
           puts "#{name} has succeed"
         else
           puts "#{name} has failed"
