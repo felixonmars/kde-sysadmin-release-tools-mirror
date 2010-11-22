@@ -1,1 +1,8 @@
+pushd clean
+test -e kdebase-workspace || ln -s kdebase/workspace kdebase-workspace
+test -e kdebase-runtime || ln -s kdebase/runtime kdebase-runtime
+test -e kdelibs-experimental || ln -s kdelibs/experimental kdelibs-experimental
+test -e kdepim-runtime || ln -s kdepim/runtime kdepim-runtime
+popd
+
 for i in `cat modules`; do ./pack $i; done
