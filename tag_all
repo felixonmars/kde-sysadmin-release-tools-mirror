@@ -99,6 +99,7 @@ if test -z "$ONLY_CLEANUP" -a -n "$l10n_module"; then
   set_urls $l10n_module
   cp language_list $tagdir/$DESTURL/subdirs
   replace_exts $tagdir/$DESTURL/scripts
+  svn pd svn:externals $tagdir/$DESTURL/documentation
 fi
 
 if test -z "$ONLY_CLEANUP"; then
