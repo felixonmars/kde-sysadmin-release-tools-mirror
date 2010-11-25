@@ -1,3 +1,5 @@
+== Release Engineering ==
+
 Ensure you use the right version of the scripts:
  Use this directory to release kde-4.x versions.
  Use the 3.5 branch for kde-3.x versions!
@@ -78,20 +80,35 @@ When everything is ready:
   Its not uncommon that slashdotting affects our server structure, and the right
   people have to know about the release date and time to be able to react in time. 
 
-When most of the mirrors behind http://download.kde.org have updated:
-Commit announcement (after adding PHP header/footer)
-Add an entry to 
-  * www/index.php,
-  * www/menu.inc,
-  * www/announcements/index.php, 
-  * www/info/releases.php,
-  * www/download/index.php and 
-  * www/whatiskde/project.php
+== Release Promotion ==
+
+Before releases:
+
+- Keep an eye on release-team mailinglist when packages are posted to kde-packagers
+- Let Dirk know a day or so in advance what your plans are for the release (i.e.
+when to push out news, how to handle possible delays, etc.)
+
+On release day:
+
+- Check with Dirk if packages are ready, and enabled for synching to the public FTPs, this should happen about 6 - 8 hours in advance of the public announcement
+- Prepare the websites:
+    * add announcement to www/announcements/announce-x.x.x.php
+    When most of the mirrors behind http://download.kde.org have updated:
+    Commit announcement (after adding PHP header/footer)
+    * have announcement text and Dot story reviewed on IRC
+    Add an entry to
+    * www/index.php,
+    * www/announcements/index.php,
+    * www/info/releases.php (only for stable releases + updates),
+    * www/download/index.php (only for stable releases + updates) and
+    * www/whatiskde/project.php  (only for stable releases + updates)
 
 Post announcement in text to kde-announce@kde.org
 Post news bit to
   * kde-press-announce (may also do so before the release under EMBARGO, then lift it with
-    another email, if in doubt, ask sebas or kde-ev-marketing)
-  * dot.kde.org (editors@kdenews.org)
-  * freshmeat.net
-  * newsgroups, optionally
+    another email, if in doubt, ask sebas, lydia or kde-ev-marketing)
+  * kde-announce@kde.org : text from the release announcement, possibly shortened a bit + link
+    to the official announcement
+  * dot.kde.org (via Dot web interface, submit under "Official News")
+  * identi.ca / twitter
+  * other news outlets optionally, optionally
