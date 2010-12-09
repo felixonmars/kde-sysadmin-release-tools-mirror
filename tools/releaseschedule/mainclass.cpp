@@ -171,7 +171,7 @@ QString MainClass::title( Events event, const QString& version )
                 desc = "Release";
                 break;
         case docfreeze :
-                desc = "Documentatin Freeze";
+                desc = "Documentation Freeze";
                 break;
         case tagfreeze :
                 desc = QString("Tagging Freeze %1").arg( version );
@@ -222,7 +222,7 @@ QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
 
         // one day tagging freeze around RC's.
         timeline.insert( timelinePoint.addDays( (ui->rcTagBeforeRelease->value() * -1) - 1 ),
-                         makePair( tagfreeze, " for Release Candidate " + QString::number( i ) ) );
+                         makePair( tagfreeze, "for Release Candidate " + QString::number( i ) ) );
     }
 
     // beta releases before the rc's
