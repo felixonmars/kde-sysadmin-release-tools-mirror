@@ -97,6 +97,7 @@ cd_package()
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
+       $rm_command */calligra
        $rm_command messages/kdevelop
        $rm_command docs/kdevelop
        $rm_command messages/kdevplatform
