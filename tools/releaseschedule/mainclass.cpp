@@ -65,11 +65,11 @@ QString MainClass::explanation( Events event )
                 desc = "All translated messages (GUI strings) are frozen on this "
                        "date. Only previously untranslated strings or clear errors "
                        "in strings can be fixed. No major new strings changes should "
-                       "be done. It is ok to remove strings. Exception: Artwork "
-                       "(try to keep the number of new strings low anyways). "
-                       "Exception: Typo fixes can be fixed until the Hard Message Freeze, "
-                       "but you have to mail kde-i18n-doc saying you made a typo fix "
-                       "change.";
+                       "be done. You cannot add new strings. It is ok to remove strings. "
+                       "Exception: Artwork (try to keep the number of new strings low "
+                       "anyways). Exception: Typo fixes can be fixed until the Hard "
+                       "Message Freeze, but you have to mail kde-i18n-doc saying you made "
+                       "a typo fix change.";
                 break;
         case hmfreeze :
                 desc = "Up to now you were able to do typo changes, but you had "
