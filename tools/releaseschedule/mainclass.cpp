@@ -88,7 +88,7 @@ QString MainClass::explanation( Events event )
                 desc = "The beta becomes available for general consumption.";
                 break;
         case rctag :
-                desc = "Trunk is frozen for release candidate tagging. Only urgent fixes, "
+                desc = "Branch is frozen for release candidate tagging. Only urgent fixes, "
                        "such as those fixing compilation errors, should be committed. ";
                 break;
         case rcrelease :
