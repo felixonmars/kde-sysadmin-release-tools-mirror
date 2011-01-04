@@ -2,6 +2,7 @@
 #include "ui_mainclass.h"
 
 #include <QApplication>
+#include <QCryptographicHash>
 #include <QDebug>
 
 MainClass::MainClass(QWidget *parent)
@@ -183,6 +184,8 @@ QString MainClass::title( Events event, const QString& version )
         default :
                 desc = "Unknown freeze, don't honor it :)";
             }
+
+    desc = QString( "KDE %1 %2" ).arg( ui->versionEdit->text() ).arg( desc );
     return desc;
 }
 
@@ -284,6 +287,9 @@ void MainClass::slotGenerateICal()
         QString desc(i.value().second);
         desc.replace('\n',' ');
         text.append( "DESCRIPTION:" + desc + "\r\n" );
+        QCryptographicHash md5( QCryptographicHash::Md5 );
+        md5.addData( i.value().first.toLatin1() );
+        text.append( "UID:" + md5.result().toHex() + '\n' );
         text.append( "END:VEVENT\r\n\r\n");
 
     }

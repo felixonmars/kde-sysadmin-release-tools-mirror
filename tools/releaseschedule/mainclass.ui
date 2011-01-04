@@ -16,6 +16,27 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Version:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="versionEdit">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>KDE version you want to release (e.g. &quot;4.6&quot;)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
        <widget class="QGroupBox" name="groupBox_4">
