@@ -289,7 +289,7 @@ void MainClass::slotGenerateICal()
         text.append( "DESCRIPTION:" + desc + "\r\n" );
         QCryptographicHash md5( QCryptographicHash::Md5 );
         md5.addData( i.value().first.toLatin1() );
-        text.append( "UID:" + md5.result().toHex() + '\n' );
+        text.append( "UID:" + md5.result().toHex() + "\r\n" );
         text.append( "END:VEVENT\r\n\r\n");
 
     }
