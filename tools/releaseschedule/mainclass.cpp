@@ -123,6 +123,12 @@ QString MainClass::explanation( Events event )
                        "fixed.\n\nNo new additions to the language bindings, except "
                        "optional bindings as permitting by the kde-bindings team.";
                 break;
+        case minortag :
+                desc = "A KDE minor release is tagged and made available to the packagers.";
+                break;
+        case minorrelease :
+                desc = "A KDE minor release is released to the public.";
+                break;
         default :
                 desc = "Unknown freeze, don't honor it :)";
             }
@@ -131,6 +137,7 @@ QString MainClass::explanation( Events event )
 
 QString MainClass::title( Events event, const QString& version )
 {
+    QString mainVersion(ui->versionEdit->text());
     QString desc;
     switch ( event ) {
         case sffreeze :
@@ -181,11 +188,19 @@ QString MainClass::title( Events event, const QString& version )
         case artfreeze :
                 desc = "Artwork and Bindings Freeze";
                 break;
+        case minortag :
+                mainVersion += '.'+version;
+                desc = QString("tagging");
+                break;
+        case minorrelease :
+                mainVersion += '.'+version;
+                desc = QString("release");
+                break;
         default :
                 desc = "Unknown freeze, don't honor it :)";
             }
 
-    desc = QString( "KDE %1 %2" ).arg( ui->versionEdit->text() ).arg( desc );
+    desc = QString( "KDE %1 %2" ).arg( mainVersion ).arg( desc );
     return desc;
 }
 
@@ -251,7 +266,19 @@ QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
                      makePair( safreeze ) );
     timeline.insert( timelinePoint.addDays( ui->softMessageFreeze->value() * -7 ),
                      makePair( smfreeze ) );
+
+
+    // Minor releases.
+    for (int i = 1 ; i <=5 ; i++) {
+        QDate minor = QDate::fromString("Tue " + QString::number(ui->releaseDate->date().month()+(i+1)) + " " +
+                                         QString::number(ui->releaseDate->date().year()), "ddd M yyyy");
+        timeline.insert( minor, makePair(minorrelease, QString::number(i) ));
+        timeline.insert( minor.addDays(-5), makePair(minortag, QString::number(i) ));
+    }
+
     return timeline;
+
+    
 }
 
 void MainClass::slotGenerateTechbase()

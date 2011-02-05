@@ -18,7 +18,8 @@ public:
     enum Events { sffreeze, hffreeze, safreeze, hafreeze,
                   depfreeze, docfreeze, tagfreeze, artfreeze,
                   smfreeze, hmfreeze, betatag, betarelease,
-                  rctag, rcrelease, finaltag, finalrelease };
+                  rctag, rcrelease, finaltag, finalrelease, 
+                  minortag, minorrelease };
     MainClass(QWidget *parent = 0);
     ~MainClass();
 
