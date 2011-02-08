@@ -27,7 +27,7 @@
       <item>
        <widget class="QLineEdit" name="versionEdit">
         <property name="text">
-         <string/>
+         <string>4.7</string>
         </property>
         <property name="placeholderText">
          <string>KDE version you want to release (e.g. &quot;4.6&quot;)</string>
@@ -56,8 +56,8 @@
            <property name="date">
             <date>
              <year>2011</year>
-             <month>1</month>
-             <day>26</day>
+             <month>7</month>
+             <day>27</day>
             </date>
            </property>
           </widget>
