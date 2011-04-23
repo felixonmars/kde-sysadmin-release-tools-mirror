@@ -312,6 +312,8 @@ void MainClass::slotGenerateICal()
         QDateTime dt( i.key() );
         text.append( "DTSTART;VALUE=DATE:" + dt.toString( "yyyyMMdd" ) + "\r\n" );
         text.append( "DTEND;VALUE=DATE:" + dt.addDays(1).toString( "yyyyMMdd" ) + "\r\n" );
+        text.append( "X-MICROSOFT-CDO-ALLDAYEVENT:TRUE\r\n" );
+        text.append( "X-MICROSOFT-CDO-INTENDEDSTATUS:FREE\r\n" );
         text.append( "SUMMARY:" + i.value().first + "\r\n" );
         QString desc(i.value().second);
         desc.replace('\n',' ');
