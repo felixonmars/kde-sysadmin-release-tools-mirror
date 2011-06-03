@@ -10,11 +10,11 @@ setup_branch_checkout()
     git checkout KDE/4.6
 }
 
-svn export $BASE/branches/KDE/4.6/kdegraphics
+svn export $BASE/tags/KDE/4.6.1/kdegraphics
 (
     cd kdegraphics
 
-    for d in kamera kgamma kcolorchooser gwenview kolourpaint ksaneplugin ksnapshot kruler svgpart; do
+    for d in kamera kgamma kcolorchooser gwenview kolourpaint ksaneplugin ksnapshot kruler svgpart ; do
         rm -rf $d
         rm -rf doc/$d
         sed -i -e "s,add_subdirectory.*$d.*,," doc/CMakeLists.txt
@@ -40,4 +40,8 @@ svn export $BASE/branches/KDE/4.6/kdegraphics
     git clone git@git.kde.org:kdegraphics-thumbnailers thumbnailers
     ( cd thumbnailers; setup_branch_checkout )
 
+    rm -rf mobipocket
+    git clone git@git.kde.org:mobipocket mobipocket
+    ( cd mobipocket; git checkout 4.6 )
+    echo "add_subdirectory(mobipocket)" >> CMakeLists.txt
 )
