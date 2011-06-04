@@ -260,7 +260,7 @@ QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
                      makePair( sffreeze ) );
     timeline.insert( timelinePoint.addDays( ui->hardFeatureFreeze->value() * -7 ),
                      makePair( hffreeze ) );
-    timeline.insert( timelinePoint.addDays( ui->dependencyFreeze->value() * -14 ),
+    timeline.insert( timelinePoint.addDays( ui->dependencyFreeze->value() * -7 ),
                      makePair( depfreeze ) );
     timeline.insert( timelinePoint.addDays( ui->sofApiFreeze->value() * -7 ),
                      makePair( safreeze ) );
