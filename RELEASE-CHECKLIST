@@ -25,19 +25,20 @@ Checkout branch:
  clean up the cache/ directory from previous builds
 
 Update version number
- * kdevelop/configure.in.in
  * kdelibs/CMakeLists.txt
  * kdepimlibs/CMakeLists.txt
- * kdebase/apps/CMakeLists.txt
- * kdebase/runtime/CMakeLists.txt
- * kdebase/workspace/CMakeLists.txt
- * kdebase/workspace/KDE4Workspace.cmake.in
+ * kde-baseapps/CMakeLists.txt
+ * kde-runtime/CMakeLists.txt
+ * kde-workspace/CMakeLists.txt
  * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
  * kdelibs/README
  * kdenetwork/kopete/libkopete/kopeteversion.h
  * kdegraphics/gwenview/app/main.cpp
+ * kdepim/CMakeLists.txt (KDEPIM_DEV_VERSION / KDEPIM_VERSION)
+ * kdepim-runtime/CMakeLists (KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION)
  * branches/bugs/3.2/template/wizard/report.html.tmpl
  * branches/bugs/3.2/bugz/wizard.cgi (then use `svnmerge merge` in tags/bugs/stable)
+ * kdevelop/configure.in.in
  * www/areas/enterprise/bizcase/form.inc (major KDE versions only)
  * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * common and versions scripts
