@@ -1,76 +1,47 @@
 #!/bin/bash
+# vim: sw=2
 
-  source `dirname $0`/common $1 $2
+source `dirname $0`/common $1 $2
 
-  if test $isl10n -eq 1; then
-    cd $package
-    echo "making per-language tarballs"
-    cat subdirs | while read lang; do
-      rsubdir=$package-$lang-$version
-      mv $lang $rsubdir
-      tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | bzip2 -9 > ../../sources/$package/$rsubdir.tar.bz2
-      mv $rsubdir $lang
-    done
-    cd ..
-  else
+bzip2=$(type -p pbzip2)
+bunzip2=$(type -p pbunzip2)
 
-   echo "mv $package $package-$version"
-   mv $package $package-$version || exit 1
-   echo "tar cjf $package-$version.tar.bz2 $package-$version"
-   tar --owner=root --group=root -cf $package-$version.tar $package-$version || exit 1
-  fi
+if ! [ -x $bzip2 ]; then
+  bzip2=$(type -p bzip2)
+fi
 
-  # Xdelta
-  if test "$package" = "kde-l10n" -o "$package" = "kde-i18n"; then
-    cd ../sources
-    # for kde-l10n we only generate xdelta for the small files
-    # #### double-check this code
-    files=`cd $package && ls -1 $package-*-$version.tar.bz2 2> /dev/null`
-    for file in $files; do
-	lang=${file/$package-/}
-	lang=${lang/-$version.tar.bz2/}
-	oldlang=`ls -1 ../sources-old/$package/$package-$lang-*tar.bz2 2>/dev/null | tail -n 1`
-	if test -n "$oldlang" && test -r "$oldlang"; then
-	    cp $oldlang $package
-	    echo "bunzip2 $package/$package-$lang-$version.tar.bz2"
-	    bunzip2 $package/$package-$lang-$version.tar.bz2
-	    cd $package
-	    ../$scriptpath/xdelta $package-$lang-*.bz2 $package-$lang-$version.tar
-	    cd ..
-	    rm -f $package/$package-$lang-*.bz2
-	    echo "bzip2 $package/$package-$lang-$version.tar"
-	    bzip2 $package/$package-$lang-$version.tar
-	fi
-    done
-    cd ../dirty
+if ! [ -x $bunzip2 ]; then
+  bunzip2=$(type -p bzip2)
+fi
 
-  else
-    # generate xdeltas
-    if test "$package" = "koffice"; then
-        # For KOffice, the modules are named "koffice" and "koffice-l10n"
-        # so search for koffice*tar.bz2 returns 2 files.
-        oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null | fgrep -v l10n`
-    else
-        # Normal case, no problem with a pseudo-duplicate
-        oldpackage=`ls -1 ../sources-old/$package*tar.bz2 2>/dev/null | tail -n 1`
-    fi
-    if test -n "$oldpackage" && test -r $oldpackage; then 
-        cp $oldpackage .
-        $scriptpath/xdelta $package*tar.bz2 $package*tar
-        mv $package*.tar.xdelta ../sources
-    fi
-  fi
+if ! [ -x $bzip2 ] || ! [ -x $bunzip2 ] ; then
+  echo "error: need at least pbzip2/bzip2 installed."
+  exit 1
+fi
 
-  if test $isl10n -eq 0; then
-    echo "bzip2 -9 $package-$version.tar"
-    rm -f $package-$version.tar.bz2
-    bzip2 -9 $package-$version.tar
-    mv $package-$version.tar.bz2 ../sources
-    echo "rm -f $package*tar"
-    rm -f $package*tar
-    echo "rm -rf $package-$version"
-    rm -rf $package-$version
-  fi
+if test $isl10n -eq 1; then
+  cd $package
+  echo "making per-language tarballs"
+  cat subdirs | while read lang; do
+    rsubdir=$package-$lang-$version
+    mv $lang $rsubdir
+    tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | $bzip2 -9 > ../../sources/$package/$rsubdir.tar.bz2
+    mv $rsubdir $lang
+  done
+  cd ..
+else
+ echo "mv $package $package-$version"
+ mv $package $package-$version || exit 1
+ echo "tar --owner=root --group=root -c -I $bzip2 -f $package-$version.tar.bz2 $package-$version"
+ tar --owner=root --group=root -c -I $bzip2 -f $package-$version.tar.bz2 $package-$version || exit 1
+fi
 
-  rm -rf dirty/$package || exit 1
+if test $isl10n -eq 0; then
+  mv $package-$version.tar.bz2 ../sources
+  echo "rm -f $package*tar"
+  rm -f $package*tar
+  echo "rm -rf $package-$version"
+  rm -rf $package-$version
+fi
 
+rm -rf dirty/$package || exit 1
