@@ -1,0 +1,18 @@
+#!/bin/bash
+# vim: sw=2 et
+
+cat modules.git | while read i branch; do
+  ( cd clean/$i
+    git pull --rebase
+    git checkout $branch
+  )
+done
+
+for i in $(<modules); do
+  ( cd clean/$i
+    svn up
+    svn info | grep URL:
+  )
+done
+
+
