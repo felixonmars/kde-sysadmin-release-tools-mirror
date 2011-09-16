@@ -6,8 +6,8 @@ set -e
 
 setup_branch_checkout()
 {
-    git branch --track 4.7 remotes/origin/4.7
-    git checkout 4.7
+    git branch --track KDE/4.7 remotes/origin/KDE/4.7
+    git checkout KDE/4.7
 }
 
 svn export -N $BASE/tags/KDE/4.7.0/kdeutils
