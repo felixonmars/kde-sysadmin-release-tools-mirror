@@ -1,5 +1,5 @@
 kdelibs                                     KDE/4.7
-kdepimlibs                                  4.7
+kdepimlibs                                  KDE/4.7
 kde-workspace                               KDE/4.7
 kde-runtime                                 KDE/4.7
 kde-baseapps                                KDE/4.7
@@ -18,8 +18,8 @@ cantor                                      KDE/4.7
 kalgebra                                    KDE/4.7
 kalzium                                     KDE/4.7
 kanagram                                    KDE/4.7
-kdepim                                      4.7
-kdepim-runtime                              4.7
+kdepim                                      KDE/4.7
+kdepim-runtime                              KDE/4.7
 kate                                        KDE/4.7
 kbruch                                      KDE/4.7
 kgeography                                  KDE/4.7
