@@ -22,6 +22,7 @@ svn_rm () {
 rm_command="rm -rf"
 if test -n "$DO_SVN"; then
   rm_command=svn_rm
+#  rm_command="rm -rf"
 fi
 
 cd_package()
@@ -92,8 +93,6 @@ cd_package()
        $rm_command docs/playground-*
        $rm_command messages/kdekiosk
        $rm_command docs/kdekiosk 
-       $rm_command messages/kdepim
-       $rm_command docs/kdepim
        $rm_command messages/play* 
        $rm_command messages/kdereview 
        $rm_command */koffice 
@@ -179,40 +178,12 @@ cd_package()
   )
   fi
 
-  if test -z "$DO_SVN"; then
-    if [ $package = "kdebase" ]; then
-    (
-       cd_package
-       $rm_command workspace
-       $rm_command runtime
-       echo "Removing workspace/runtime from kdebase"
-    )
-    fi
-
-    if [ $package = "kdebase-workspace" ]; then
-    (
-       cd_package
-       $rm_command runtime
-       $rm_command apps
-       echo "Removing runtime,apps from kdebase-workspace"
-    )
-    fi
-
-    if [ $package = "kdelibs" ]; then
-    (
-       cd_package
-       $rm_command experimental
-       echo "Removing experimental from kdelibs"
-    )
-    fi
-
-    if [ $package = "kdepim" ]; then
-    (
-       cd_package
-       $rm_command runtime
-       echo "Removing runtime from kdepim"
-    )
-    fi
+  if [ $package = "kdelibs" ]; then
+  (
+     cd_package
+     $rm_command experimental/libkactivities
+     echo "Removing libkactivities from kdelibs"
+  )
   fi
 
   if [ $package = "kdewebdev" ]; then
