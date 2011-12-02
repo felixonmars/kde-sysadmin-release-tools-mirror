@@ -1,0 +1,86 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e4641d1..20251ea 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -10,9 +10,9 @@ include(CPack)
+ 
+ set (KDE_VERSION_MAJOR 4)
+ set (KDE_VERSION_MINOR 7)
+-set (KDE_VERSION_RELEASE 3)
++set (KDE_VERSION_RELEASE 90)
+ set (KDE_VERSION "${KDE_VERSION_MAJOR}.${KDE_VERSION_MINOR}.${KDE_VERSION_RELEASE}" )
+-set (KDE_VERSION_STRING "${KDE_VERSION} (4.7.3)")
++set (KDE_VERSION_STRING "${KDE_VERSION} (4.8 Beta2 (4.7.90))")
+ 
+ set (KDE_DISTRIBUTION_TEXT "compiled sources" CACHE STRING "Indicate the distribution in bug reports" )
+ 
+diff --git a/README b/README
+index b6d4be2..612a98f 100644
+--- a/README
++++ b/README
+@@ -10,7 +10,7 @@ In this file:
+ 
+ About kdelibs
+ -------------
+-This is version 4.7 of the KDE libraries.
++This is version 4.8 of the KDE libraries.
+ 
+ This package includes libraries that are central to the development and
+ execution of a KDE program, as well as internationalization files for these
+diff --git a/cmake/modules/KDE4Defaults.cmake b/cmake/modules/KDE4Defaults.cmake
+index 61ccb85..309b15c 100644
+--- a/cmake/modules/KDE4Defaults.cmake
++++ b/cmake/modules/KDE4Defaults.cmake
+@@ -21,11 +21,11 @@ set(CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE ON)
+ # define the generic version of the libraries here
+ # this makes it easy to advance it when the next KDE release comes
+ # Use this version number for libraries which are at version n in KDE version n
+-set(GENERIC_LIB_VERSION "4.7.0")
++set(GENERIC_LIB_VERSION "4.8.0")
+ set(GENERIC_LIB_SOVERSION "4")
+ 
+ # Use this version number for libraries which are already at version n+1 in KDE version n
+-set(KDE_NON_GENERIC_LIB_VERSION "5.7.0")
++set(KDE_NON_GENERIC_LIB_VERSION "5.8.0")
+ set(KDE_NON_GENERIC_LIB_SOVERSION "5")
+ 
+ # windows does not support LD_LIBRARY_PATH or similar
+diff --git a/doc/api/doxygen.sh b/doc/api/doxygen.sh
+index 84341d3..dc28a56 100755
+--- a/doc/api/doxygen.sh
++++ b/doc/api/doxygen.sh
+@@ -354,7 +354,7 @@ apidox_qhppages()
+                PROJECT_NAME="KDE"
+         fi
+         if test -z "$PROJECT_VERSION" ; then
+-               PROJECT_VERSION="4.7"
++               PROJECT_VERSION="4.8"
+         fi
+         vf="$PROJECT_NAME"-"$PROJECT_VERSION"
+         echo "QHP_VIRTUAL_FOLDER     = $vf" >> "$subdir/Doxyfile"
+diff --git a/doc/common/header.html b/doc/common/header.html
+index 88bf19e..512c70e 100644
+--- a/doc/common/header.html
++++ b/doc/common/header.html
+@@ -39,7 +39,7 @@
+ <div id="header">
+   <div id="header_top"><div><div>
+     <img alt ="" src="@topdir@/top-kde.jpg"/>
+-    KDE 4.7 API Reference  </div></div></div>
++    KDE 4.8 API Reference  </div></div></div>
+   <div id="header_bottom">
+     <div id="location">
+       <ul>
+diff --git a/doc/common/mainheader.html b/doc/common/mainheader.html
+index 9cea33f..e5adb56 100644
+--- a/doc/common/mainheader.html
++++ b/doc/common/mainheader.html
+@@ -39,7 +39,7 @@
+ <div id="header">
+   <div id="header_top"><div><div>
+     <img alt ="" src="@topdir@/top-kde.jpg"/>
+-    KDE 4.7 API Reference  </div></div></div>
++    KDE 4.8 API Reference  </div></div></div>
+   <div id="header_bottom">
+     <div id="location">
+       <ul>
