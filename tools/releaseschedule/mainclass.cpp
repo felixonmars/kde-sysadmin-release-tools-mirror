@@ -107,9 +107,9 @@ QString MainClass::explanation( Events event )
                 desc = "Final release is released for general consumption.";
                 break;
         case docfreeze :
-                desc = "No more substantive changes to documentation or handbooks "
-                       "after this date. Typos, spelling and simple grammar changes "
-                       "are permitted.";
+                desc = "No more changes to documentation or handbooks after this date. "
+                       "For typos, spelling and simple grammar changes you have to mail "
+                       "kde-i18n-doc for approval.";
                 break;
         case tagfreeze :
                 desc = "During tagging freeze only compilation fixes for all "
