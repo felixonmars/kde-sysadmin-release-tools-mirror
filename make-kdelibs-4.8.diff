@@ -1,16 +1,16 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e4641d1..20251ea 100644
+index 1cad718..bdd488e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,9 +10,9 @@ include(CPack)
  
  set (KDE_VERSION_MAJOR 4)
  set (KDE_VERSION_MINOR 7)
--set (KDE_VERSION_RELEASE 3)
-+set (KDE_VERSION_RELEASE 90)
+-set (KDE_VERSION_RELEASE 4)
++set (KDE_VERSION_RELEASE 95)
  set (KDE_VERSION "${KDE_VERSION_MAJOR}.${KDE_VERSION_MINOR}.${KDE_VERSION_RELEASE}" )
--set (KDE_VERSION_STRING "${KDE_VERSION} (4.7.3)")
-+set (KDE_VERSION_STRING "${KDE_VERSION} (4.8 Beta2 (4.7.90))")
+-set (KDE_VERSION_STRING "${KDE_VERSION} (4.7.4)")
++set (KDE_VERSION_STRING "${KDE_VERSION} (4.8 RC1 (4.7.95)")
  
  set (KDE_DISTRIBUTION_TEXT "compiled sources" CACHE STRING "Indicate the distribution in bug reports" )
  
