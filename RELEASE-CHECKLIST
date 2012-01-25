@@ -89,10 +89,11 @@ On release day:
 
 - Check with Dirk if packages are ready, and enabled for synching to the public FTPs, this should happen about 6 - 8 hours in advance of the public announcement
 - Prepare the websites:
-    * add announcement to www/announcements/announce-x.x.x.php
+    * add announcement to www/announcements/announce-x.x.x.php with "INCOMPLETE DRAFT ANNOUNCEMENT" warning if preparing in advanace
     When most of the mirrors behind http://download.kde.org have updated:
     Commit announcement (after adding PHP header/footer)
     * have announcement text and Dot story reviewed on IRC
+    * remove "Draft" warning on www/announcements/announce-x.x.x.php
     Add an entry to
     * www/index.php,
     * www/announcements/index.php,
