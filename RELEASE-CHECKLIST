@@ -30,7 +30,7 @@ Update version number
  * kde-baseapps/CMakeLists.txt
  * kde-runtime/CMakeLists.txt
  * kde-workspace/CMakeLists.txt
- * kdelibs/kdecore/sycoca/ksycoca.h --> ksycoca version number
+ * kdelibs/kdecore/sycoca/ksycoca.cpp --> ksycoca version number
  * kdelibs/README
  * kdenetwork/kopete/libkopete/kopeteversion.h
  * gwenview/lib/version.h

@@ -3,19 +3,18 @@
 
 source `dirname $0`/common $1 $2
 
-bzip2=$(type -p pbzip2)
-bunzip2=$(type -p pbunzip2)
+compressors="pbzip2 bzip2"
+#compressors="pixz xz $compressors"
 
-if ! [ -x $bzip2 ]; then
-  bzip2=$(type -p bzip2)
-fi
+for c in $compressors; do
+  compress=$(type -p $c)
+  if [ -x $compress }; then
+    break;
+  fi
+done
 
-if ! [ -x $bunzip2 ]; then
-  bunzip2=$(type -p bzip2)
-fi
-
-if ! [ -x $bzip2 ] || ! [ -x $bunzip2 ] ; then
-  echo "error: need at least pbzip2/bzip2 installed."
+if ! [ -x $compress ] || ; then
+  echo "error: need at least bzip2 installed."
   exit 1
 fi
 
@@ -25,15 +24,15 @@ if test $isl10n -eq 1; then
   cat subdirs | while read lang; do
     rsubdir=$package-$lang-$version
     mv $lang $rsubdir
-    tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | $bzip2 -9 > ../../sources/$package/$rsubdir.tar.bz2
+    tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | $compress -9 > ../../sources/$package/$rsubdir.tar.bz2
     mv $rsubdir $lang
   done
   cd ..
 else
  echo "mv $package $package-$version"
  mv $package $package-$version || exit 1
- echo "tar --owner=root --group=root -c -I $bzip2 -f $package-$version.tar.bz2 $package-$version"
- tar --owner=root --group=root -c -I $bzip2 -f $package-$version.tar.bz2 $package-$version || exit 1
+ echo "tar --owner=root --group=root -c -I $compress -f $package-$version.tar.bz2 $package-$version"
+ tar --owner=root --group=root -c -I $compress -f $package-$version.tar.bz2 $package-$version || exit 1
 fi
 
 if test $isl10n -eq 0; then
