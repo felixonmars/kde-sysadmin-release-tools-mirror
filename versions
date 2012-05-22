@@ -1,6 +1,6 @@
 function set_urls {
 case $1 in
-  kde-l10n|kde-i18n)
+  kde-l10n)
     HEADURL=branches/stable/l10n-kde4
     DESTURL=tags/KDE/4.0.2/kde-l10n
     subname=kde-l10n

@@ -71,7 +71,7 @@ cd_package()
   ) || exit 1
   fi
 
-  if [ $package = "kde-l10n" -o $package = "kde-i18n" ]; then
+  if [ $package = "kde-l10n" ]; then
   (
      cd_package
      echo "Removing other stuff"
@@ -119,7 +119,7 @@ cd_package()
   )
   fi
 
-  if [ $package = "kde-l10n" -o $package = "koffice-l10n" -o $package = "kde-i18n" ]; then
+  if [ $package = "kde-l10n" -o $package = "koffice-l10n" ]; then
   (
     cd_package
 
