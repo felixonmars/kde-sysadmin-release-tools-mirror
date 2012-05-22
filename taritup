@@ -8,7 +8,7 @@ compressors="pbzip2 bzip2"
 
 for c in $compressors; do
   compress=$(type -p $c)
-  if [ -x $compress }; then
+  if [ -x $compress ]; then
     break;
   fi
 done
