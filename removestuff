@@ -87,6 +87,7 @@ cd_package()
        $rm_command messages/kdenonbeta 
        $rm_command docs/kdenonbeta 
        $rm_command messages/extragear-*
+       $rm_command messages/www
        $rm_command messages/playground-*
        $rm_command messages/no-auto-merge
        $rm_command docs/extragear-* 
