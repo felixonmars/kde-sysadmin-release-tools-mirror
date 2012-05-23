@@ -1,8 +1,12 @@
-pushd clean
-test -e kdebase-workspace || ln -s kdebase/workspace kdebase-workspace
-test -e kdebase-runtime || ln -s kdebase/runtime kdebase-runtime
-test -e kdelibs-experimental || ln -s kdelibs/experimental kdelibs-experimental
-test -e kdepim-runtime || ln -s kdepim/runtime kdepim-runtime
-popd
+cat modules.git | while read i branch; do
+    echo "Packing $i"
+    ./pack $i;
+    echo ""
+done
 
-for i in `cat modules`; do ./pack $i; done
+for i in `cat modules`; do
+    echo "Packing $i"
+    ./pack $i;
+    echo ""
+done
+
