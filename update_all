@@ -3,15 +3,20 @@
 
 cat modules.git | while read i branch; do
   ( cd clean/$i
-    git pull --rebase
+    echo "Updating $i. Branch $branch"
     git checkout $branch
+    git pull --rebase
+    git rev-parse HEAD
+    echo ""
   )
 done
 
 for i in $(<modules); do
   ( cd clean/$i
+    echo "Updating $i"
     svn up
     svn info | grep URL:
+    echo ""
   )
 done
 
