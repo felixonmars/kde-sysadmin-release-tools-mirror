@@ -4,7 +4,9 @@
 source `dirname $0`/common $1 $2
 
 compressors="pbzip2 bzip2"
-#compressors="pixz xz $compressors"
+#compressors="pixz xz"
+compressedextension="bz2"
+#compressedextension="xz"
 
 for c in $compressors; do
   compress=$(type -p $c)
@@ -26,19 +28,19 @@ if test $isl10n -eq 1; then
   cat subdirs | while read lang; do
     rsubdir=$package-$lang-$version
     mv $lang $rsubdir
-    tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | $compress -9 > ../../sources/$package/$rsubdir.tar.bz2
+    tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | $compress -9 > ../../sources/$package/$rsubdir.tar.$compressedextension
     mv $rsubdir $lang
   done
   cd ..
 else
  echo "mv $package $package-$version"
  mv $package $package-$version || exit 1
- echo "tar --owner=root --group=root -c -I $compress -f $package-$version.tar.bz2 $package-$version"
- tar --owner=root --group=root -c -I $compress -f $package-$version.tar.bz2 $package-$version || exit 1
+ echo "tar --owner=root --group=root -c -I $compress -f $package-$version.tar.$compressedextension $package-$version"
+ tar --owner=root --group=root -c -I $compress -f $package-$version.tar.$compressedextension $package-$version || exit 1
 fi
 
 if test $isl10n -eq 0; then
-  mv $package-$version.tar.bz2 ../sources
+  mv $package-$version.tar.$compressedextension ../sources
   echo "rm -f $package*tar"
   rm -f $package*tar
   echo "rm -rf $package-$version"
