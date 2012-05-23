@@ -13,7 +13,7 @@ for c in $compressors; do
   fi
 done
 
-if ! [ -x $compress ] || ; then
+if ! [ -x $compress ] ; then
   echo "error: need at least bzip2 installed."
   exit 1
 fi
