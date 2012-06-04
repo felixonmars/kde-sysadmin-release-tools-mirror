@@ -9,7 +9,10 @@ setup_branch_checkout()
     git checkout KDE/4.8
 }
 
-svn export -N $BASE/tags/KDE/4.8.2/kdemultimedia
+svn export -N $BASE/tags/KDE/4.8.3/kdemultimedia
+svn export -N $BASE/tags/KDE/4.8.3/kdemultimedia/kioslave kdemultimedia/kioslave
+mkdir kdemultimedia/cmake
+svn export -N $BASE/tags/KDE/4.8.3/kdemultimedia/cmake/modules kdemultimedia/cmake/modules
 (
     cd kdemultimedia
 
@@ -21,6 +24,6 @@ svn export -N $BASE/tags/KDE/4.8.2/kdemultimedia
     done
 
     mv strigi-multimedia strigi-analyzer
-    mv audiocd-kio kioslave
+    mv audiocd-kio kioslave/audiocd
     mv dragon dragonplayer
 )
