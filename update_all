@@ -4,6 +4,7 @@
 cat modules.git | while read i branch; do
   ( cd clean/$i
     echo "Updating $i. Branch $branch"
+    git pull --rebase
     git checkout $branch
     git pull --rebase
     git rev-parse HEAD
