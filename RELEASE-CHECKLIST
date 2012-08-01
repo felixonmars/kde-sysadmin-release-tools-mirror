@@ -26,6 +26,7 @@ Checkout branch:
 
 Update version number
  * kdelibs/CMakeLists.txt
+ * kdelibs/cmake/modules/KDE4Defaults.cmake
  * kdepimlibs/CMakeLists.txt
  * kde-baseapps/CMakeLists.txt
  * kde-runtime/CMakeLists.txt
