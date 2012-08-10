@@ -3,10 +3,10 @@
 
 source `dirname $0`/common $1 $2
 
-compressors="pbzip2 bzip2"
-#compressors="pixz xz"
-compressedextension="bz2"
-#compressedextension="xz"
+#compressors="bzip2"
+compressors="xz"
+#compressedextension="bz2"
+compressedextension="xz"
 
 for c in $compressors; do
   compress=$(type -p $c)
