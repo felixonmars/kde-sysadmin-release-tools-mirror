@@ -2,7 +2,6 @@
 # vim: sw=2 et
 
 # This is a helper script, which removes the useless stuff from some modules.
-# For instance it separates the koffice translations between kde-l10n and koffice-l10n.
 # Call it with the package name as argument, like:  ./removestuff kde-l10n
 
 # This is called by tag_all with DO_SVN=1 in order to remove unused stuff from a tag.
@@ -33,43 +32,6 @@ cd_package()
     cd $package || { echo "bah! $package doesn't exist in $PWD"; exit 1; }
   fi
 }
-
-  if [ $package = "koffice-l10n" ]; then
-  (
-     # Most of this is redundant if you use the koffice-l10n script.
-     # However, the removing kdgantt.po part is necessary, and the rest is
-     # harmless.
-     cd_package
-     echo "Removing non-koffice stuff"
-     $rm_command templates
-     if grep -E -q '[a-z] +$' subdirs; then
-       echo "subdirs has a trailing space on a line! This breaks stuff, fix it."
-       exit 1
-     fi
-     cat */pack-with-variants subdirs | sort -u | while read lang; do
-       cd $lang || continue
-       echo $lang
-       $rm_command internal
-       $rm_command docmessages
-       $rm_command webmessages
-       test -f messages/koffice/kdgantt.po && $rm_command messages/koffice/kdgantt.po
-       for sub in messages docs data; do
-         test -d $sub || continue
-         cd $sub
-         for i in *; do
-           test $i != "koffice" -a $i != "Makefile.am" && $rm_command $i
-         done
-         cd ..
-         files=`ls -1 $sub | wc -l`
-         test $files -eq 0 && $rm_command $sub
-       done
-       cd ..
-     done
-     echo "Removing template specific stuff"
-     $rm_command templates
-     $rm_command debian || true
-  ) || exit 1
-  fi
 
   if [ $package = "kde-l10n" ]; then
   (
@@ -120,7 +82,7 @@ cd_package()
   )
   fi
 
-  if [ $package = "kde-l10n" -o $package = "koffice-l10n" ]; then
+  if [ $package = "kde-l10n" ]; then
   (
     cd_package
 
@@ -149,7 +111,7 @@ cd_package()
 	    fi
         fi
 
-        # For KOffice, some languages directories may be entirely empty
+        # some languages directories may be entirely empty
         # by this point.
         if test -d $dir ; then
           files=`ls -1 $dir | wc -l`
@@ -158,16 +120,6 @@ cd_package()
 
     done
     ) || exit 1
-  fi
-
-  if [ $package = "koffice" ]; then
-  (
-     cd_package
-#     $rm_command kexi
-     $rm_command kivio
-     $rm_command tools/f-office
-     echo "Removing non-released stuff"
-  )
   fi
 
   if [ $package = "kdenetwork" ]; then

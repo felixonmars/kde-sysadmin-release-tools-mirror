@@ -5,16 +5,6 @@ case $1 in
     DESTURL=tags/KDE/4.0.2/kde-l10n
     subname=kde-l10n
     ;;
-  koffice-l10n)
-    HEADURL=branches/stable/l10n
-    DESTURL=tags/koffice/1.6.0/koffice-l10n
-    subname=koffice-l10n
-    ;;
-  koffice)
-    HEADURL=branches/koffice/1.6/koffice
-    DESTURL=tags/koffice/1.6.0/$1
-    subname=$1
-    ;;
   oxygen-icons)
     HEADURL=trunk/kdesupport/$1
     DESTURL=tags/KDE/4.0.2/$1

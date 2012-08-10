@@ -8,12 +8,6 @@ test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 if test -z "$version"; then
 
 case $package in
-  koffice)
-    version=1.9.95.3
-    ;;
-  koffice-l10n)
-    version=1.6.0
-    ;;
   *)
     version=4.0.2
     ;;

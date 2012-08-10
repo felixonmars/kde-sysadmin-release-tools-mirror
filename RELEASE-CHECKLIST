@@ -37,14 +37,13 @@ Update version number
  * gwenview/lib/version.h
  * kdepim/CMakeLists.txt (KDEPIM_DEV_VERSION / KDEPIM_VERSION)
  * kdepim-runtime/CMakeLists (KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION)
- * for koffice: configure.in.in, lib/kofficecore/kofficeversion.h, etc.
  * common and versions scripts
 
 Update kdepackages in kdelibs/kdeui
 In the stable branch, remove the MALLOC_CHECK_ block from kdebase/workspace/startkde.cmake
 Run "fixuifiles"
 Make sure the meinproc in path is a version of the correct branch
-Use tag_all to get clean sources into "clean" directory (e.g. <releasedir>/clean/koffice)
+Use tag_all to get clean sources into "clean" directory (e.g. <releasedir>/clean)
 Make tarballs using "pack <module>". Start with kde-l10n. Do kdelibs/kdebase last.
 If you have to redo a tarball because of a code change and don't want to wait for meinproc to complete,
  extract the old tarball inside cache/<module> before calling "pack". The docu script will
@@ -56,7 +55,6 @@ create contrib/ directory and make it g+w for group "packager"
 Test tarballs
 md5sum *.tar.bz2 kde-l10n/*.tar.bz2 > MD5SUMS
 gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
-(Note: for KOffice, MD5SUMS should be signed with --clearsign instead of --detach-sign.)
 Prepare a Changelog
 Inform the packagers (kde-packager at kde dot org)
 Ask for/write announcement (on the kde-promo mailing-list)
@@ -64,7 +62,7 @@ Ask for/write announcement (on the kde-promo mailing-list)
 When everything is ready:
 
 - Make directory on the FTP site readable, so that mirrors can start getting it
-  Update latest and/or {koffice,kdevelop}-latest symlinks on the FTP site
+  Update latest and/or {kdevelop}-latest symlinks on the FTP site
 
 - clean up the older releases. Make sure that kdestableftp and kdeunstableftp
   remain in their advertised size limits (~20 GB). Sort out older binary packages, 
