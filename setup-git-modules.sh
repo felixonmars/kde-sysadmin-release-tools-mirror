@@ -4,7 +4,7 @@
 set -x
 
 cd clean
-cat modules.git | while read module branch; do
+cat ../modules.git | while read module branch; do
     if ! test -d $module/.git ; then
         if test -d $module; then
             echo "ERROR: $module exists but is no git repo!"
