@@ -1,0 +1,96 @@
+What does each file in this folder do?
+======================================
+
+ * anon
+    Removes the .git and .svn files from a folder since we do not want to package them
+    Run by 'pack' so there should not be any need to run it manually
+ 
+ * checkout
+    Downloads the svn modules specified in the modules file
+    Should be run by the packager
+ 
+ * checkxml
+    TODO
+ 
+ * common
+    Defines the package version and a few more vars
+    Should be updated by the packager
+ 
+ * compile_all
+    TODO
+ 
+ * config.options
+    TODO
+ 
+ * create_all_changelogs
+    TODO
+ 
+ * create_sources_inc
+    Creates the contents of the files that end up in trunk/www/sites/www/info/source-4.9.0.inc
+    Should be run by the packager and uploaded to www
+ 
+ * difftarball
+    TODO
+ 
+ * dist
+    Runs removestuff and autogen (this one only for l10n)
+    Run by 'pack' so there should not be any need to run it manually
+ 
+ * docu
+    Compiles the documentation
+    Run by 'pack' so there should not be any need to run it manually
+ 
+ * dosnapshot
+    TODO
+ 
+ * language_list
+    Holds the list of languages that need to be released
+ 
+ * Makefile.docu
+    Makefile to compile the documentation
+    Run by 'doc' so there should not be any need to run it manually
+ 
+ * modules
+    List of svn modules
+ 
+ * modules.git
+    List of git repositories + branches
+ 
+ * pack
+    Creates the tarball of a given module
+    Should be run by the packager if needs to package just one module
+ 
+ * pack_all
+    Creates the tarball of all modules
+    Should be run by the packager if needs to package all modules
+ 
+ * README
+    This file
+ 
+ * RELEASE-CHECKLIST
+    A list of things to do check/do when doing a release
+ 
+ * removestuff
+    Removes stuff from the source dir that should not be released
+    Run by 'dist' so there should not be any need to run it manually
+ 
+ * setup-git-modules.sh
+    Downloads the git repositories specified in the modules.git file
+    Should be run by the packager
+ 
+ * snapmodules
+    TODO
+ 
+ * svn2log.py
+    TODO
+ 
+ * taritup
+    Creates a tar for the release
+    Run by 'pack' so there should not be any need to run it manually
+ 
+ * update_all
+    Updates the contents of all the svn and git repos
+    Can be run by the packager if needs to update the contents (e.g. to create new tarballs)
+ 
+ * versions
+    Defines the urls for the svn modules
