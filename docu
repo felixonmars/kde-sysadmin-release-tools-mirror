@@ -1,11 +1,42 @@
 CDPATH=
 
+# Needed to compile docbookl10nhelper
+CXX=g++
+CFLAGS_QT4="-I/usr/include/qt4/QtCore/ -I/usr/include/qt4/ -I/usr/include/qt4/QtXml"
+LDFLAGS_QT4_CORE=-lQtCore
+
+# Needed to correctly replace stuff in the ,cmake files
+# DOCBOOK_LOCATION should contain a file named catalog whose header says "Catalog data for DocBook XML V4.2"
+# DOCBOOKXSL_LOCATION  should contains a file named catalog.xml whose header says "XML Catalog file for DocBook XSL Stylesheets"
+DOCBOOK_LOCATION=/usr/share/xml/docbook/schema/dtd/4.2/
+DOCBOOKXSL_LOCATION=/usr/share/xml/docbook/stylesheet/nwalsh/
+
 # make sure we leave no corefiles behind
 ulimit -c 0
 
 adir=$(cd $(dirname $0); echo $PWD)
 pushd $1
 
+kdoctools_root=../kdoctools_for_compiling
+
+# Clean the kdoctools_root (in case it exists) and copy stuff from kdelibs there
+rm -rf $kdoctools_root
+cp -R `pwd`/../../clean/kdelibs/kdoctools/ $kdoctools_root
+
+# Compile docboojl10nhelper
+g++ $CFLAGS_QT4 $kdoctools_root/docbookl10nhelper.cpp $LDFLAGS_QT4_CORE -o $kdoctools_root/docbookl10nhelper
+
+# Do some of the cmake magic
+sed s#@DOCBOOKXML_CURRENTDTD_DIR@#$DOCBOOK_LOCATION#g $kdoctools_root/customization/dtd/kdex.dtd.cmake > $kdoctools_root/customization/dtd/kdex.dtd
+sed s#@DOCBOOKXSL_DIR@#$DOCBOOKXSL_LOCATION#g $kdoctools_root/customization/kde-include-common.xsl.cmake > $kdoctools_root/customization/kde-include-common.xsl
+sed s#@DOCBOOKXSL_DIR@#$DOCBOOKXSL_LOCATION#g $kdoctools_root/customization/kde-include-man.xsl.cmake > $kdoctools_root/customization/kde-include-man.xsl
+$kdoctools_root/docbookl10nhelper $DOCBOOKXSL_LOCATION $kdoctools_root/customization/xsl/ $kdoctools_root/customization/xsl/
+
+# Compile the docs
 NUM_PROC=$(($(grep -c processor /proc/cpuinfo)+1))
-make -k -f $adir/Makefile.docu -j$NUM_PROC SOURCE_DIR=$adir/sources
+make -k -f $adir/Makefile.docu -j$NUM_PROC SOURCE_DIR=$adir/sources KDOCTOOLS_DIR=$kdoctools_root
+
+# Clean the kdoctools_root
+rm -rf $kdoctools_root
+
 popd
