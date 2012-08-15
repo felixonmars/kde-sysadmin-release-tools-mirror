@@ -1,9 +1,5 @@
 == Release Engineering ==
 
-Ensure you use the right version of the scripts:
- Use this directory to release kde-4.x versions.
- Use the 3.5 branch for kde-3.x versions!
-
 Make the following directories:
 clean sources-old sources dirty
 and optionally:
