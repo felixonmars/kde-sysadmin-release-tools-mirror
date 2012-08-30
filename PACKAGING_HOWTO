@@ -23,6 +23,8 @@ obviously some of the 4.9.0 need to be replaced by the version you are packaging
    in case of doubt sysadmin will kindly help you
    Note that usually the tarballs are first only available to distro packagers
    and later they are public to everyone. sysadmin knows how to do that
+ * Inform kde-packager@kde.org and release-team@kde.org
+ * Make sure someone acts on RELEASE_PROMOTION
  * Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.9.0.inc
    Coordinate with the people doing web announcement for this
  * Once the release has been publicly announced use the UPDATE_LOG contents to tag svn and git

@@ -1,10 +1,5 @@
 == Release Engineering ==
 
-Make the following directories:
-clean sources-old sources dirty
-and optionally:
-test build done
-
 Choose version number: 
  * remember that RPM is stupid and considers 5.0beta1 newer than
    5.0, so always use "code versions" for the packages. Also
@@ -15,93 +10,16 @@ Make sure that dependencies are met:
  * new soprano release needed?
  * new akonadi release needed (check kdepimlibs/akonadi/session_p.h)
 
-Checkout branch:
- fix the paths in versions script
- use the checkout script
- clean up the cache/ directory from previous builds
-
-Update version number
- * kdelibs/CMakeLists.txt
- * kdelibs/cmake/modules/KDE4Defaults.cmake
- * kdepimlibs/CMakeLists.txt
- * kde-baseapps/CMakeLists.txt
- * kde-runtime/CMakeLists.txt
- * kde-workspace/CMakeLists.txt
- * kdelibs/kdecore/sycoca/ksycoca.cpp --> ksycoca version number
- * kdelibs/README
- * kdenetwork/kopete/libkopete/kopeteversion.h
- * gwenview/lib/version.h
- * kdepim/CMakeLists.txt (KDEPIM_DEV_VERSION / KDEPIM_VERSION)
- * kdepim-runtime/CMakeLists (KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION)
- * common and versions scripts
-
-Update kdepackages in kdelibs/kdeui
-In the stable branch, remove the MALLOC_CHECK_ block from kdebase/workspace/startkde.cmake
-Run "fixuifiles"
-Make sure the meinproc in path is a version of the correct branch
-Use tag_all to get clean sources into "clean" directory (e.g. <releasedir>/clean)
-Make tarballs using "pack <module>". Start with kde-l10n. Do kdelibs/kdebase last.
-If you have to redo a tarball because of a code change and don't want to wait for meinproc to complete,
- extract the old tarball inside cache/<module> before calling "pack". The docu script will
- then use the version from the cache instead of regenerating it, saving a lot of time.
-Upload tarballs to their final location, as 'ftprelease' user under a src/ directory.
-chmod o-rwx any new dir (so that they're not yet public)
-chmod g+w the new directory where packagers will put their files
-create contrib/ directory and make it g+w for group "packager"
-Test tarballs
-md5sum *.tar.bz2 kde-l10n/*.tar.bz2 > MD5SUMS
-gpg --detach-sign -a MD5SUMS (if you're bored, do it for all files)
-Prepare a Changelog
-Inform the packagers (kde-packager at kde dot org)
-Ask for/write announcement (on the kde-promo mailing-list)
-
-When everything is ready:
-
-- Make directory on the FTP site readable, so that mirrors can start getting it
-  Update latest and/or {kdevelop}-latest symlinks on the FTP site
-
-- clean up the older releases. Make sure that kdestableftp and kdeunstableftp
-  remain in their advertised size limits (~20 GB). Sort out older binary packages, 
-  add compatibility links.
-
-- Enable syncing during the night, so that the uplink can be saturated and
-  does not affect interactive server load and network traffic. 
-
-- Pre-notify sysadm@trolltech.com and sysadmin@kde.org about an upcoming release
-  so that they can be ready for fixing bandwidth problems, server outages or similiar.
-  Its not uncommon that slashdotting affects our server structure, and the right
-  people have to know about the release date and time to be able to react in time. 
-
-== Release Promotion ==
-
-Before releases:
-
-- Keep an eye on release-team mailinglist when packages are posted to kde-packagers
-- Let Dirk know a day or so in advance what your plans are for the release (i.e.
-when to push out news, how to handle possible delays, etc.)
-
-On release day:
-
-- Check with Dirk if packages are ready, and enabled for synching to the public FTPs, this should happen about 6 - 8 hours in advance of the public announcement
-- Prepare the websites:
-    * add announcement to www/announcements/announce-x.x.x.php with "INCOMPLETE DRAFT ANNOUNCEMENT" warning if preparing in advanace
-    When most of the mirrors behind http://download.kde.org have updated:
-    Commit announcement (after adding PHP header/footer)
-    * have announcement text and Dot story reviewed on IRC
-    * remove "Draft" warning on www/announcements/announce-x.x.x.php
-    Add an entry to
-    * www/index.php,
-    * www/announcements/index.php,
-    * www/info/releases.php (only for stable releases + updates),
-    * www/download/index.php (only for stable releases + updates) and
-    * www/whatiskde/project.php  (only for stable releases + updates)
-
-Post announcement in text to kde-announce@kde.org
-Post news bit to
-  * kde-press-announce (may also do so before the release under EMBARGO, then lift it with
-    another email, if in doubt, ask sebas, lydia or kde-ev-marketing)
-  * kde-announce@kde.org : text from the release announcement, possibly shortened a bit + link
-    to the official announcement
-  * dot.kde.org (via Dot web interface, submit under "Official News")
-  * identi.ca / twitter
-  * other news outlets optionally, optionally
+For each release (i.e. x.y.z)
+ * kdelibs/CMakeLists.txt - KDE_VERSION_*
+ * kdelibs/README - This is version x.y.z of the KDE libraries.
+ * kdelibs/cmake/modules/KDE4Defaults.cmake - GENERIC_LIB_VERSION and KDE_NON_GENERIC_LIB_VERSION
+ * kdelibs/kdecore/sycoca/ksycoca.cpp --> KSYCOCA_VERSION
+ * kdepimlibs/CMakeLists.txt - KDEPIMLIBS_VERSION_*
+ * kde-workspace/CMakeLists.txt - KDE4WORKSPACE_VERSION_*
+ * kdenetwork/kopete/libkopete/kopeteversion.h - KOPETE_VERSION_*
+ * kdepim/CMakeLists.txt - KDEPIM_DEV_VERSION / KDEPIM_VERSION
+ * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
+ 
+For .0 releases (i.e. x.y.0)
+ * kde-workspace/startkde.cmake - Make sure the MALLOC_CHECK_ block is removed
