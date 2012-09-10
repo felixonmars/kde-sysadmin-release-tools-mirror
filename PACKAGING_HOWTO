@@ -47,3 +47,6 @@ suggested procedure is
 
 Note 2:
 You only have to publish the l10n tarballs of the languages present in language_list
+
+Note 3:
+For KDE 4.9.x, x >= 2 the pack_kdegames script creates a fake monolitic tarball from the git repos
