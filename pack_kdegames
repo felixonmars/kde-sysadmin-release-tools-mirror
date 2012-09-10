@@ -1,0 +1,47 @@
+#!/bin/bash
+# Special for KDE 4.9 lifefime, pack kdegames monolithic
+package=kdegames
+source `dirname $0`/common $package $2
+
+MEINPROCPATH=`type -p meinproc`
+if test -f "$MEINPROCPATH"; then
+  MEINPROCPATH=`dirname $MEINPROCPATH`
+fi
+if test -n "$MEINPROCPATH"; then
+  export PATH=$MEINPROCPATH:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin
+  echo "PATH changed to $PATH"
+fi
+test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
+test -d clean || { echo "create clean subdir with svn checkout"; exit 1; }
+test -d dirty || mkdir dirty || { echo "create empty subdir dirty"; exit 1; }
+test -d sources || mkdir sources || { echo "create empty subdir sources"; exit 1; }
+
+test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
+test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package; }
+
+mkdir dirty/kdegames
+cp kdegames49cmakelists.txt dirty/kdegames/CMakeLists.txt
+repos="bomber bovo granatier kajongg kapman katomic kblackbox kblocks kbounce kbreakout kdiamond kfourinline kgoldrunner kigo killbots kiriki kjumpingcube klickety klines kmahjongg kmines knavalbattle knetwalk kolf kollision konquest kpat kreversi kshisen ksirk ksnakeduel kspaceduel ksquares ksudoku ktuberling kubrick libkdegames libkmahjongg lskat palapeli"
+for repo in $repos; do
+  echo "cp -pr clean/$repo/ dirty/kdegames"
+  cp -pr clean/$repo/ dirty/kdegames || exit 1
+done
+
+echo "cd dirty"
+cd dirty || exit 1
+
+# Anonymize checkout by removing the SVN information from it.
+echo "anon $package"
+$scriptpath/anon $package || exit 1
+
+# Generate docu
+echo "docu $package"
+$scriptpath/docu $package
+
+# Prepare for distribution
+echo "dist $package"
+$scriptpath/dist $package $version || exit 1
+
+# Final packaging
+echo "taritup $package"
+$scriptpath/taritup $package $version || exit 1
