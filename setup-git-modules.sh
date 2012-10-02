@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: sw=4 et
 
-set -x
+#set -x
 
 cd clean
 cat ../modules.git | while read module branch; do

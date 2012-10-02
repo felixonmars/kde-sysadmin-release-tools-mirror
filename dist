@@ -6,7 +6,7 @@
   if test $isl10n -eq 1; then
     cd $package
     cat subdirs | while read lang; do
-      scripts/autogen.sh $lang || exit 1
+      scripts/autogen.sh $lang || echo "ERROR with: $lang"
     done
   fi
 

@@ -9,7 +9,7 @@ if test -z "$version"; then
 
 case $package in
   *)
-    version=4.9.1
+    version=4.9.2
     ;;
 esac
 

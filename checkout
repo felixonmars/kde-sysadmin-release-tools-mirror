@@ -5,8 +5,8 @@
 # language_list becomes the subdirs file in the l10n module, make sure it's uptodate.
 # Once it's all done, the script checks out the tagged directories under clean/.
 
-#SVNUSER=coolo
-#SVNPROTOCOL=svn+ssh
+SVNUSER=tnyblom
+SVNPROTOCOL=svn+ssh
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
 test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
@@ -17,6 +17,7 @@ BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
 
 cd clean
 for i in `cat ../modules`; do
+  echo "$i..."
   set_urls $i
   if test -d $subname; then 
         svn switch $BASE/$HEADURL $subname
