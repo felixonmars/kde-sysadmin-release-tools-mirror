@@ -3,6 +3,10 @@
 
 #set -x
 
+if test -z "$BASE"; then
+    BASE="git@git.kde.org"
+fi
+
 cd clean
 cat ../modules.git | while read module branch; do
     if ! test -d $module/.git ; then
@@ -13,7 +17,7 @@ cat ../modules.git | while read module branch; do
     fi
 
     if ! test -d $module; then
-        git clone git@git.kde.org:$module
+        git clone $BASE:$module
     fi
 
     if test -d $module; then

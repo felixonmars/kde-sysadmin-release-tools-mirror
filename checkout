@@ -8,10 +8,12 @@
 SVNUSER=tnyblom
 SVNPROTOCOL=svn+ssh
 
-test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
-test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
+if test -z "$BASE"; then
+    test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
+    test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }
 
-BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
+    BASE=$SVNPROTOCOL://$SVNUSER@svn.kde.org/home/kde
+fi
 
 . versions
 
