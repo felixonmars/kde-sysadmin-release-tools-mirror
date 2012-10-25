@@ -23,7 +23,7 @@ if ! [ -x $compress ] ; then
 fi
 
 if test $isl10n -eq 1; then
-  cd $package
+  pushd $package
   echo "making per-language tarballs"
   cat subdirs | while read lang; do
     rsubdir=$package-$lang-$version
@@ -31,7 +31,7 @@ if test $isl10n -eq 1; then
     tar --owner=root --group=root -c --exclude autom4te.cache $rsubdir | $compress -9 > ../../sources/$package/$rsubdir.tar.$compressedextension
     mv $rsubdir $lang
   done
-  cd ..
+  popd
 else
  echo "mv $package $package-$version"
  mv $package $package-$version || exit 1
