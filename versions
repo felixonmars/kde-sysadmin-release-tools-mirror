@@ -6,10 +6,6 @@ case $1 in
     ;;
   oxygen-icons)
     HEADURL=trunk/kdesupport/$1
-    subname=$1
-    ;;
-  oxygen-icons)
-    HEADURL=trunk/kdesupport/$1
     DESTURL=tags/KDE/4.9.2/$1
     subname=$1
     ;;
