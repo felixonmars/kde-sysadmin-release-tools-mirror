@@ -24,7 +24,7 @@ for d in clean/*; do
         branchurl=$(svn info | sed -n -e '/^URL: \(.*\)$/s//\1/p')
         tagurl=`basename ${branchurl}`
 
-        svn copy -m"4.9.2" $branchurl@$rev $TAGDIR/$tagurl || echo $tagurl >> FAILED_TAGGING_LOG
+        svn copy -m"$version" $branchurl@$rev $TAGDIR/$tagurl || echo $tagurl >> FAILED_TAGGING_LOG
     fi
     popd 2> /dev/null > /dev/null
 done
