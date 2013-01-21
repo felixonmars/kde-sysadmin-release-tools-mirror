@@ -6,7 +6,7 @@ case $1 in
     ;;
   oxygen-icons)
     HEADURL=branches/KDE/4.10/$1
-    DESTURL=tags/KDE/4.9.97/$1
+    DESTURL=tags/KDE/4.9.98/$1
     subname=$1
     ;;
   *)
