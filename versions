@@ -1,12 +1,12 @@
 function set_urls {
 case $1 in
   kde-l10n)
-    HEADURL=trunk/l10n-kde4
+    HEADURL=branches/stable/l10n-kde4
     subname=kde-l10n
     ;;
   oxygen-icons)
     HEADURL=branches/KDE/4.10/$1
-    DESTURL=tags/KDE/4.9.98/$1
+    DESTURL=tags/KDE/4.10.0/$1
     subname=$1
     ;;
   *)
