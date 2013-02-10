@@ -1,7 +1,15 @@
 cat modules.git | while read i branch; do
-    echo "Packing $i"
-    ./pack $i;
-    echo ""
+    # Special for KDE 4.10 lifetime, pack kdesdk and kdetoys monolithic
+    case "$i" in 
+        amor|kteatime|ktux|cervisia|dolphin-plugins|kapptemplate|kcachegrind|kde-dev-utils|kde-dev-scripts|kdesdk-kioslaves|kdesdk-strigi-analyzers|kdesdk-thumbnailers|kompare|lokalize|okteta|poxml|umbrello
+          echo "Skipping packaging of $i"
+        ;;
+        *)
+          echo "Packing $i"
+          ./pack $i;
+          echo ""
+        ;;
+    esac
 done
 
 for i in `cat modules`; do
@@ -10,3 +18,10 @@ for i in `cat modules`; do
     echo ""
 done
 
+# Special for KDE 4.10 lifetime, pack kdesdk monolithic
+echo "Special packing kdesdk"
+./pack_kdesdk
+
+# Special for KDE 4.10 lifetime, pack kdetoys monolithic
+echo "Special packing kdetoys"
+./pack_kdetoys
