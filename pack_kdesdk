@@ -21,7 +21,7 @@ test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package;
 
 mkdir dirty/kdesdk
 cp kdesdk410cmakelists.txt dirty/kdesdk/CMakeLists.txt
-repos="cervisia dolphin-plugins kapptemplate kcachegrind kde-dev-scripts kde-dev-utils kdesdk-strigi-analyzers kdesdk-thumbnailers kioslave kompare lokalize okteta poxml umbrello"
+repos="cervisia dolphin-plugins kapptemplate kcachegrind kde-dev-scripts kde-dev-utils kdesdk-strigi-analyzers kdesdk-thumbnailers kdesdk-kioslaves kompare lokalize okteta poxml umbrello"
 for repo in $repos; do
   echo "cp -pr clean/$repo/ dirty/kdesdk"
   cp -pr clean/$repo/ dirty/kdesdk || exit 1
