@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [[ -d sources/kde-l10n ]]; then
+    pushd sources/kde-l10n
+fi
+
+mkdir -p ok
+mkdir -p nok
+for lang in `cat ../../language_list`; do
+    mv kde-l10n-$lang-*.tar.xz ok/
+done
+
+mv kde-l10n-*.tar.xz nok/
+mv ok/* ./
+
+popd
