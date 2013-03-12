@@ -89,16 +89,29 @@ QString MainClass::explanation( Events event )
         case betarelease :
                 desc = "The beta becomes available for general consumption.";
                 break;
+        case betatagrelease :
+                desc = "Trunk is frozen for beta release tagging. Only urgent fixes, "
+                       "such as those fixing compilation errors, should be committed. "
+                       "The usual beta rules apply as soon as the Beta tarballs have "
+                       "been generated. As soon as the tarballs have been confirmed to build "
+                       "and the Release Team thinks they meet enough quality it will be released";
+                break;
         case rctag :
                 desc = "Branch is frozen for release candidate tagging. Only urgent fixes, "
                        "such as those fixing compilation errors, should be committed. ";
                 break;
         case rcrelease :
                 desc = "The release candidate is tagged from the branch. Only urgent "
-                       "fixes, such as those fixing compilation errors, should be committed."
+                       "fixes, such as those fixing compilation errors, should be committed. "
                        "As soon as the RC has been confirmed to build it will be released "
                        "immediately.";
                 break;
+        case rctagrelease :
+                desc = "The release candidate is tagged from the branch. Only urgent "
+                       "fixes, such as those fixing compilation errors, should be committed. "
+                       "As soon as the tarballs have been confirmed to build "
+                       "and the Release Team thinks they meet enough quality it will be released";
+                break;		
         case finaltag :
                 desc = "The branch is frozen for final release tagging. Only urgent fixes, "
                        "such as those fixing compilation errors, should be committed. ";
@@ -167,11 +180,17 @@ QString MainClass::title( Events event, const QString& version )
         case betarelease :
                 desc = QString("Beta %1 Release").arg( version );
                 break;
+        case betatagrelease :
+                desc = QString("Beta %1 Tagging and Release").arg( version );
+                break;
         case rctag :
                 desc = QString("Release Candidate %1 Tagging").arg( version );
                 break;
         case rcrelease :
                 desc = QString("Release Candidate %1 Release").arg( version );
+                break;
+        case rctagrelease :
+                desc = QString("Release Candidate %1 Tagging and Release").arg( version );
                 break;
         case finaltag :
                 desc = "Final Tag";
@@ -233,11 +252,15 @@ QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
     // release candidates before tagging final release
     for ( int i = ui->rcAmount->text().toInt(); i > 0; --i ) {
         timelinePoint = timelinePoint.addDays( ui->rcInterval->value() * -7 );
-        timeline.insert( timelinePoint, makePair( rcrelease, QString::number( i ) ) );
+        if ( ui->rcTagBeforeRelease->value() == 0 ) {
+            timeline.insert( timelinePoint, makePair( rctagrelease, QString::number( i ) ) );
+        } else {
+            timeline.insert( timelinePoint, makePair( rcrelease, QString::number( i ) ) );
 
-        // tagging is a bit earlier.
-        timeline.insert( timelinePoint.addDays( ui->rcTagBeforeRelease->value() * -1 ),
-                         makePair( rctag, QString::number( i ) ) );
+            // tagging is a bit earlier.
+            timeline.insert( timelinePoint.addDays( ui->rcTagBeforeRelease->value() * -1 ),
+                            makePair( rctag, QString::number( i ) ) );
+        }
 
         // one day tagging freeze around RC's.
         timeline.insert( timelinePoint.addDays( (ui->rcTagBeforeRelease->value() * -1) - 1 ),
@@ -247,11 +270,15 @@ QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
     // beta releases before the rc's
     for ( int i = ui->betaAmount->text().toInt(); i > 0; --i ) {
         timelinePoint = timelinePoint.addDays( ui->betaInterval->value() * -7 );
-        timeline.insert( timelinePoint, makePair( betarelease, QString::number( i ) ) );
+        if ( ui->betaTagBeforeRelease->value() == 0 ) {
+            timeline.insert( timelinePoint, makePair( betatagrelease, QString::number( i ) ) );
+        } else {
+            timeline.insert( timelinePoint, makePair( betarelease, QString::number( i ) ) );
 
-        // tagging is a bit earlier.
-        timeline.insert( timelinePoint.addDays( ui->betaTagBeforeRelease->value() * -1 ),
-                         makePair( betatag, QString::number( i ) ) );
+            // tagging is a bit earlier.
+            timeline.insert( timelinePoint.addDays( ui->betaTagBeforeRelease->value() * -1 ),
+                            makePair( betatag, QString::number( i ) ) );
+        }
     }
 
     // Stuff before tagging of the first beta.

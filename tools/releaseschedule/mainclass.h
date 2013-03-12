@@ -17,8 +17,8 @@ class MainClass : public QMainWindow
 public:
     enum Events { sffreeze, hffreeze, safreeze, hafreeze,
                   depfreeze, docfreeze, tagfreeze, artfreeze,
-                  smfreeze, hmfreeze, betatag, betarelease,
-                  rctag, rcrelease, finaltag, finalrelease, 
+                  smfreeze, hmfreeze, betatag, betarelease, betatagrelease,
+                  rctag, rcrelease, rctagrelease, finaltag, finalrelease, 
                   minortag, minorrelease };
     MainClass(QWidget *parent = 0);
     ~MainClass();
