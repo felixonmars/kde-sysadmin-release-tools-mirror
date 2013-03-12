@@ -296,7 +296,7 @@ QMultiMap<QDate, QPair<QString, QString> > MainClass::generateTimeline()
 
 
     // Minor releases.
-    QDate minorDate = ui->releaseDate->date().addMonths( 1 ); // dont release again in same month.
+    QDate minorDate = ui->releaseDate->date();
     for (int i = 1 ; i <=5 ; i++) {
         minorDate = minorDate.addMonths(1);
         QDate minor = QDate::fromString(QDate::shortDayName(2) + " " + QString::number( minorDate.month() ) + " " +
