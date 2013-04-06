@@ -5,12 +5,12 @@ case $1 in
     subname=kde-l10n
     ;;
   oxygen-icons)
-    HEADURL=trunk/kdesupport/$1
-    DESTURL=tags/KDE/4.10.60/$1
+    HEADURL=trunk/$1
+    DESTURL=tags/KDE/4.10.95/$1
     subname=$1
     ;;
   *)
-    HEADURL=trunk/KDE/$1
+    HEADURL=trunk/$1
     subname=$1
     ;;
 esac

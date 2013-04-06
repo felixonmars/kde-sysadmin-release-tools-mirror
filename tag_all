@@ -1,5 +1,5 @@
 #!/bin/bash
-version=4.9.3
+version=4.10.95
 
 SVNUSER=tnyblom
 SVNPROTOCOL=svn+ssh
@@ -17,7 +17,7 @@ for d in clean/*; do
     pushd $d 2> /dev/null > /dev/null
     if [ -d .git ]; then
         echo "=> Tagging git repo $d"
-        echo git tag -a -m "KDE/$version" v$version && git push --tags || echo $d >> FAILED_TAGGING_LOG
+        git tag -a -m "KDE/$version" v$version && git push --tags || echo $d >> FAILED_TAGGING_LOG
     elif [ -d .svn ]; then
         echo "=> Tagging svn repo $d"
         rev=$(svn info | sed -n -e '/^Revision: \([0-9]*\).*$/s//\1/p')

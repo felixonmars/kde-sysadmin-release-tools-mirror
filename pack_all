@@ -1,7 +1,12 @@
 cat modules.git | while read i branch; do
-    echo "Packing $i"
-    ./pack $i;
-    echo ""
+    case "$i" in 
+    	# Place for special handling during git migration for instance
+        *)
+          echo "Packing $i"
+          ./pack $i;
+          echo ""
+        ;;
+    esac
 done
 
 for i in `cat modules`; do
@@ -9,4 +14,3 @@ for i in `cat modules`; do
     ./pack $i;
     echo ""
 done
-
