@@ -130,9 +130,6 @@ libkmahjongg                                master
 lskat                                       master
 palapeli                                    master
 picmi                                       master
-amor                                        master
-kteatime                                    master
-ktux                                        master
 cervisia                                    master
 dolphin-plugins                             master
 kapptemplate                                master
@@ -147,3 +144,6 @@ lokalize                                    master
 okteta                                      master
 poxml                                       master
 umbrello                                    master
+amor                                        master
+kteatime                                    master
+ktux                                        master
