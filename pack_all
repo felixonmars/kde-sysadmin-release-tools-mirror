@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cat modules.git | while read i branch; do
     # Special for KDE 4.10 lifetime, pack kdesdk and kdetoys monolithic
     case "$i" in 

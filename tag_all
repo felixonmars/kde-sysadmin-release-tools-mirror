@@ -1,8 +1,9 @@
 #!/bin/bash
-version=4.10.2
 
 SVNUSER=tnyblom
 SVNPROTOCOL=svn+ssh
+
+. versions
 
 test -n "$SVNUSER" || { echo "You must set SVNUSER"; exit 1; }
 test -n "$SVNPROTOCOL" || { echo "You must set SVNPROTOCOL"; exit 1; }

@@ -1,3 +1,9 @@
+#!/bin/bash
+kde_version=4.10.3
+kde_branch=KDE/4.10
+
+export kde_version kde_branch
+
 function set_urls {
 case $1 in
   kde-l10n)
@@ -5,12 +11,12 @@ case $1 in
     subname=kde-l10n
     ;;
   oxygen-icons)
-    HEADURL=branches/KDE/4.10/$1
-    DESTURL=tags/KDE/4.10.0/$1
+    HEADURL=branches/$kde_branch/$1
+    DESTURL=tags/KDE/$kde_version/$1
     subname=$1
     ;;
   *)
-    HEADURL=branches/KDE/4.10/$1
+    HEADURL=branches/$kde_branch/$1
     subname=$1
     ;;
 esac
