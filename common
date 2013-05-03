@@ -3,7 +3,9 @@
 package=$1
 version=$2
 
-. versions
+source `dirname $0`/versions
+#test -f ./version && . ./versions
+#test -f ../version && . ../versions
 
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 
