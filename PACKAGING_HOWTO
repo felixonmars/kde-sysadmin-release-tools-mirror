@@ -31,6 +31,7 @@ obviously some of the 4.9.0 need to be replaced by the version you are packaging
    At the moment you have to do this manually
      - git tags are like 'v4.9.0'
      - svn tags are in tags/KDE/4.9.0/modulename
+ * Do not forget to tell whoever does the ftp work to update the latest symlink
 
 
 Note 1:
