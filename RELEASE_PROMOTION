@@ -14,7 +14,6 @@ On release day:
     * www/announcements/index.php,
     * www/info/releases.php (only for stable releases + updates),
     * www/download/index.php (only for stable releases + updates) and
-    * www/whatiskde/project.php  (only for stable releases + updates)
 
 Post announcement in text to kde-announce@kde.org
 Post news bit to
