@@ -6,7 +6,7 @@ process_folder()
         filename=`basename $i`
         echo '<tr valign="top">'
         l=`echo $filename | sed -e "s#.tar.xz##"`
-        echo '   <td><a href="http://download.kde.org/stable/4.10.2/'$2'/'$filename'">'$l'</a></td>'
+        echo '   <td><a href="http://download.kde.org/stable/4.10.4/'$2'/'$filename'">'$l'</a></td>'
         size=`stat -c "%s" $i`
         size=`echo "$size / 1024" | bc`
         if test "$size" -lt 1024; then
