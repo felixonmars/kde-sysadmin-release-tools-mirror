@@ -1,5 +1,5 @@
 #!/bin/bash
-version=4.10.2
+version=4.10.4
 
 SVNUSER=tnyblom
 SVNPROTOCOL=svn+ssh
