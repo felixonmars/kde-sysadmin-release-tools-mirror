@@ -1,0 +1,47 @@
+#!/bin/bash
+# Special for KDE 4.10 lifefime, pack kdeadmin monolithic
+package=kdeadmin
+source `dirname $0`/common $package $2
+
+MEINPROCPATH=`type -p meinproc`
+if test -f "$MEINPROCPATH"; then
+  MEINPROCPATH=`dirname $MEINPROCPATH`
+fi
+if test -n "$MEINPROCPATH"; then
+  export PATH=$MEINPROCPATH:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin
+  echo "PATH changed to $PATH"
+fi
+test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
+test -d clean || { echo "create clean subdir with svn checkout"; exit 1; }
+test -d dirty || mkdir dirty || { echo "create empty subdir dirty"; exit 1; }
+test -d sources || mkdir sources || { echo "create empty subdir sources"; exit 1; }
+
+test -d dirty/$package-$version && { echo "rm -rf dirty/$package-$version"; rm -rf dirty/$package-$version; }
+test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package; }
+
+mkdir dirty/kdeadmin
+cp kdeadmin410cmakelists.txt dirty/kdeadmin/CMakeLists.txt
+repos="kdeadmin-strigi-analyzers kcron kuser ksystemlog"
+for repo in $repos; do
+  echo "cp -pr clean/$repo/ dirty/kdeadmin"
+  cp -pr clean/$repo/ dirty/kdeadmin || exit 1
+done
+
+echo "cd dirty"
+cd dirty || exit 1
+
+# Anonymize checkout by removing the SVN information from it.
+echo "anon $package"
+$scriptpath/anon $package || exit 1
+
+# Generate docu
+echo "docu $package"
+$scriptpath/docu $package
+
+# Prepare for distribution
+echo "dist $package"
+$scriptpath/dist $package $version || exit 1
+
+# Final packaging
+echo "taritup $package"
+$scriptpath/taritup $package $version || exit 1

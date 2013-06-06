@@ -147,3 +147,15 @@ umbrello                                    KDE/4.10
 amor                                        KDE/4.10
 kteatime                                    KDE/4.10
 ktux                                        KDE/4.10
+kdeadmin-strigi-analyzers					KDE/4.10
+kcron										KDE/4.10
+ksystemlog									KDE/4.10
+kuser										KDE/4.10
+kdenetwork-strigi-analyzers					KDE/4.10
+kdenetwork-filesharing						KDE/4.10
+kppp										KDE/4.10
+kdnssd										KDE/4.10
+kget										KDE/4.10
+krfb										KDE/4.10
+krdc										KDE/4.10
+kopete										KDE/4.10
