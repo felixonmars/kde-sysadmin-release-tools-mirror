@@ -18,7 +18,6 @@ include_directories( ${KDE4_INCLUDES} )
 # Put configure checks below this line.
 set( CMAKE_REQUIRED_DEFINITIONS ${_KDE4_PLATFORM_DEFINITIONS} )
 
-macro_optional_add_subdirectory( kdeadmin-strigi-analyzers )
 macro_optional_add_subdirectory( kuser )
 macro_optional_add_subdirectory( ksystemlog )
 macro_optional_add_subdirectory( kcron )

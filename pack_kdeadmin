@@ -21,7 +21,7 @@ test -d dirty/$package && { echo "rm -rf dirty/$package"; rm -rf dirty/$package;
 
 mkdir dirty/kdeadmin
 cp kdeadmin410cmakelists.txt dirty/kdeadmin/CMakeLists.txt
-repos="kdeadmin-strigi-analyzers kcron kuser ksystemlog"
+repos="kcron kuser ksystemlog"
 for repo in $repos; do
   echo "cp -pr clean/$repo/ dirty/kdeadmin"
   cp -pr clean/$repo/ dirty/kdeadmin || exit 1
