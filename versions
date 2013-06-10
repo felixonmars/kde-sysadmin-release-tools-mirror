@@ -5,7 +5,7 @@ case $1 in
     subname=kde-l10n
     ;;
   oxygen-icons)
-    HEADURL=trunk/$1
+    HEADURL=trunk/kdesupport/$1
     subname=$1
     ;;
   *)
