@@ -20,6 +20,3 @@ For each release (i.e. x.y.z)
  * kopete/libkopete/kopeteversion.h - KOPETE_VERSION_*
  * kdepim/CMakeLists.txt - KDEPIM_DEV_VERSION / KDEPIM_VERSION
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
- 
-For .0 releases (i.e. x.y.0)
- * kde-workspace/startkde.cmake - Make sure the MALLOC_CHECK_ block is removed
