@@ -1,5 +1,5 @@
 #!/bin/bash
-kde_version=4.10.4
+kde_version=4.10.5
 kde_branch=KDE/4.10
 
 export kde_version kde_branch
