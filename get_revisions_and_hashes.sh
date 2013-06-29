@@ -1,6 +1,6 @@
-rm REVISIONS_AND_HASHES
+rm -f REVISIONS_AND_HASHES
 
-. versions
+source ./versions
 
 for d in clean/*; do
     pushd ${d}

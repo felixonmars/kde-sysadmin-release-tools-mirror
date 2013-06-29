@@ -27,3 +27,11 @@ echo "Special packing kdesdk"
 # Special for KDE 4.10 lifetime, pack kdetoys monolithic
 echo "Special packing kdetoys"
 ./pack_kdetoys
+
+# Special for KDE 4.10 lifetime, pack kdeadmin monolithic
+echo "Special packing kdeadmin"
+./pack_kdeadmin
+
+# Special for KDE 4.10 lifetime, pack kdenetwork monolithic
+echo "Special packing kdenetwork"
+./pack_kdenetwork
