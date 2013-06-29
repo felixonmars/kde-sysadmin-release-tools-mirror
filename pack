@@ -98,12 +98,6 @@ fi
 echo "anon $package"
 $scriptpath/anon $package || exit 1
 
-if test -z "$DOINGSNAPSHOT"; then
-  # Generate docu
-  echo "docu $package"
-  $scriptpath/docu $package 
-fi
-
 # Prepare for distribution
 echo "dist $package"
 $scriptpath/dist $package $version || exit 1

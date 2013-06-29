@@ -36,19 +36,11 @@ What does each file in this folder do?
     Runs removestuff and autogen (this one only for l10n)
     Run by 'pack' so there should not be any need to run it manually
  
- * docu
-    Compiles the documentation
-    Run by 'pack' so there should not be any need to run it manually
- 
  * dosnapshot
     TODO
  
  * language_list
     Holds the list of languages that need to be released
- 
- * Makefile.docu
-    Makefile to compile the documentation
-    Run by 'doc' so there should not be any need to run it manually
  
  * modules
     List of svn modules

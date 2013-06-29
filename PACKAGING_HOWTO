@@ -5,7 +5,6 @@ obviously some of the 4.9.0 need to be replaced by the version you are packaging
  * Update versions file with the correct svn-urls
  * Update modules.git file with the correct git modules and branches
  * Update common file with correct version number
- * Check the definitions on top of docu file are correct
  * Read RELEASE-CHECKLIST
  * Create the folder for the clean sources
      rm -rf clean
