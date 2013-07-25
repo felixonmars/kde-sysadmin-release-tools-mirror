@@ -140,6 +140,7 @@ kdesdk-kioslaves                            master
 kdesdk-strigi-analyzers                     master
 kdesdk-thumbnailers                         master
 kompare                                     master
+libkomparediff2	                            master
 lokalize                                    master
 okteta                                      master
 poxml                                       master
