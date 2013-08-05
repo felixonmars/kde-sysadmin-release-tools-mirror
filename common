@@ -3,13 +3,15 @@
 package=$1
 version=$2
 
+source `dirname $0`/versions
+
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 
 if test -z "$version"; then
 
 case $package in
   *)
-    version=4.10.90
+    version=$kde_version
     ;;
 esac
 

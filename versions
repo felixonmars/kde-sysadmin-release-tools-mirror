@@ -1,3 +1,8 @@
+kde_version=4.11.60
+kde_branch=master
+
+export kde_version kde_branch
+
 function set_urls {
 case $1 in
   kde-l10n)
