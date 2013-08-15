@@ -122,14 +122,6 @@ cd_package()
     ) || exit 1
   fi
 
-  if [ $package = "kdewebdev" ]; then
-  (
-     cd_package
-     $rm_command quanta
-     echo "Removing quanta from kdewebdev"
-  )
-  fi
-
   # generic stuff
   (
      cd_package
