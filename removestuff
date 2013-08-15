@@ -122,14 +122,6 @@ cd_package()
     ) || exit 1
   fi
 
-  if [ $package = "kdelibs" ]; then
-  (
-     cd_package
-     $rm_command experimental/libkactivities
-     echo "Removing libkactivities from kdelibs"
-  )
-  fi
-
   if [ $package = "kdewebdev" ]; then
   (
      cd_package
