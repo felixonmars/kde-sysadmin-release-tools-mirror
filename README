@@ -9,9 +9,6 @@ What does each file in this folder do?
     Downloads the svn modules specified in the modules file
     Should be run by the packager
  
- * checkxml
-    TODO
- 
  * common
     Defines the package version and a few more vars
     Should be updated by the packager
