@@ -122,15 +122,6 @@ cd_package()
     ) || exit 1
   fi
 
-  if [ $package = "kdenetwork" ]; then
-  (
-     cd_package
-#     $rm_command kopete
-#     $rm_command doc/kopete
-#     echo "Removing kopete from kdenetwork"
-  )
-  fi
-
   if [ $package = "kdelibs" ]; then
   (
      cd_package
