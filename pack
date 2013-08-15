@@ -8,14 +8,6 @@
 
 source `dirname $0`/common $1 $2
 
-MEINPROCPATH=`type -p meinproc`
-if test -f "$MEINPROCPATH"; then
-  MEINPROCPATH=`dirname $MEINPROCPATH`
-fi
-if test -n "$MEINPROCPATH"; then
-  export PATH=$MEINPROCPATH:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin
-  echo "PATH changed to $PATH"
-fi
 test -n "$package" || { echo "requires modulename as parameter"; exit 1; }
 test -d clean || { echo "create clean subdir with svn checkout"; exit 1; }
 test -d dirty || mkdir dirty || { echo "create empty subdir dirty"; exit 1; }
