@@ -122,31 +122,6 @@ cd_package()
     ) || exit 1
   fi
 
-  if [ $package = "kdenetwork" ]; then
-  (
-     cd_package
-#     $rm_command kopete
-#     $rm_command doc/kopete
-#     echo "Removing kopete from kdenetwork"
-  )
-  fi
-
-  if [ $package = "kdelibs" ]; then
-  (
-     cd_package
-     $rm_command experimental/libkactivities
-     echo "Removing libkactivities from kdelibs"
-  )
-  fi
-
-  if [ $package = "kdewebdev" ]; then
-  (
-     cd_package
-     $rm_command quanta
-     echo "Removing quanta from kdewebdev"
-  )
-  fi
-
   # generic stuff
   (
      cd_package
