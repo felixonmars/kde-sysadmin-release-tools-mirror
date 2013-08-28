@@ -22,7 +22,9 @@ cat ../modules.git | while read module branch; do
 
     if test -d $module; then
         cd $module
+        git fetch
         git checkout $branch
+        git pull
         cd ..
     fi
 done
