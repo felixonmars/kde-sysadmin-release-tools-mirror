@@ -14,7 +14,7 @@ sleep ${DELAY} && \
 	sha1sum *.xz > ../sha1sums.txt && \
 	popd && \
 	pushd sources/kde-l10n && \
-	sha1sum >> ../../sha1sums.txt && \
+	sha1sum *.xz >> ../../sha1sums.txt && \
 	ncftpput kde . *.xz && \
 	popd && \
 	pushd sources && \
