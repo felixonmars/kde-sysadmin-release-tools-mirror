@@ -1,4 +1,4 @@
-kde_version=4.11.1
+kde_version=4.11.2
 kde_branch=KDE/4.11
 
 export kde_version kde_branch
