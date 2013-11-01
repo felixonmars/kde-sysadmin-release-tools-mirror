@@ -5,6 +5,7 @@ DELAY=$1
 echo "Starting run in ${DELAY}..."
 
 mkdir -p logs
+rm -rf logs/*
 
 sleep ${DELAY} && \
 	./update_all | tee logs/update.log && \
