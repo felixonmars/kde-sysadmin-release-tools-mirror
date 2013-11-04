@@ -1,20 +1,20 @@
 kde_version=4.11.80
-kde_branch=master
+kde_branch=KDE/4.12
 
 export kde_version kde_branch
 
 function set_urls {
 case $1 in
   kde-l10n)
-    HEADURL=trunk/l10n-kde4
+    HEADURL=branches/stable/l10n-kde4
     subname=kde-l10n
     ;;
   oxygen-icons)
-    HEADURL=trunk/kdesupport/$1
+    HEADURL=branches/$kde_branch/$1
     subname=$1
     ;;
   *)
-    HEADURL=trunk/$1
+    HEADURL=branches/$kde_branch/$1
     subname=$1
     ;;
 esac
