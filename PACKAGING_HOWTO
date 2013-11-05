@@ -1,50 +1,28 @@
-This is a quick description on how KDE SC 4.9.0 packaging was done,
-obviously some of the 4.9.0 need to be replaced by the version you are packaging ;-)
+This is a quick description on how KDE SC 4.12 beta 1 packaging was done,
+obviously some of the version numbers need to be replaced by the version you are packaging ;-)
 
- * Update modules file with the correct svn modules
- * Update versions file with the correct svn-urls
+ * Update version file with the correct version number
+ * Update modules.svn file with the correct svn modules and branches
  * Update modules.git file with the correct git modules and branches
- * Update common file with correct version number
  * Read RELEASE-CHECKLIST
- * Create the folder for the clean sources
-     rm -rf clean
-     mkdir clean
- * Do a checkout of svn
-     ./checkout
- * Do a checkout of git
-     ./setup-git-modules.sh
- * Do an update, saving the log is important as it will be used for tagging later on
-     ./update_all &> UPDATE_LOG
  * Pack the sources
-     ./pack_all &> PACK_LOG
- * Read the PACK_LOG file and make sure nothing wrong happened
+     ./pack_all.sh
  * Read ftp://ftp.kde.org/pub/kde/README_UPLOAD for how to upload the tarballs
    in case of doubt sysadmin will kindly help you
    Note that usually the tarballs are first only available to distro packagers
    and later they are public to everyone. sysadmin knows how to do that
+ * Do not forget to tell whoever does the ftp work to update the latest symlink
  * Inform kde-packager@kde.org and release-team@kde.org
  * Make sure someone acts on RELEASE_PROMOTION
- * Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.9.0.inc
+
+
+ * TODO NEEDS UPDATING Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.9.0.inc
    Coordinate with the people doing web announcement for this
- * Once the release has been publicly announced use the UPDATE_LOG contents to tag svn and git
+ * TODO NEEDS SCRIPT Once the release has been publicly announced use the UPDATE_LOG contents to tag svn and git
    At the moment you have to do this manually
      - git tags are like 'v4.9.0'
      - svn tags are in tags/KDE/4.9.0/modulename
- * Do not forget to tell whoever does the ftp work to update the latest symlink
 
-
-Note 1:
-In case you have to retag something you do not need to pack everything again, the
-suggested procedure is
- * update saving to a different log file
-     ./update_all &> NEW_UPDATE_LOG
- * Find which modules changed
-     diff UPDATE_LOG NEW_UPDATE_LOG
- * Pack those modules individually
-     ./pack modulename
- * Update the log file
-     mv NEW_UPDATE_LOG UPDATE_LOG
-
-Note 2:
-You only have to publish the l10n tarballs of the languages present in language_list
-
+Note:
+ * Running ./pack_all.sh again will only repackage the repos that have changed
+   so it should be "cheap"
