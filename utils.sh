@@ -7,7 +7,7 @@ function get_git_rev()
 
 function get_svn_rev()
 {
-    echo `svn info $branch/$repo | grep "Revision: " | cut -f 2 -d ' '`
+    echo `svn info $branch/$repo | grep "Last Changed Rev: " | cut -f 2 -d ' '`
 }
 
 function checkDownloadUptodate()
