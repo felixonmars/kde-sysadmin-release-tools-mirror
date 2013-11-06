@@ -92,7 +92,7 @@ pack_lang()
             checkout=0
         fi
         if [ $rootLang -eq 1 ]; then
-            rm -rf $lang kde-l10n-$lang
+            rm -rf $lang kde-l10n-$lang-$version
         fi
     done
 }
