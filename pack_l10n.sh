@@ -82,8 +82,8 @@ pack_lang()
             cd ..
             if [ $rootLang -eq 1 ]; then
                 /tmp/kde-l10n-autogen.sh $lang
-                mv $lang kde-l10n-$lang
-                find kde-l10n-$lang -type f |sed 's/^\.*\/*//'|sort > MANIFEST
+                mv $lang kde-l10n-$lang-$version
+                find kde-l10n-$lang-$version -type f |sed 's/^\.*\/*//'|sort > MANIFEST
                 tar cf kde-l10n-$lang-$version.tar --owner 0 --group 0 --numeric-owner --no-recursion --files-from MANIFEST
                 xz -9 kde-l10n-$lang-$version.tar
                 mv kde-l10n-$lang-$version.tar.xz sources/kde-l10n
