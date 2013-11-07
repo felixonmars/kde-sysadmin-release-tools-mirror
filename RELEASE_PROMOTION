@@ -12,7 +12,7 @@ On release day:
     Add an entry to
     * www/index.php,
     * www/announcements/index.php,
-    * www/info/releases.php (only for stable releases + updates),
+    * www/info/releases.php,
     * www/download/index.php (only for stable releases + updates) and
 - Update the contents of define_release_data in the define_release_data function of trunk/l10n-kde4/scripts/generate_release_data.py
 
