@@ -14,7 +14,7 @@ On release day:
     * www/announcements/index.php,
     * www/info/releases.php,
     * www/download/index.php (only for stable releases + updates) and
-- Update the contents of define_release_data in the define_release_data function of trunk/l10n-kde4/scripts/generate_release_data.py
+- Update the contents of release_files in the define_release_data function of trunk/l10n-kde4/scripts/generate_release_data.py
 
 Post announcement in text to kde-announce@kde.org
 Post news bit to
