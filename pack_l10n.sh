@@ -81,6 +81,12 @@ pack_lang()
             pack_variants
             cd ..
             if [ $rootLang -eq 1 ]; then
+                # Delete empty folders, we do it a few times
+                # in case there is empty dirs inside empty dirs
+                find $lang -type d -empty -delete
+                find $lang -type d -empty -delete
+                find $lang -type d -empty -delete
+                find $lang -type d -empty -delete
                 /tmp/kde-l10n-autogen.sh $lang
                 mv $lang kde-l10n-$lang-$version
                 find kde-l10n-$lang-$version -type f |sed 's/^\.*\/*//'|sort > MANIFEST
