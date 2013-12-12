@@ -36,14 +36,20 @@ cat modules.git | while read repo branch; do
             rev=`get_git_rev`
             git archive --remote=kde:$repo $branch --prefix $repo-$version/ > $tarFile
             rev2=`get_git_rev`
-            if [ $rev = $rev2 ]; then
-                echo "$rev"
-                echo "$rev" >> $versionFilePath
-                xz -9 $tarFile
-                mv $tarFile.xz sources
-                sha256sum $finalDestination >> $versionFilePath
-                checkout=0
+            errorcode=$?
+            if [ $errorcode -eq 0 ]; then
+                if [ $rev = $rev2 ]; then
+                    echo "$rev"
+                    echo "$rev" >> $versionFilePath
+                    xz -9 $tarFile
+                    mv $tarFile.xz sources
+                    sha256sum $finalDestination >> $versionFilePath
+                    checkout=0
+                else
+                    rm -f $tarFile
+                fi
             else
+                echo "git archive --remote=kde:$repo $branch --prefix $repo-$version/ failed with error code $errorcode"
                 rm -f $tarFile
             fi
         done
@@ -69,17 +75,22 @@ cat modules.svn | while read repo branch; do
             MANIFEST="`mktemp -t`"
             rev=`get_svn_rev`
             svn export $branch/$repo $repo-$version &> /dev/null
-            rev2=`get_svn_rev`
-            if [ "$rev" = "$rev2" ]; then
-                echo "$rev"
-                echo "$rev" >> $versionFilePath
-                find $repo-$version -type f |sed 's/^\.*\/*//'|sort > MANIFEST
-                tar cf $tarFile --owner 0 --group 0 --numeric-owner --no-recursion --files-from MANIFEST
-                xz -9 $tarFile
-                mv $tarFile.xz sources
-                rm -f MANIFEST
-                checkout=0
-                sha256sum $finalDestination >> $versionFilePath
+            errorcode=$?
+            if [ $errorcode -eq 0 ]; then
+                rev2=`get_svn_rev`
+                if [ "$rev" = "$rev2" ]; then
+                    echo "$rev"
+                    echo "$rev" >> $versionFilePath
+                    find $repo-$version -type f |sed 's/^\.*\/*//'|sort > MANIFEST
+                    tar cf $tarFile --owner 0 --group 0 --numeric-owner --no-recursion --files-from MANIFEST
+                    xz -9 $tarFile
+                    mv $tarFile.xz sources
+                    rm -f MANIFEST
+                    checkout=0
+                    sha256sum $finalDestination >> $versionFilePath
+                fi
+            else
+                echo "svn export $branch/$repo $repo-$version failed with error code $errorcode"
             fi
             rm -fr $repo-$version
         done
