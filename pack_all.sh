@@ -12,4 +12,4 @@ cat modules.svn | while read repo branch; do
 )
 done
 
-bash pack_l10n.sh
+# bash pack_l10n.sh
