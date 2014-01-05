@@ -2,6 +2,7 @@
 
 . version
 . utils.sh
+. config
 
 repo_to_pack=$1
 force=$2
@@ -45,6 +46,16 @@ cat modules.git | while read repo branch; do
                     mv $tarFile.xz sources
                     sha256sum $finalDestination >> $versionFilePath
                     checkout=0
+
+                    if [ $make_zip -eq 1 ]; then
+                      cd sources
+                      tar xf $tarFile.xz
+                      basename=`echo $tarFile | sed -e 's/\.tar//'`
+                      test -d $basename || exit 1
+                      zip -r $basename.zip $basename || exit 2
+                      rm -rf $basename
+                    fi
+
                 else
                     rm -f $tarFile
                 fi
