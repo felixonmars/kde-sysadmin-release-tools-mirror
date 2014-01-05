@@ -18,7 +18,7 @@ cat $here/modules.git | while read repo branch; do
     cd frameworks/$repo || cd kdesupport/$repo || exit 2
     echo $PWD
     git fetch || exit 3
-    git tag -a $version $b -m "Create tag for $version"  || exit 4
+    git tag -a $tagname $b -m "Create tag for $version"  || exit 4
     git push --tags || exit 5
 done
 
