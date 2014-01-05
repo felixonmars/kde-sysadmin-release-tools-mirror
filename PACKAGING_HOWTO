@@ -8,7 +8,7 @@ obviously some of the version numbers need to be replaced by the version you are
  * Pack the sources
      ./pack_all.sh
  * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
-   directly into the right location.
+   directly into the right location (and use chmod o-rx on the directory).
    Otherwise read ftp://upload.kde.org/README for how to upload the tarballs
    in case of doubt sysadmin will kindly help you
    Note that usually the tarballs are first only available to distro packagers
@@ -18,11 +18,11 @@ obviously some of the version numbers need to be replaced by the version you are
  * Make sure someone acts on RELEASE_PROMOTION
  * Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.11.80.inc
    Coordinate with the people doing web announcement for this
- * TODO NEEDS SCRIPT Once the release has been publicly announced use the UPDATE_LOG contents to tag svn and git
-   At the moment you have to do this manually
-     - git tags are like 'v4.9.0'
+ * Once the release has been publicly announced run tag_all.sh
+   At the moment you have to do this manually for SVN modules:
      - svn tags are in tags/KDE/4.9.0/modulename
 
 Note:
  * Running ./pack_all.sh again will only repackage the repos that have changed
    so it should be "cheap"
+
