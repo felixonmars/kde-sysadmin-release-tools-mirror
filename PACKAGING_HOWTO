@@ -7,10 +7,12 @@ obviously some of the version numbers need to be replaced by the version you are
  * Read RELEASE-CHECKLIST
  * Pack the sources
      ./pack_all.sh
- * Read ftp://ftp.kde.org/pub/kde/README_UPLOAD for how to upload the tarballs
+ * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
+   directly into the right location.
+   Otherwise read ftp://upload.kde.org/README for how to upload the tarballs
    in case of doubt sysadmin will kindly help you
    Note that usually the tarballs are first only available to distro packagers
-   and later they are public to everyone. sysadmin knows how to do that
+   and later they are public to everyone. sysadmin knows how to do that.
  * Do not forget to tell whoever does the ftp work to update the latest symlink
  * Inform kde-packager@kde.org and release-team@kde.org
  * Make sure someone acts on RELEASE_PROMOTION
