@@ -13,3 +13,6 @@ cat modules.svn | while read repo branch; do
 done
 
 bash pack_l10n.sh
+
+# for sending to kde-packager@kde.org
+cat versions/* > REVISIONS_AND_HASHES
