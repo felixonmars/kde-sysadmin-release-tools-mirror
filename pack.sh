@@ -1,6 +1,5 @@
 #!/bin/bash
 
-. version
 . utils.sh
 
 repo_to_pack=$1
@@ -14,14 +13,18 @@ fi
 mkdir -p sources
 mkdir -p versions
 
-finalDestination="sources/$repo_to_pack-$version.tar.xz"
-versionFilePath=versions/$repo_to_pack
-tarFile=$repo_to_pack-$version.tar
+function determineVersion() {
+  . version
+  finalDestination="sources/$repo_to_pack-$version.tar.xz"
+  versionFilePath=versions/$repo_to_pack
+  tarFile=$repo_to_pack-$version.tar
+}
 
 cat modules.git | while read repo branch; do
     if [ $repo_to_pack = $repo ]; then
         repoLine="$repo $branch"
 
+        determineVersion
         checkDownloadUptodate "git"
         uptodate=$?
         if [ $uptodate = 1 ]; then
@@ -60,6 +63,7 @@ cat modules.svn | while read repo branch; do
     if [ $repo_to_pack = $repo ]; then
         repoLine="$repo $branch"
 
+        determineVersion
         checkDownloadUptodate "svn"
         uptodate=$?
         if [ $uptodate = 1 ]; then
