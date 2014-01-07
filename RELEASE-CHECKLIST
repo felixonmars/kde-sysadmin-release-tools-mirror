@@ -22,5 +22,6 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
+ * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
  * */CMakeLists.txt - KF5_VERSION
  * kservice/src/sycoca/ksycoca.cpp --> KSYCOCA_VERSION
