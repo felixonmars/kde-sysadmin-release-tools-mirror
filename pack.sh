@@ -40,8 +40,8 @@ cat modules.git | while read repo branch; do
         while [ $checkout -eq 1 ]; do
             rev=`get_git_rev`
             git archive --remote=kde:$repo $branch --prefix $repo-$version/ > $tarFile
-            rev2=`get_git_rev`
             errorcode=$?
+            rev2=`get_git_rev`
             if [ $errorcode -eq 0 ]; then
                 if [ $rev = $rev2 ]; then
                     echo "$rev"
