@@ -2,6 +2,7 @@ kdelibs                                     KDE/4.12
 kactivities                                 KDE/4.12
 nepomuk-core                                KDE/4.12
 nepomuk-widgets                             KDE/4.12
+kde-workspace                               KDE/4.11
 kde-runtime                                 KDE/4.12
 kde-baseapps                                KDE/4.12
 kate                                        KDE/4.12
