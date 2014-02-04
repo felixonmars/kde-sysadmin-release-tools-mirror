@@ -24,6 +24,7 @@ cat $here/modules.git | while read repo branch; do
         exit 3
     fi
     echo $PWD
+    git fetch
     git tag -a $tagname $b -m "Create tag for $version"  || exit 4
     git push --tags || exit 5
 done
