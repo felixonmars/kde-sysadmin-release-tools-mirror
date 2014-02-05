@@ -10,6 +10,9 @@ Make sure that dependencies are met:
  * new soprano release needed?
  * new akonadi release needed (check kdepimlibs/akonadi/session_p.h)
 
+Ensure everything is green in build.kde.org
+Ensure there are no unrelated local changes, then proceed with updating the version numbers:
+
 For each release (i.e. x.y.z)
  * kdelibs/CMakeLists.txt - KDE_VERSION_*
  * kdelibs/README - This is version x.y.z of the KDE libraries.
@@ -22,6 +25,12 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
- * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
- * */CMakeLists.txt - KF5_VERSION
- * kservice/src/sycoca/ksycoca.cpp --> KSYCOCA_VERSION
+ ECM version:
+  * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
+     (then wait for a successful rebuild on build.kde.org, to avoid failing all the frameworks at the next commit)
+  * cd frameworks ; perl -pi -e 's/ECM 0\.0\.[0-9]*/ECM 0\.0\.10/g' **/CMakeLists.txt
+     (note that this is recursive in order to catch frameworkintegration/src/kstyle...)
+ KF5 version:
+  * perl -pi -e '$_ = "set(KF5_VERSION \"4.96.0\")\n" if (/^set.KF5_VERSION /);' **/CMakeLists.txt
+    for d in *; do (echo $d; cd $d ; git up; git commit -a -m 'Upgrade ECM version requirement and KF5 version.' ; git push) ; done
+  * kservice/src/sycoca/ksycoca.cpp --> KSYCOCA_VERSION
