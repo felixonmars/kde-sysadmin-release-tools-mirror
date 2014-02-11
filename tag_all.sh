@@ -21,6 +21,8 @@ cat $here/modules.git | while read repo branch; do
         cd frameworks/$repo
     elif [ -d kdesupport/$repo ]; then
         cd kdesupport/$repo || exit 2
+    elif [ -d $repo ]; then
+        cd $repo || exit 2
     else
         echo "NOT FOUND: $repo"
         exit 3

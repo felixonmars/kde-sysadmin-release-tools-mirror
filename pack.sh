@@ -23,7 +23,7 @@ function determineVersion() {
 }
 
 cat modules.git | while read repo branch; do
-    if [ $repo_to_pack = $repo ]; then
+    if [ "$repo_to_pack" = "$repo" ]; then
         repoLine="$repo $branch"
 
         determineVersion
