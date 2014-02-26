@@ -5,7 +5,7 @@
 
 force=$1
 
-branch=svn://anonsvn.kde.org/home/kde/branches/stable/l10n-kde4
+branch=svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4
 
 mkdir -p sources/kde-l10n
 mkdir -p versions
