@@ -1,6 +1,7 @@
 This is a quick description on how KDE SC 4.12 beta 1 packaging was done,
 obviously some of the version numbers need to be replaced by the version you are packaging ;-)
 
+ * rm -rf sources versions REVISIONS_AND_HASHES
  * Update version file with the correct version number
  * Update modules.svn file with the correct svn modules and branches
  * Update modules.git file with the correct git modules and branches
