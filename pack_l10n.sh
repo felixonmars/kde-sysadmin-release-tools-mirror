@@ -79,23 +79,28 @@ pack_lang()
             cd $lang
             remove_stuff
             pack_variants
-            cd ..
-            if [ $rootLang -eq 1 ]; then
-                # Delete empty folders, we do it a few times
-                # in case there is empty dirs inside empty dirs
-                find $lang -type d -empty -delete
-                find $lang -type d -empty -delete
-                find $lang -type d -empty -delete
-                find $lang -type d -empty -delete
-                /tmp/kde-l10n-autogen.sh $lang
-                mv $lang kde-l10n-$lang-$version
-                find kde-l10n-$lang-$version -type f |sed 's/^\.*\/*//'|sort > MANIFEST
-                tar cf kde-l10n-$lang-$version.tar --owner 0 --group 0 --numeric-owner --no-recursion --files-from MANIFEST
-                xz -9 kde-l10n-$lang-$version.tar
-                mv kde-l10n-$lang-$version.tar.xz sources/kde-l10n
-                rm -f MANIFEST
+            rev3=`get_svn_rev`
+            # Check again after pack_variants just in case
+            # something happened in between
+            if [ "$rev" = "$rev3" ]; then
+                cd ..
+                if [ $rootLang -eq 1 ]; then
+                    # Delete empty folders, we do it a few times
+                    # in case there is empty dirs inside empty dirs
+                    find $lang -type d -empty -delete
+                    find $lang -type d -empty -delete
+                    find $lang -type d -empty -delete
+                    find $lang -type d -empty -delete
+                    /tmp/kde-l10n-autogen.sh $lang
+                    mv $lang kde-l10n-$lang-$version
+                    find kde-l10n-$lang-$version -type f |sed 's/^\.*\/*//'|sort > MANIFEST
+                    tar cf kde-l10n-$lang-$version.tar --owner 0 --group 0 --numeric-owner --no-recursion --files-from MANIFEST
+                    xz -9 kde-l10n-$lang-$version.tar
+                    mv kde-l10n-$lang-$version.tar.xz sources/kde-l10n
+                    rm -f MANIFEST
+                fi
+                checkout=0
             fi
-            checkout=0
         fi
         if [ $rootLang -eq 1 ]; then
             rm -rf $lang kde-l10n-$lang-$version
