@@ -56,4 +56,9 @@ for lang in `cat language_list`; do
     branch=`echo $branch | sed 's#svn://anonsvn.kde.org#svn+ssh://svn@svn.kde.org#g'`
     echo $branch
     svn cp $branch/$lang@$b svn+ssh://svn@svn.kde.org/home/kde/tags/KDE/$version/kde-l10n -m "Create tag for $version" || exit 11
+    variants=`svn cat svn+ssh://svn@svn.kde.org/home/kde/tags/KDE/$version/kde-l10n/$lang/pack-with-variants 2> /dev/null` || continue
+    for variant in $variants; do
+        echo $variant
+        svn cp $branch/$variant@$b svn+ssh://svn@svn.kde.org/home/kde/tags/KDE/$version/kde-l10n -m "Create tag for $version" || exit 12
+    done
 done
