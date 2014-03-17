@@ -157,7 +157,7 @@ ksystemlog                                  KDE/4.13
 kuser                                       KDE/4.13
 kdenetwork-filesharing                      KDE/4.13
 kdenetwork-strigi-analyzers                 KDE/4.13
-kdnssd                                      KDE/4.13
+zeroconf-ioslave                            KDE/4.13
 kget                                        KDE/4.13
 kopete                                      KDE/4.13
 kppp                                        KDE/4.13
