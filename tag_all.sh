@@ -8,6 +8,11 @@ here=$PWD
 # TODO: update this path
 srcdir=/d/kde/src
 
+if [ ! -d $srcdir ]; then
+    echo "$srcdir does not exist, please fix srcdir variable"
+    exit
+fi
+
 cat $here/modules.git | while read repo branch; do
     cd $srcdir || exit 1
     echo $repo
