@@ -25,13 +25,16 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
- files=`ls -1 frameworks/*/CMakeLists.txt kdesupport/attica/CMakeLists.txt kde-kactivities/CMakeLists.txt plasma-framework/CMakeLists.txt`
+ files=`ls -1 kdesupport/attica/CMakeLists.txt frameworks/*/CMakeLists.txt kde/kdelibs/kactivities/CMakeLists.txt playground/libs/plasma-framework/CMakeLists.txt`
  ECM version:
   * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
      (then wait for a successful rebuild on build.kde.org, to avoid failing all the frameworks at the next commit)
-  * perl -pi -e 's/ECM 0\.0\.[0-9]*/ECM 0\.0\.11/g' `echo $files`
+  * perl -pi -e 's/ECM 0\.0\.[0-9]*/ECM 0\.0\.12/g' `echo $files`
  KF5 version:
-  * perl -pi -e '$_ = "set(KF5_VERSION \"4.97.0\")\n" if (/^set.KF5_VERSION /);' `echo $files`
+
+   TODO NEXT TIME: first increase "this is my version"
+
+  * perl -pi -e '$_ = "set(KF5_VERSION \"4.98.0\")\n" if (/^set.KF5_VERSION /);' `echo $files`
     for f in `echo $files`; do (d=`dirname $f`; echo $d; cd $d ; git up; git commit -a -m 'Upgrade ECM version requirement and KF5 version.') ; done
   * Now push this up by tiers, to not break CI...
      cd kdesupport/attica ; git push
@@ -41,21 +44,23 @@ For KDE Frameworks releases
      (wait for CI)
      for d in kconfigwidgets kwallet kservice kpty kjsembed kunitconversion; do (cd $d ; git push) ; done
      (wait for CI)
-     kiconthemes kdesu
+     kiconthemes kdesu kemoticons
      (wait for CI)
-     ktextwidgets
+     ktextwidgets knotifications
      (wait for CI)
      kxmlgui
      (wait for CI)
      kcmutils kbookmarks
      (wait for CI)
-     kio ktexteditor
+     kio
      (wait for CI)
-     kinit kparts kdeclarative knewstuff knotifyconfig kfileaudiopreview
+     for d in kinit kparts kdeclarative knewstuff knotifyconfig kfileaudiopreview; do (cd $d ; git push) ; done
      (wait for CI)
-     kactivities kmediaplayer kross kdewebkit khtml kded
+     for d in ktexteditor ../kde/kdelibs/kactivities kmediaplayer kross kded; do (cd $d ; git push) ; done
      (wait for CI)
-     ../plasma-framework kdesignerplugin frameworkintegration
+     for d in kdewebkit khtml; do (cd $d ; git push) ; done
+     (wait for CI)
+     for d in ../playground/libs/plasma-framework kdesignerplugin frameworkintegration; do (cd $d ; git push) ; done
      (wait for CI)
      krunner kde4support
 
