@@ -25,7 +25,7 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
- files=`ls -1 kdesupport/attica/CMakeLists.txt frameworks/*/CMakeLists.txt kde/kdelibs/kactivities/CMakeLists.txt playground/libs/plasma-framework/CMakeLists.txt`
+ files=`ls -1 kdesupport/attica/CMakeLists.txt frameworks/*/CMakeLists.txt kdereview/plasma-framework/CMakeLists.txt`
  ECM version:
   * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
      (then wait for a successful rebuild on build.kde.org, to avoid failing all the frameworks at the next commit)
@@ -60,7 +60,7 @@ For KDE Frameworks releases
      (wait for CI)
      for d in kdewebkit khtml; do (cd $d ; git push) ; done
      (wait for CI)
-     for d in ../playground/libs/plasma-framework kdesignerplugin frameworkintegration; do (cd $d ; git push) ; done
+     for d in ../kdereview/plasma-framework kdesignerplugin frameworkintegration; do (cd $d ; git push) ; done
      (wait for CI)
      krunner kde4support
 
