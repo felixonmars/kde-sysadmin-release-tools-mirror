@@ -1,1 +1,6 @@
 make_zip=1
+
+l10n_repo=l10n-kf5
+
+# name of the subdir of $l10n_repo/$lang/messages
+l10n_module=frameworks

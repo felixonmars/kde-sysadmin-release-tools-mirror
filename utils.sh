@@ -42,3 +42,19 @@ function checkDownloadUptodate()
     fi
     return $result
 }
+
+function grabTranslations()
+{
+    local basename=$1
+    mkdir $basename/po
+    local repo=$2
+    local subdir
+    for subdir in ../l10n/*; do
+        local podir=$subdir/messages/$l10n_module
+        if test -d $podir; then
+            local lang=`basename $subdir`
+            cp $podir/${repo}5.po $basename/po/$lang.po 2>/dev/null
+            cp $podir/${repo}5_*.po $basename/po/$lang.po 2>/dev/null
+        fi
+    done
+}
