@@ -26,7 +26,7 @@ cat modules.git | while read repo branch; do
         repoLine="$repo $branch"
 
         determineVersion
-        checkDownloadUptodate "git" "$tarFile"
+        checkDownloadUptodate "git" "sources/$tarFile"
         uptodate=$?
         if [ $uptodate = 1 ]; then
             echo "$repo is already up to date, no need to re-download. Use -f as second parameter if you want to force"
@@ -36,10 +36,10 @@ cat modules.git | while read repo branch; do
         checkout=1
         echo "$repoLine"
         echo "$repoLine" > $versionFilePath
-        cd sources
         while [ $checkout -eq 1 ]; do
             rev=`get_git_rev`
             basename=$repo-$version
+            cd sources
             git archive --remote=kde:$repo $branch --prefix $basename/ | tar x
             errorcode=$PIPESTATUS # grab error code from git archive
             if [ $errorcode -eq 0 ]; then
@@ -51,9 +51,6 @@ cat modules.git | while read repo branch; do
                 tar c --owner 0 --group 0 --numeric-owner $basename | xz -9 > $tarFile
                 rev2=`get_git_rev`
                 if [ $rev = $rev2 ]; then
-                    echo "$rev"
-                    echo "$rev" >> $versionFilePath
-                    sha256sum $tarFile >> $versionFilePath
                     checkout=0
 
                     if [ $make_zip -eq 1 ]; then
@@ -68,8 +65,11 @@ cat modules.git | while read repo branch; do
             else
                 echo "git archive --remote=kde:$repo $branch --prefix $basename/ failed with error code $errorcode"
             fi
+            cd ..
         done
-        cd ..
+        echo "$rev"
+        echo "$rev" >> $versionFilePath
+        sha256sum sources/$tarFile >> $versionFilePath
     fi
 done
 
