@@ -12,11 +12,12 @@ function get_svn_rev()
 
 function checkDownloadUptodate()
 {
-    isGit="true"
+    local isGit="true"
     if [ "$1" = "svn" ]; then
         isGit="false"
     fi
-    result=0
+    local finalDestination=$2
+    local result=0
     if [ "x$force" != "x-f" ]; then
         if [ -f $finalDestination ]; then
             if [ -f $versionFilePath ]; then
