@@ -25,7 +25,7 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
- files=`ls -1 kdesupport/attica/CMakeLists.txt frameworks/*/CMakeLists.txt kdereview/plasma-framework/CMakeLists.txt`
+ files=`ls -1 frameworks/*/CMakeLists.txt kdereview/plasma-framework/CMakeLists.txt`
  ECM version:
   * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
      (then wait for a successful rebuild on build.kde.org, to avoid failing all the frameworks at the next commit)
@@ -37,7 +37,6 @@ For KDE Frameworks releases
   * perl -pi -e '$_ = "set(KF5_VERSION \"4.98.0\")\n" if (/^set.KF5_VERSION /);' `echo $files`
     for f in `echo $files`; do (d=`dirname $f`; echo $d; cd $d ; git up; git commit -a -m 'Upgrade ECM version requirement and KF5 version.') ; done
   * Now push this up by tiers, to not break CI...
-     cd kdesupport/attica ; git push
      for f in `grep -l tier:\ 1 */*yaml`; do (cd `dirname $f` ; git push); done
      (wait for CI)
      for f in `grep -l tier:\ 2 */*yaml`; do (cd `dirname $f` ; git push); done
