@@ -6,6 +6,8 @@
 
 force=$1
 
+unset CDPATH
+
 mkdir -p sources/kde-l10n
 mkdir -p versions
 

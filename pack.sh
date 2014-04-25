@@ -11,6 +11,8 @@ if [ -z "$repo_to_pack" ]; then
     exit
 fi
 
+unset CDPATH
+
 mkdir -p sources
 mkdir -p versions
 

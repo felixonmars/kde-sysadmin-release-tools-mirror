@@ -4,6 +4,7 @@
 # (to make it branch-independent)
 
 . config
+unset CDPATH
 
 if test -d l10n; then
 
