@@ -80,7 +80,7 @@ cat modules.svn | while read repo branch; do
         repoLine="$repo $branch"
 
         determineVersion
-        checkDownloadUptodate "svn" "$tarFile"
+        checkDownloadUptodate "svn" "sources/$tarFile"
         uptodate=$?
         if [ $uptodate = 1 ]; then
             echo "$repo is already up to date, no need to re-download. Use -f as second parameter if you want to force"

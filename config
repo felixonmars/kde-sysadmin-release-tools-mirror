@@ -1,8 +1,9 @@
-make_zip=1
+make_zip=0
+
+l10n_repo=svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4
+
+release_l10n_separately=1
 
 # name of the subdir of $l10n_repo/$lang/messages
-l10n_module=frameworks
-
-release_l10n_separately=0
-
-l10n_repo=svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5
+# only used if release_l10n_separately=0
+l10n_module=dummy

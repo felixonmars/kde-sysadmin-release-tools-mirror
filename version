@@ -1,11 +1,1 @@
-if [ "$repo" = "extra-cmake-modules" ]; then
-   version=0.0.12
-else
-   # 4.95 = tp1
-   # 4.96 = alpha1
-   # 4.97 = alpha2
-   # 4.98 = beta1
-   # 4.99 = beta2
-   # should have started lower to have more room...
-   version=4.98.0
-fi
+version=4.13.60
