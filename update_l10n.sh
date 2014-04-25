@@ -17,11 +17,10 @@ else
 
     # Make new checkout
 
-    svnurl=svn+ssh://svn@svn.kde.org/home/kde/trunk/$l10n_repo
-    languages=`svn cat $svnurl/subdirs`
+    languages=`svn cat $l10n_repo/subdirs`
     for lang in $languages; do
         mkdir -p l10n/$lang/messages
-        svn co $svnurl/$lang/messages/$l10n_module l10n/$lang/messages/$l10n_module
+        svn co $l10n_repo/$lang/messages/$l10n_module l10n/$lang/messages/$l10n_module
     done
 
 fi
