@@ -43,15 +43,15 @@ cat modules.git | while read repo branch; do
             git archive --remote=kde:$repo $branch --prefix $basename/ | tar x
             errorcode=$PIPESTATUS # grab error code from git archive
             if [ $errorcode -eq 0 ]; then
-
-                # Only for frameworks: grab translations and put them into the tarball
-                if [ -f "$basename/$repo.yaml" ]; then
-                    grabTranslations "$basename" "$repo"
-                fi
-                tar c --owner 0 --group 0 --numeric-owner $basename | xz -9 > $tarFile
                 rev2=`get_git_rev`
+
                 if [ $rev = $rev2 ]; then
                     checkout=0
+                    # Only for frameworks: grab translations and put them into the tarball
+                    if [ -f "$basename/$repo.yaml" ]; then
+                        grabTranslations "$basename" "$repo"
+                    fi
+                    tar c --owner 0 --group 0 --numeric-owner $basename | xz -9 > $tarFile
 
                     if [ $make_zip -eq 1 ]; then
                       zip -r $basename.zip $basename || exit 1

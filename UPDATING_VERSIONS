@@ -20,7 +20,6 @@ For each release (i.e. x.y.z)
  * kdelibs/kdecore/sycoca/ksycoca.cpp --> KSYCOCA_VERSION
  * kdepimlibs/CMakeLists.txt - KDEPIMLIBS_VERSION_*
  * kde-workspace/CMakeLists.txt - KDE4WORKSPACE_VERSION_*
- * kopete/libkopete/kopeteversion.h - KOPETE_VERSION_*
  * kdepim/CMakeLists.txt - KDEPIM_DEV_VERSION / KDEPIM_VERSION
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
