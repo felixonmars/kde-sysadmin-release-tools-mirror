@@ -5,7 +5,7 @@ obviously some of the version numbers need to be replaced by the version you are
  * Update version file with the correct version number
  * Update modules.svn file with the correct svn modules and branches
  * Update modules.git file with the correct git modules and branches
- * Read RELEASE-CHECKLIST
+ * Read UPDATING_VERSIONS
  * Pack the sources
      ./pack_all.sh
  * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
