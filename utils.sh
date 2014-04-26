@@ -87,7 +87,7 @@ function grabTranslations()
     fi
 
     # Copy po files
-    commitmsg="Create tag for $version"
+    has_po=0
     local subdir
     for subdir in $l10n/*; do
         local podir=$subdir/messages/$l10n_module
@@ -97,14 +97,19 @@ function grabTranslations()
             cp -f $podir/${repo}5.po $pofile 2>/dev/null
             cp -f $podir/${repo}5_*.po $pofile 2>/dev/null
             if [ -f $pofile ]; then
-                $cmd git add po/$lang.po
-                commitmsg="Create tag for $version, including translations from `basename $l10n_repo`"
+                git add po/$lang.po
+                has_po=1
             fi
         fi
     done
 
+    if [ $has_po -eq 1 ]; then
+        git ci po -m "Commit translations from `basename $l10n_repo`"
+    fi
+
     # Tag
-    $cmd git tag -a $tagname -m "$commitmsg"  || exit 4
+    git tag -d $tagname 2>/dev/null
+    git tag -a $tagname -m "Create tag for $version"  || exit 4
     $cmd git push --tags || exit 5
     cd $oldpwd
 }
