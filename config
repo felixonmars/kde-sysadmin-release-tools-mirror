@@ -7,3 +7,7 @@ release_l10n_separately=0
 # name of the subdir of $l10n_repo/$lang/messages
 # only used if release_l10n_separately=0
 l10n_module=frameworks
+
+# Look for the checkouts in $srcdir
+# TODO: update this path
+srcdir=/d/kde/src/5

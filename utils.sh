@@ -43,6 +43,22 @@ function checkDownloadUptodate()
     return $result
 }
 
+function findCheckout()
+{
+    local repo=$1
+    cd $srcdir || exit 1
+    if [ -d frameworks/$repo ]; then
+        echo $srcdir/frameworks/$repo
+    elif [ -d kdesupport/$repo ]; then
+        echo $srcdir/kdesupport/$repo || exit 2
+    elif [ -d $repo ]; then
+        echo $srcdir/$repo
+    else
+        echo "NOT FOUND: $repo" 1>&2
+        exit 3
+    fi
+}
+
 function grabTranslations()
 {
     local basename=$1

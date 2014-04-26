@@ -4,9 +4,8 @@ unset CDPATH
 
 here=$PWD
 
-# We look for the checkouts in subdirs (frameworks/, kdesupport/) of $srcdir
-# TODO: adapt this for KDE SC releases
-srcdir=/d/kde/src/5
+. config
+. utils.sh
 
 if [ ! -d $srcdir ]; then
     echo "$srcdir does not exist, please fix srcdir variable"
@@ -14,7 +13,6 @@ if [ ! -d $srcdir ]; then
 fi
 
 cat $here/modules.git | while read repo branch; do
-    cd $srcdir || exit 1
     echo $repo
     . $here/version
     tagname=v$version
@@ -22,16 +20,8 @@ cat $here/modules.git | while read repo branch; do
     if [ ! -f $versionfile ]; then echo "$versionfile not found"; exit 1; fi
     b=`sed '2q;d' $versionfile`
     echo $b
-    if [ -d frameworks/$repo ]; then
-        cd frameworks/$repo
-    elif [ -d kdesupport/$repo ]; then
-        cd kdesupport/$repo || exit 2
-    elif [ -d $repo ]; then
-        cd $repo || exit 2
-    else
-        echo "NOT FOUND: $repo"
-        exit 3
-    fi
+    checkout=$(findCheckout $repo)
+    cd $checkout || exit 2
     echo $PWD
     git fetch || exit 2
     git tag -a $tagname $b -m "Create tag for $version"  || exit 4
