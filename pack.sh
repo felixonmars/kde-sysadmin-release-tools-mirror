@@ -42,7 +42,7 @@ cat modules.git | while read repo branch; do
         basename=$repo-$version
 
         if [ "$release_l10n_separately" = "0" ]; then
-            grabTranslations "$repo" "$PWD/l10n"
+            grabTranslations "$repo" "$PWD/l10n" "$version-$tagsuffix"
         fi
 
         while [ $checkout -eq 1 ]; do

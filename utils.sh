@@ -59,40 +59,52 @@ function findCheckout()
     fi
 }
 
-# grabTranslations $repo $l10n
-# Copy .po files from $l10n (full path) into $repo and git add them
+# Usage: grabTranslations $repo $l10n $tagname
+# Copy .po files from $l10n (full path) into $repo and git add them, then tag rc with $tagname
 function grabTranslations()
 {
     local repo=$1
     local l10n=$2
+    local tagname=$3
+
+    local cmd=
+    if [ "$dry_run" = "1" ]; then
+        cmd=echo
+    fi
+
+    # Go to the local checkout
     local checkout=$(findCheckout $repo)
     test -d $checkout || exit 1
     local oldpwd=$PWD
-
-    mkdir -p $checkout/po
     cd $checkout
+    mkdir -p po
+    git fetch || exit 2
     local status=`git status --porcelain --untracked-files=no`
     if [ -n "$status" ]; then
         echo "$checkout doesn't seem clean:"
         echo "$status"
         exit 2
     fi
+
+    # Copy po files
+    commitmsg="Create tag for $version"
     local subdir
     for subdir in $l10n/*; do
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
             local lang=`basename $subdir`
             local pofile=$checkout/po/$lang.po
-            cp $podir/${repo}5.po $pofile 2>/dev/null
-            cp $podir/${repo}5_*.po $pofile 2>/dev/null
+            cp -f $podir/${repo}5.po $pofile 2>/dev/null
+            cp -f $podir/${repo}5_*.po $pofile 2>/dev/null
             if [ -f $pofile ]; then
-                git add po/$lang.po
+                $cmd git add po/$lang.po
+                commitmsg="Create tag for $version, including translations from `basename $l10n_repo`"
             fi
         fi
     done
-    git commit po -m "Commit translations copied from `basename $l10n_repo`"
-    if [ "$dry_run" = "0" ]; then
-        git push
-    fi
+
+    # Tag
+    $cmd git tag -a $tagname -m "$commitmsg"  || exit 4
+    $cmd git push --tags || exit 5
     cd $oldpwd
 }
