@@ -1,5 +1,8 @@
 make_zip=1
 
+# Set this to 1 for pack.sh to not commit/push anything
+dry_run=1
+
 l10n_repo=svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5
 
 release_l10n_separately=0

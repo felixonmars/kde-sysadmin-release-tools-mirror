@@ -59,18 +59,40 @@ function findCheckout()
     fi
 }
 
+# grabTranslations $repo $l10n
+# Copy .po files from $l10n (full path) into $repo and git add them
 function grabTranslations()
 {
-    local basename=$1
-    mkdir $basename/po
-    local repo=$2
+    local repo=$1
+    local l10n=$2
+    local checkout=$(findCheckout $repo)
+    test -d $checkout || exit 1
+    local oldpwd=$PWD
+
+    mkdir -p $checkout/po
+    cd $checkout
+    local status=`git status --porcelain --untracked-files=no`
+    if [ -n "$status" ]; then
+        echo "$checkout doesn't seem clean:"
+        echo "$status"
+        exit 2
+    fi
     local subdir
-    for subdir in ../l10n/*; do
+    for subdir in $l10n/*; do
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
             local lang=`basename $subdir`
-            cp $podir/${repo}5.po $basename/po/$lang.po 2>/dev/null
-            cp $podir/${repo}5_*.po $basename/po/$lang.po 2>/dev/null
+            local pofile=$checkout/po/$lang.po
+            cp $podir/${repo}5.po $pofile 2>/dev/null
+            cp $podir/${repo}5_*.po $pofile 2>/dev/null
+            if [ -f $pofile ]; then
+                git add po/$lang.po
+            fi
         fi
     done
+    git commit po -m "Commit translations copied from `basename $l10n_repo`"
+    if [ "$dry_run" = "0" ]; then
+        git push
+    fi
+    cd $oldpwd
 }
