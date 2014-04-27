@@ -3,6 +3,7 @@ obviously some of the version numbers need to be replaced by the version you are
 
  * rm -rf sources versions REVISIONS_AND_HASHES l10n
  * Update version file with the correct version number
+ * Edit config, ensure dry_run=0
  * Update modules.svn file with the correct svn modules and branches
  * Update modules.git file with the correct git modules and branches
      (when releasing frameworks, run ./list_frameworks.sh)
