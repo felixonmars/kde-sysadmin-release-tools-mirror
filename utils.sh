@@ -59,6 +59,13 @@ function findCheckout()
     fi
 }
 
+function readYamlEntry()
+{
+    local metainfo=$1
+    local key=$2
+    grep ^$key: $metainfo | sed -e "s/$key: //"
+}
+
 # Usage: grabTranslations $repo $l10n $tagname
 # Copy .po files from $l10n (full path) into $repo and git add them, then tag rc with $tagname
 function grabTranslations()
