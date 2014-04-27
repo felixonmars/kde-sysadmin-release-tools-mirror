@@ -76,7 +76,7 @@ function grabTranslations()
 
     local cmd=
     if [ "$dry_run" = "1" ]; then
-        cmd=echo
+        cmd=echo echo
     fi
 
     # Go to the local checkout
