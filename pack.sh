@@ -67,13 +67,13 @@ function grabTranslations()
     done
 
     if [ $has_po -eq 1 ]; then
-        git add po
-        git ci po -m "Commit translations from `basename $l10n_repo`"
+        $cmd git add po
+        $cmd git ci po -m "Commit translations from `basename $l10n_repo`"
     fi
 
     # Tag
-    git tag -d $tagname 2>/dev/null
-    git tag -a $tagname -m "Create tag for $version"  || exit 4
+    $cmd git tag -d $tagname 2>/dev/null
+    $cmd git tag -a $tagname -m "Create tag for $version"  || exit 4
     $cmd git push --tags || exit 5
     cd $oldpwd
 }
