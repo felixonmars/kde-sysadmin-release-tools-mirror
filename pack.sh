@@ -13,14 +13,30 @@ fi
 
 unset CDPATH
 
-mkdir -p sources
 mkdir -p versions
+
+
+# Determine where in sources/ the tarball should go.
+# Output: $destination
+function adjustDestination() {
+    local repo=$1
+    metainfo=$srcdir/frameworks/$repo/metainfo.yaml
+    if [ -f $metainfo ]; then
+        portingAid=`readYamlEntry $metainfo portingAid`
+        if [ "$portingAid" = "true" ]; then
+            destination=$destination/portingAids
+        fi
+    fi
+}
 
 function determineVersion() {
   . version
   versionFilePath=$PWD/versions/$repo_to_pack
   tarFile=$repo_to_pack-$version.tar.xz
-  echo $tarFile
+  destination=sources
+  adjustDestination $repo
+  mkdir -p $destination
+  echo $destination/$tarFile
 }
 
 cat modules.git | while read repo branch; do
@@ -28,7 +44,7 @@ cat modules.git | while read repo branch; do
         repoLine="$repo $branch"
 
         determineVersion
-        checkDownloadUptodate "git" "sources/$tarFile"
+        checkDownloadUptodate "git" "$destination/$tarFile"
         uptodate=$?
         if [ $uptodate = 1 ]; then
             echo "$repo is already up to date, no need to re-download. Use -f as second parameter if you want to force"
@@ -47,7 +63,8 @@ cat modules.git | while read repo branch; do
 
         while [ $checkout -eq 1 ]; do
             rev=`get_git_rev`
-            cd sources
+            oldpwd=$PWD
+            cd $destination
             git archive --remote=kde:$repo $branch --prefix $basename/ | tar x
             errorcode=$PIPESTATUS # grab error code from git archive
             if [ $errorcode -eq 0 ]; then
@@ -68,11 +85,12 @@ cat modules.git | while read repo branch; do
             else
                 echo "git archive --remote=kde:$repo $branch --prefix $basename/ failed with error code $errorcode"
             fi
-            cd ..
+            cd $oldpwd
         done
         echo "$rev"
         echo "$rev" >> $versionFilePath
-        sha256sum sources/$tarFile >> $versionFilePath
+        echo PWD=$PWD
+        sha256sum $destination/$tarFile >> $versionFilePath
     fi
 done
 
