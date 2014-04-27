@@ -93,17 +93,16 @@ function grabTranslations()
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
             local lang=`basename $subdir`
-            local pofile=$checkout/po/$lang.po
-            cp -f $podir/${repo}5.po $pofile 2>/dev/null
-            cp -f $podir/${repo}5_*.po $pofile 2>/dev/null
-            if [ -f $pofile ]; then
-                git add po/$lang.po
+            local destdir=$checkout/po/$lang
+            mkdir -p $destdir
+            if cp -f $podir/${repo}5.po $destdir 2>/dev/null || cp -f $podir/${repo}5_*.po $destdir 2>/dev/null; then
                 has_po=1
             fi
         fi
     done
 
     if [ $has_po -eq 1 ]; then
+        git add po
         git ci po -m "Commit translations from `basename $l10n_repo`"
     fi
 
