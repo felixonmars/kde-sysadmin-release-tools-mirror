@@ -13,6 +13,9 @@ if test -d l10n; then
     for dir in l10n/*/messages/$l10n_module; do
         ( cd $dir ; svn update )
     done
+    for dir in l10n/*/docs/$l10n_module; do
+        ( cd $dir ; svn update )
+    done
 
 else
 
@@ -22,6 +25,8 @@ else
     for lang in $languages; do
         mkdir -p l10n/$lang/messages
         svn co $l10n_repo/$lang/messages/$l10n_module l10n/$lang/messages/$l10n_module
+        mkdir -p l10n/$lang/docs
+        svn co $l10n_repo/$lang/docs/$l10n_module l10n/$lang/docs/$l10n_module
     done
 
 fi

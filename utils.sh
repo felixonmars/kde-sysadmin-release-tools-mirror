@@ -86,19 +86,28 @@ function grabTranslations()
         exit 2
     fi
 
-    # Copy po files
+    # Copy po files and translated docbooks
     has_po=0
     local subdir
     for subdir in $l10n/*; do
+        local lang=`basename $subdir`
+        local destdir=$checkout/po/$lang
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
-            local lang=`basename $subdir`
-            local destdir=$checkout/po/$lang
             mkdir -p $destdir
             if cp -f $podir/${repo}5.po $destdir 2>/dev/null || cp -f $podir/${repo}5_*.po $destdir 2>/dev/null; then
                 has_po=1
             fi
         fi
+        # the subdir in l10n is supposed to be named exactly after the framework
+        local docdir=$subdir/docs/$l10n_module/$repo
+        if test -d $docdir; then
+            rm -rf $destdir/docs
+            mkdir -p $destdir/docs
+            cp -a $docdir/* $destdir/docs
+            test -f $destdir/docs/CMakeLists.txt && has_po=1
+        fi
+
     done
 
     if [ $has_po -eq 1 ]; then
