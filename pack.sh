@@ -151,7 +151,6 @@ cat modules.git | while read repo branch; do
         done
         echo "$rev"
         echo "$rev" >> $versionFilePath
-        echo PWD=$PWD
         sha256sum $destination/$tarFile >> $versionFilePath
     fi
 done
