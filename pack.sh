@@ -50,9 +50,12 @@ function grabTranslations()
         local destdir=$checkout/po/$lang
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
-            mkdir -p $destdir
+            local hasdestdir=0;
+            test -d $destdir && hasdestdir=1 || mkdir -p $destdir
             if cp -f $podir/${repo}5.po $destdir 2>/dev/null || cp -f $podir/${repo}5_*.po $destdir 2>/dev/null; then
                 has_po=1
+            elif [ $hasdestdir -eq 0 ]; then
+                rm -r $destdir
             fi
         fi
         # the subdir in l10n is supposed to be named exactly after the framework
@@ -63,18 +66,24 @@ function grabTranslations()
             cp -a $docdir/* $destdir/docs
             test -f $destdir/docs/CMakeLists.txt && has_po=1
         fi
-
     done
 
     if [ $has_po -eq 1 ]; then
+        $cmd git branch -D local_release
+        $cmd git checkout -b local_release
         $cmd git add po
         $cmd git ci po -m "Commit translations from `basename $l10n_repo`"
     fi
+
+    if [ `ls po | wc -l` -eq 0 ]; then rm -r po ; fi
 
     # Tag
     $cmd git tag -d $tagname 2>/dev/null
     $cmd git tag -a $tagname -m "Create tag for $version"  || exit 4
     $cmd git push --tags || exit 5
+    if [ $has_po -eq 1 ]; then
+        $cmd git checkout master
+    fi
     cd $oldpwd
 }
 

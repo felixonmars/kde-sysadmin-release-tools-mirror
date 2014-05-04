@@ -1,5 +1,5 @@
 if [ "$repo" = "extra-cmake-modules" ]; then
-   version=0.0.12
+   version=0.0.13
 else
    # 4.95 = tp1
    # 4.96 = alpha1
@@ -7,7 +7,7 @@ else
    # 4.98 = beta1
    # 4.99 = beta2
    # should have started lower to have more room...
-   version=4.98.0
+   version=4.99.0
 fi
 
 # Suffix to use for immediate tagging
