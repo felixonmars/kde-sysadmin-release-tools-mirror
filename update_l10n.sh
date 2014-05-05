@@ -11,10 +11,10 @@ if test -d l10n; then
     # Update existing checkout
 
     for dir in l10n/*/messages/$l10n_module; do
-        ( cd $dir ; svn update )
+        ( cd $dir ; svn cleanup ; svn update )
     done
     for dir in l10n/*/docs/$l10n_module; do
-        ( cd $dir ; svn update )
+        ( cd $dir ; svn cleanup ; svn update )
     done
 
 else

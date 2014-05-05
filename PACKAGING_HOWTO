@@ -9,6 +9,7 @@ obviously some of the version numbers need to be replaced by the version you are
      (when releasing frameworks, run ./list_frameworks.sh)
  * Read UPDATING_VERSIONS
  * Pack the sources
+     (when releasing frameworks: ./update_l10n.sh ; ./make_rc_tag_all.sh ; kdesrc-build frameworks)
      ./pack_all.sh
  * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
    directly into the right location (and use chmod o-rx on the directory).

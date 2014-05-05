@@ -1,5 +1,7 @@
 #!/bin/bash
 
+unset CDPATH
+
 function get_git_rev()
 {
     echo `git ls-remote kde:$repo $branch | cut -f 1`

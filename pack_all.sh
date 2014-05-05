@@ -2,9 +2,9 @@
 
 . config
 
-if [ "$release_l10n_separately" = "0" ]; then
-    bash update_l10n.sh
-fi
+#if [ "$release_l10n_separately" = "0" ]; then
+    #bash update_l10n.sh
+#fi
 
 cat modules.git | while read repo branch; do
 (

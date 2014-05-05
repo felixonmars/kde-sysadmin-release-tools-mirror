@@ -11,4 +11,4 @@ else
 fi
 
 # Suffix to use for immediate tagging
-tagsuffix=rc1
+tagsuffix=rc3
