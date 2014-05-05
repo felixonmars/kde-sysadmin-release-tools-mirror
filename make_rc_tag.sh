@@ -4,12 +4,7 @@
 . config
 
 repo_to_pack=$1
-force=$2
 
-if [ -z "$repo_to_pack" ]; then
-    echo "No repo given"
-    exit
-fi
 if [ "$release_l10n_separately" = "1" ]; then
     echo "Only makes sense with bundled translations"
     exit
@@ -94,7 +89,7 @@ function grabTranslations()
 }
 
 cat modules.git | while read repo branch; do
-    if [ "$repo_to_pack" = "$repo" ]; then
+    if [ -z "$repo_to_pack" -o "$repo_to_pack" = "$repo" ]; then
 
         . version
 

@@ -55,10 +55,10 @@ cat modules.git | while read repo branch; do
         basename=$repo-$version
         tagname="v$version-$tagsuffix"
 
-        # TODO   make_rc_tag_all.sh?
-        #if [ "$release_l10n_separately" = "0" ]; then
-            #grabTranslations "$repo" "$branch" "$PWD/l10n" "$tagname"
-        #fi
+        if [ "$release_l10n_separately" = "0" ]; then
+            # We must have run make_rc_tag.sh first
+            branch=$tagname
+        fi
 
         while [ $checkout -eq 1 ]; do
             rev=`get_git_rev`
