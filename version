@@ -9,6 +9,3 @@ else
    # should have started lower to have more room...
    version=4.99.0
 fi
-
-# Suffix to use for immediate tagging
-tagsuffix=rc3

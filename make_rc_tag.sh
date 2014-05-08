@@ -10,39 +10,20 @@ if [ "$release_l10n_separately" = "1" ]; then
     exit
 fi
 
-# Usage: grabTranslations $repo $branch $l10n $tagname
-# Copy .po files from $l10n (full path) into $repo (branch $branch) and git add them, then tag rc with $tagname
+cmd=
+if [ "$dry_run" = "1" ]; then
+    cmd=echo
+fi
+
+# Usage: grabTranslations $repo $branch $l10n
+# Copy .po files from $l10n (full path) into $repo (branch $branch) and git add them into local_release
 function grabTranslations()
 {
     local repo=$1
     local branch=$2
     local l10n=$3
-    local tagname=$4
 
-    local cmd=
-    if [ "$dry_run" = "1" ]; then
-        cmd=echo
-    fi
-
-    # Go to the local checkout
-    local checkout=$(findCheckout $repo)
-    test -d $checkout || exit 1
-    local oldpwd=$PWD
-    cd $checkout
-    git checkout $branch
     mkdir -p po
-    git fetch || exit 2
-    local status=`git status --porcelain --untracked-files=no`
-    if [ -n "$status" ]; then
-        echo "$checkout doesn't seem clean:"
-        echo "$status"
-        exit 2
-    fi
-
-    if [ -f ".git/refs/tags/$tagname" ]; then
-        echo "$checkout appears to have a $tagname tag already, skipping"
-        return
-    fi
 
     # Copy po files and translated docbooks
     has_po=0
@@ -81,14 +62,30 @@ function grabTranslations()
     fi
 
     if [ `ls po | wc -l` -eq 0 ]; then rm -r po ; fi
+}
 
-    # Tag
+function tagModule()
+{
+    local repo=$1
+    local version=$2
+    local basetag="v$version-rc"
+
+    # Determine first available tag name
+    local i=1
+    while [ -f ".git/refs/tags/$basetag$i" ]; do
+      i=$((i+1))
+    done
+    local tagname=$basetag$i
+
+    # Tag the current directory with $tagname
     $cmd git tag -a $tagname -m "Create tag for $version"  || exit 4
     $cmd git push origin tag $tagname || exit 5
-    if [ $has_po -eq 1 ]; then
-        $cmd git checkout $branch
-    fi
-    cd $oldpwd
+
+    # Tell pack.sh which tag to use
+    sed -i "/^$repo /d" $oldpwd/tags.git
+    echo "$repo $tagname" >> $oldpwd/tags.git
+
+    return 0
 }
 
 cat modules.git | while read repo branch; do
@@ -97,9 +94,28 @@ cat modules.git | while read repo branch; do
         . version
 
         basename=$repo-$version
-        tagname="v$version-$tagsuffix"
 
-        grabTranslations "$repo" "$branch" "$PWD/l10n" "$tagname"
+        oldpwd=$PWD
+        # Go to the local checkout, ensure clean, update
+        checkout=$(findCheckout $repo)
+        test -d $checkout || exit 1
+        cd $checkout
+        status=`git status --porcelain --untracked-files=no`
+        if [ -n "$status" ]; then
+            echo "$checkout doesn't seem clean:"
+            echo "$status"
+            exit 2
+        fi
+        git checkout $branch || exit 2
+        git pull || exit 3
+
+        grabTranslations "$repo" "$branch" "$PWD/l10n"
+
+        tagModule "$repo" "$version"
+
+        $cmd git checkout $branch
+
+        cd $oldpwd
     fi
 done
 
