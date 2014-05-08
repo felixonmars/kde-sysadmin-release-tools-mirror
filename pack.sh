@@ -36,7 +36,10 @@ function determineVersion() {
   echo $destination/$tarFile
 }
 
-cat modules.git | while read repo branch; do
+inputfile=modules.git
+[ -f tags.git ] && inputfile=tags.git
+
+cat $inputfile | while read repo branch; do
     if [ "$repo_to_pack" = "$repo" ]; then
         repoLine="$repo $branch"
 
@@ -53,18 +56,12 @@ cat modules.git | while read repo branch; do
         echo "$repoLine" > $versionFilePath
 
         basename=$repo-$version
-        tagname="v$version-$tagsuffix"
-
-        if [ "$release_l10n_separately" = "0" ]; then
-            # We must have run make_rc_tag.sh first
-            branch=$tagname
-        fi
 
         while [ $checkout -eq 1 ]; do
             rev=`get_git_rev`
             oldpwd=$PWD
             cd $destination
-            git archive --remote=kde:$repo $tagname --prefix $basename/ | tar x
+            git archive --remote=kde:$repo $branch --prefix $basename/ | tar x
             errorcode=$PIPESTATUS # grab error code from git archive
             if [ $errorcode -eq 0 ]; then
                 rev2=`get_git_rev`
@@ -82,7 +79,7 @@ cat modules.git | while read repo branch; do
                 fi
                 rm -rf $basename
             else
-                echo "git archive --remote=kde:$repo $tagname --prefix $basename/ failed with error code $errorcode"
+                echo "git archive --remote=kde:$repo $branch --prefix $basename/ failed with error code $errorcode"
             fi
             cd $oldpwd
         done
