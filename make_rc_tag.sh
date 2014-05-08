@@ -49,6 +49,9 @@ function grabTranslations()
     local subdir
     for subdir in $l10n/*; do
         local lang=`basename $subdir`
+        if [ "$lang" = "x-test" ]; then
+            continue
+        fi
         local destdir=$checkout/po/$lang
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
