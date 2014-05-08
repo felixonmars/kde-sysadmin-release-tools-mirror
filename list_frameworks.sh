@@ -11,6 +11,8 @@ out=modules.git
 
 cp -f /dev/null $out
 
+echo "extra-cmake-modules master" >> $out
+
 for framework in `ls -1 $srcdir/frameworks`; do
 
     metainfo=$srcdir/frameworks/$framework/metainfo.yaml
