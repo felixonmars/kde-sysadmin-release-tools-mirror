@@ -82,7 +82,7 @@ function tagModule()
     $cmd git push origin tag $tagname || exit 5
 
     # Tell pack.sh which tag to use
-    sed -i "/^$repo /d" $oldpwd/tags.git
+    [ -f $oldpwd/tags.git ] && sed -i "/^$repo /d" $oldpwd/tags.git
     echo "$repo $tagname" >> $oldpwd/tags.git
 
     return 0
@@ -90,6 +90,8 @@ function tagModule()
 
 cat modules.git | while read repo branch; do
     if [ -z "$repo_to_pack" -o "$repo_to_pack" = "$repo" ]; then
+
+        echo $repo
 
         . version
 
@@ -109,7 +111,7 @@ cat modules.git | while read repo branch; do
         git checkout $branch || exit 2
         git pull || exit 3
 
-        grabTranslations "$repo" "$branch" "$PWD/l10n"
+        grabTranslations "$repo" "$branch" "$oldpwd/l10n"
 
         tagModule "$repo" "$version"
 
