@@ -5,6 +5,7 @@ kactivities                                 KDE/4.13
 kfilemetadata                               KDE/4.13
 nepomuk-core                                KDE/4.13
 nepomuk-widgets                             KDE/4.13
+kde-workspace                               KDE/4.11
 kde-runtime                                 KDE/4.13
 kde-baseapps                                KDE/4.13
 kate                                        KDE/4.13
