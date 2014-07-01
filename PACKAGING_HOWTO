@@ -1,5 +1,4 @@
-This is a quick description on how KDE SC 4.12 beta 1 packaging was done,
-obviously some of the version numbers need to be replaced by the version you are packaging ;-)
+This is a quick description on how KDE Frameworks packaging is done.
 
  * rm -rf sources versions REVISIONS_AND_HASHES l10n tags.git
  * Update version file with the correct version number

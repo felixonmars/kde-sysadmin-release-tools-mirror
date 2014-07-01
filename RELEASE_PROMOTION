@@ -1,5 +1,7 @@
 == Release Promotion ==
 
+Warn kde-promo@kde.org and dot-editors@kde.org to ask for an announcement text.
+
 On release day:
 
 - Check with if packages are ready, and enabled for synching to the public FTPs, this should happen about 6 - 8 hours in advance of the public announcement
