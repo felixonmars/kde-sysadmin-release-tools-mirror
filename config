@@ -12,5 +12,4 @@ release_l10n_separately=0
 l10n_module=frameworks
 
 # Look for the checkouts in $srcdir
-# TODO: update this path
-srcdir=/d/kde/src/5
+srcdir=/home/scripty/frameworks_packaging/src

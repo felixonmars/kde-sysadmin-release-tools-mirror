@@ -24,6 +24,7 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
+ rm -rf frameworks/kf5umbrella
  files=`ls -1 frameworks/*/CMakeLists.txt`
  Ask Alex Merry if in doubt whether it's worth making a new ECM release
  Update versions:
