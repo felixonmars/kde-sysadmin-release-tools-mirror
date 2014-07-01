@@ -58,7 +58,7 @@ function grabTranslations()
         $cmd git branch -D local_release
         $cmd git checkout -b local_release
         $cmd git add po
-        $cmd git ci po -m "Commit translations from `basename $l10n_repo`"
+        $cmd git commit po -m "Commit translations from `basename $l10n_repo`"
     fi
 
     if [ `ls po | wc -l` -eq 0 ]; then rm -r po ; fi
