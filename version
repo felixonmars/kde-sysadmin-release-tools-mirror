@@ -1,5 +1,5 @@
 if [ "$repo" = "extra-cmake-modules" ]; then
-   version=0.0.15
+   version=1.0.0
 else
    # 4.95 = tp1
    # 4.96 = alpha1
