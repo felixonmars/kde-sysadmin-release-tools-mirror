@@ -37,7 +37,9 @@ echo '  <th align="left">Sha1 Sum</th>'
 echo '</tr>'
 
 process_folder "sources" "src"
-process_folder "sources/kde-l10n" "src/kde-l10n"
+if [ -d "sources/kde-l10n" ]; then
+    process_folder "sources/kde-l10n" "src/kde-l10n"
+fi
 
 echo '</table>'
 
