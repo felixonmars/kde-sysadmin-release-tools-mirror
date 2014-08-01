@@ -55,6 +55,11 @@ function grabTranslations()
     done
 
     if [ $has_po -eq 1 ]; then
+        # Strip unused strings, to keep things small
+        cd po
+        for f in */*.po ; do msgattrib --output-file=$f --no-obsolete $f ; done
+        cd ..
+
         $cmd git branch -D local_release
         $cmd git checkout -b local_release
         $cmd git add po

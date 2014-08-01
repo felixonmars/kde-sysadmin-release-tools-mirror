@@ -7,9 +7,14 @@ This is a quick description on how KDE Frameworks packaging is done.
  * Update modules.git file with the correct git modules and branches
      (when releasing frameworks, run ./list_frameworks.sh)
  * Read UPDATING_VERSIONS
- * Pack the sources
+ * Pack the sources (from ssh -A scripty@l10n.kde.org)
      (when releasing frameworks: ./update_l10n.sh ; ./make_rc_tag.sh ; kdesrc-build frameworks)
      ./pack_all.sh
+
+     Frameworks: to apply a hotfix:
+        git checkout local_release ; git fetch ; git cherry-pick -x sha1 ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
+        Update N in tags.git, ./pack.sh <module>, create_sources_inc
+
  * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
    directly into the right location (and use chmod o-rx on the directory).
    Otherwise read ftp://upload.kde.org/README for how to upload the tarballs
@@ -19,7 +24,7 @@ This is a quick description on how KDE Frameworks packaging is done.
  * Do not forget to tell whoever does the ftp work to update the latest symlink
  * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES and tags.git
  * Make sure someone acts on RELEASE_PROMOTION
- * Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.11.80.inc
+ * ./create_sources_inc > ../www_info/source-kf-5.0.0.inc  then svn add + commit.
    Coordinate with the people doing web announcement for this
  * Once the release has been publicly announced run tag_all.sh
    At the moment you have to do this manually for SVN modules:
