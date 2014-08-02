@@ -2,6 +2,7 @@ This is a quick description on how KDE Frameworks packaging is done.
 
  * rm -rf sources versions REVISIONS_AND_HASHES l10n tags.git
  * Update version file with the correct version number
+    (ask Alex Merry if in doubt about making a new ECM release, after git diff v1.last.0..)
  * Edit config, ensure dry_run=0
  * Update modules.svn file with the correct svn modules and branches
  * Update modules.git file with the correct git modules and branches

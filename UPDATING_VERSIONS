@@ -24,19 +24,13 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
+ ./kdesrc-build --src-only
  rm -rf frameworks/kf5umbrella
- files=`ls -1 frameworks/*/CMakeLists.txt`
- Ask Alex Merry if in doubt whether it's worth making a new ECM release
  Update versions:
-  * kservice/src/sycoca/ksycoca.cpp --> KSYCOCA_VERSION
-  * extra-cmake-modules/CMakeLists.txt - ECM_*_VERSION
-  * perl -pi -e '$_ =~ s/\Q$1/5.0.0/ if (/^set.KF5_VERSION \"([^\"]*)\"/);' `echo $files`
-    for f in `echo $files`; do (d=`dirname $f`; echo $d; cd $d ; git commit -a -m 'Upgrade KF5 version.'; git pull --rebase ; git push) ; done
+  * ./increase_frameworks_version.sh step1
 
  Then wait for a successful rebuild on build.kde.org, to avoid failing all the frameworks at the next commit
 
  Upgrade version requirements:
-  * perl -pi -e 's/ECM [0-9]+\.[0-9]+\.[0-9]+/ECM 1\.0\.0/g' `echo $files`
-  * perl -pi -e '$_ =~ s/\Q$1/5.0.0/ if (/^set.KF5_DEP_VERSION \"([^\"]*)\"/);' `echo $files`
-  * for f in `echo $files`; do (d=`dirname $f`; echo $d; cd $d ; git commit -a -m 'Upgrade ECM and KF5 version requirements.'; git pull --rebase ; git push) ; done
+  * ./increase_frameworks_version.sh step2
 
