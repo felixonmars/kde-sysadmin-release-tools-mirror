@@ -9,15 +9,17 @@ This is a quick description on how KDE Frameworks packaging is done.
      (when releasing frameworks, run ./list_frameworks.sh)
  * Read UPDATING_VERSIONS
  * Pack the sources (from ssh -A scripty@l10n.kde.org)
-     (when releasing frameworks: ./update_l10n.sh ; ./make_rc_tag.sh ; kdesrc-build frameworks)
+     (when releasing frameworks: ./update_l10n.sh ; ./make_rc_tag.sh
+      then locally, try compiling the rc tag -> git fetch --tags ; kdesrc-build extra-cmake-modules frameworks)
      ./pack_all.sh
 
      Frameworks: to apply a hotfix:
         git checkout local_release ; git fetch ; git cherry-pick -x sha1 ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
         Update N in tags.git, ./pack.sh <module>, create_sources_inc
 
- * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
-   directly into the right location (and use chmod o-rx on the directory).
+ * If you have ssh access to ftpadmin@depot.kde.org:
+     ./upload_all.sh
+
    Otherwise read ftp://upload.kde.org/README for how to upload the tarballs
    in case of doubt sysadmin will kindly help you
    Note that usually the tarballs are first only available to distro packagers
