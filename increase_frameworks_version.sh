@@ -39,12 +39,12 @@ cat $here/modules.git | while read repo branch; do
             ecm_major=`echo $ecm_version | cut -d. -f1`
             ecm_minor=`echo $ecm_version | cut -d. -f2`
             ecm_patch=`echo $ecm_version | cut -d. -f3`
-	    $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_major'/ if (/^set.ECM_MAJOR_VERSION ([0-9]*)/);' CMakeLists.txt
-	    $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_minor'/ if (/^set.ECM_MINOR_VERSION ([0-9]*)/);' CMakeLists.txt
-	    $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_patch'/ if (/^set.ECM_PATCH_VERSION ([0-9]*)/);' CMakeLists.txt
+            $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_major'/ if (/^set.ECM_MAJOR_VERSION ([0-9]*)/);' CMakeLists.txt
+            $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_minor'/ if (/^set.ECM_MINOR_VERSION ([0-9]*)/);' CMakeLists.txt
+            $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_patch'/ if (/^set.ECM_PATCH_VERSION ([0-9]*)/);' CMakeLists.txt
             $cmd git commit -a -m "Upgrade ECM version for $ecm_version release."
         else
-	    $cmd perl -pi -e '$_ =~ s/\Q$1/'$version'/ if (/^set.KF5_VERSION \"([^\"]*)\"/);' CMakeLists.txt
+            $cmd perl -pi -e '$_ =~ s/\Q$1/'$version'/ if (/^set.KF5_VERSION \"([^\"]*)\"/);' CMakeLists.txt
             $cmd git commit -a -m "Upgrade KF5 version for $version release."
         fi
     else
