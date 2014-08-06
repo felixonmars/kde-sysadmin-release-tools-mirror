@@ -45,6 +45,7 @@ cat $here/modules.git | while read repo branch; do
             $cmd git commit -a -m "Upgrade ECM version for $ecm_version release."
         else
             $cmd perl -pi -e '$_ =~ s/\Q$1/'$version'/ if (/^set.KF5_VERSION \"([^\"]*)\"/);' CMakeLists.txt
+            test -f setup.py && $cmd perl -pi -e '$_ =~ s/\Q$1/'$version'/ if (/^ +version=.(.*).,/);' setup.py # for kapidox
             $cmd git commit -a -m "Upgrade KF5 version for $version release."
         fi
     else
