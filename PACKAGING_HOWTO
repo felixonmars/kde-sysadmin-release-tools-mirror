@@ -15,7 +15,7 @@ This is a quick description on how KDE Frameworks packaging is done.
 
      Frameworks: to apply a hotfix:
         git checkout local_release ; git fetch ; git cherry-pick -x sha1 ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
-        Update N in tags.git, ./pack.sh <module>, create_sources_inc
+        Update N in tags.git, ./pack.sh <module> ; ./upload_all.sh ; create_sources_inc
 
  * If you have ssh access to ftpadmin@depot.kde.org:
      ./upload_all.sh

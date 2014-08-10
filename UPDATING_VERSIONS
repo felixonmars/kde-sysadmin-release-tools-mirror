@@ -25,7 +25,6 @@ For each release (i.e. x.y.z)
 
 For KDE Frameworks releases
  ./kdesrc-build --src-only
- rm -rf frameworks/kf5umbrella
  Update versions:
   * ./increase_frameworks_version.sh step1
 
