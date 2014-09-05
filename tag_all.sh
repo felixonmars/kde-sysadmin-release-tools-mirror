@@ -28,8 +28,8 @@ cat $here/modules.git | while read repo branch; do
     checkout=$(findCheckout $repo)
     cd $checkout || exit 2
     echo $PWD
-    $cmd git fetch || exit 2
-    $cmd git tag -a $tagname $b -m "Create tag for $version"  || exit 4
+    $cmd git fetch --tags || exit 2
+    $cmd git tag -a $tagname $b -m "Create tag for $version"  # ignore error ("already exists")
     $cmd git push --tags || exit 5
 done
 

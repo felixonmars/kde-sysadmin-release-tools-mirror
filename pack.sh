@@ -70,6 +70,7 @@ cat $inputfile | while read repo branch; do
                     tar c --owner 0 --group 0 --numeric-owner $basename | xz -9 > $tarFile
 
                     if [ $make_zip -eq 1 ]; then
+                      rm -f $basename.zip
                       zip -r $basename.zip $basename || exit 1
                     fi
 
