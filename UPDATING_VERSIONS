@@ -24,7 +24,8 @@ For each release (i.e. x.y.z)
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
 
 For KDE Frameworks releases
- ./kdesrc-build --src-only
+ cd src ; ./kdesrc-build --src-only
+ cd ../release-tools ; ./list_frameworks.sh
  Update versions:
   * ./increase_frameworks_version.sh step1
 

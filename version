@@ -1,12 +1,5 @@
 if [ "$repo" = "extra-cmake-modules" ]; then
-   version=1.1.0
+   version=1.2.0
 else
-   # 4.95 = tp1
-   # 4.96 = alpha1
-   # 4.97 = alpha2
-   # 4.98 = beta1
-   # 4.99 = beta2
-   # should have started lower to have more room...
-   # 4.100 = beta3
-   version=5.1.0
+   version=5.2.0
 fi

@@ -41,8 +41,10 @@ function grabTranslations()
             if cp -f $podir/${repo}5.po $destdir 2>/dev/null || cp -f $podir/${repo}5_*.po $destdir 2>/dev/null; then
                 has_po=1
                 local scriptdir=$subdir/scripts/$l10n_module
+                rm -rf $destdir/scripts
                 mkdir $destdir/scripts
                 cp -rf $scriptdir/${repo}5 $destdir/scripts/ 2>/dev/null || cp -rf $podir/${repo}5_* $destdir/scripts/ 2>/dev/null || rmdir $destdir/scripts
+                rm -rf $destdir/scripts/${repo}5/.svn
             elif [ $hasdestdir -eq 0 ]; then
                 rm -r $destdir
             fi
