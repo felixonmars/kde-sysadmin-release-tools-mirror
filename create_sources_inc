@@ -49,3 +49,29 @@ echo '</table>' >> $output
 cd `dirname $output`
 svn add `basename $output`
 
+##################
+# Now create the main info page
+
+cp kde-frameworks-template.php kde-frameworks-$version.php
+
+perl -pi -e "s/5\.1\.0/$version/g" kde-frameworks-$version.php
+
+svn add kde-frameworks-$version.php
+
+#######
+# Now create the announcement page
+
+cd ../www_announcements
+
+cp kde-frameworks-template.top kde-frameworks-$version.php
+
+../release-tools/Markdown.pl ../release-tools/changelog | sed -e 's/"/\\"/g' >> kde-frameworks-$version.php
+
+cat kde-frameworks-template.bottom >> kde-frameworks-$version.php
+
+perl -pi -e "s/5\.1\.0/$version/g" kde-frameworks-$version.php
+date=`date +'%B %d, %Y'`
+perl -pi -e "s/INSERT_DATE_HERE/$date/" kde-frameworks-$version.php
+
+svn add kde-frameworks-$version.php
+
