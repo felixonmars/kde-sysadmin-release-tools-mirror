@@ -28,11 +28,15 @@ This is a quick description on how KDE Frameworks packaging is done.
  * Do not forget to tell whoever does the ftp work to update the latest symlink
  * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES and tags.git
  * Make sure someone acts on RELEASE_PROMOTION
- * ./create_sources_inc > ../www_info/source-kf-5.0.0.inc  then svn add + commit.
+ * ./create_sources_inc ; cd ../../www_info ; svn commit
    Coordinate with the people doing web announcement for this
  * Once the release has been publicly announced run tag_all.sh
    At the moment you have to do this manually for SVN modules:
      - svn tags are in tags/KDE/4.9.0/modulename
+
+ * Update the version numbers right away in master.
+     vi version
+     ./increase_frameworks_version.sh step1 ; wait for CI ; ./increase_frameworks_version.sh step2
 
 Note:
  * Running ./pack_all.sh again will only repackage the repos that have changed
