@@ -1,0 +1,37 @@
+This is a quick description on how KDE Frameworks packaging is done.
+
+ * Ensure everything is green in build.kde.org
+ * ssh -A scripty@l10n.kde.org, and from there:
+    cd ~/frameworks_packaging/release-tools/
+    git pull
+    rm -rf sources versions REVISIONS_AND_HASHES l10n tags.git
+ * Update version file with the correct version number
+    (ask Alex Merry if in doubt about making a new ECM release, after git diff v1.last.0..)
+ * Edit config, ensure dry_run=0
+ * cd ../src ; ./kdesrc-build --src-only ; cd ../release-tools ; ./list_frameworks.sh
+ * Pack the sources:
+     ./update_l10n.sh ; ./make_rc_tag.sh
+      (then locally, try compiling the rc tag -> git fetch --tags ; kdesrc-build extra-cmake-modules frameworks)
+     ./pack_all.sh
+
+ * To apply a hotfix:
+        git checkout local_release ; git fetch ; git cherry-pick -x sha1 ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
+        Update N in tags.git, ./pack.sh <module> ; ./upload_all.sh ; create_sources_inc
+
+ * If you have ssh access to ftpadmin@depot.kde.org:
+     ./upload_all.sh
+
+ * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES and tags.git
+
+Several days later:
+ * chmod a+rx on the FTP directory, 8 hours before the release
+ * Write the list of changes in markdown format, into a file called changelog (here)
+ * ./create_sources_inc ; cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
+
+ * Make sure someone acts on RELEASE_PROMOTION
+ * Once the release has been publicly announced run tag_all.sh
+
+ * Update the version numbers right away in master.
+     vi version
+     ./increase_frameworks_version.sh step1 ; wait for CI ; ./increase_frameworks_version.sh step2
+
