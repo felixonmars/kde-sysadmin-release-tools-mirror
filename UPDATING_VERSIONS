@@ -10,9 +10,6 @@ Make sure that dependencies are met:
  * new soprano release needed?
  * new akonadi release needed (check kdepimlibs/akonadi/session_p.h)
 
-Ensure everything is green in build.kde.org
-Ensure there are no unrelated local changes, then proceed with updating the version numbers:
-
 For each release (i.e. x.y.z)
  * kdelibs/CMakeLists.txt - KDE_VERSION_*
  * kdelibs/README - This is version x.y.z of the KDE libraries.
@@ -22,15 +19,3 @@ For each release (i.e. x.y.z)
  * kde-workspace/CMakeLists.txt - KDE4WORKSPACE_VERSION_*
  * kdepim/CMakeLists.txt - KDEPIM_DEV_VERSION / KDEPIM_VERSION
  * kdepim-runtime/CMakeLists - KDEPIM_RUNTIME_DEV_VERSION and KDEPIM_RUNTIME_VERSION
-
-For KDE Frameworks releases
- cd src ; ./kdesrc-build --src-only
- cd ../release-tools ; ./list_frameworks.sh
- Update versions:
-  * ./increase_frameworks_version.sh step1
-
- Then wait for a successful rebuild on build.kde.org, to avoid failing all the frameworks at the next commit
-
- Upgrade version requirements:
-  * ./increase_frameworks_version.sh step2
-

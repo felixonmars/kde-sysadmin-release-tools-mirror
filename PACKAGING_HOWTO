@@ -1,42 +1,26 @@
-This is a quick description on how KDE Frameworks packaging is done.
+This is a quick description on how KDE SC 4.12 beta 1 packaging was done,
+obviously some of the version numbers need to be replaced by the version you are packaging ;-)
 
- * ssh -A scripty@l10n.kde.org, and from there:
- * git pull
- * rm -rf sources versions REVISIONS_AND_HASHES l10n tags.git
  * Update version file with the correct version number
-    (ask Alex Merry if in doubt about making a new ECM release, after git diff v1.last.0..)
- * Edit config, ensure dry_run=0
- * Update modules.svn file with the correct svn modules and branches [skip for frameworks]
- * Update modules.git file with the correct git modules and branches [skip for frameworks]
- * Read UPDATING_VERSIONS
- * Pack the sources (from ssh -A scripty@l10n.kde.org)
-     (when releasing frameworks: ./update_l10n.sh ; ./make_rc_tag.sh
-      then locally, try compiling the rc tag -> git fetch --tags ; kdesrc-build extra-cmake-modules frameworks)
+ * Update modules.svn file with the correct svn modules and branches
+ * Update modules.git file with the correct git modules and branches
+ * Read RELEASE-CHECKLIST
+ * Pack the sources
      ./pack_all.sh
-
-     Frameworks: to apply a hotfix:
-        git checkout local_release ; git fetch ; git cherry-pick -x sha1 ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
-        Update N in tags.git, ./pack.sh <module> ; ./upload_all.sh ; create_sources_inc
-
- * If you have ssh access to ftpadmin@depot.kde.org:
-     ./upload_all.sh
-
+ * If you have ssh access to ftpadmin@depot.kde.org, upload the tarballs there,
+   directly into the right location (and use chmod o-rx on the directory).
    Otherwise read ftp://upload.kde.org/README for how to upload the tarballs
    in case of doubt sysadmin will kindly help you
    Note that usually the tarballs are first only available to distro packagers
    and later they are public to everyone. sysadmin knows how to do that.
  * Do not forget to tell whoever does the ftp work to update the latest symlink
- * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES and tags.git
+ * Inform kde-packager@kde.org and release-team@kde.org
  * Make sure someone acts on RELEASE_PROMOTION
- * ./create_sources_inc ; cd ../../www_info ; svn commit
+ * Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.11.80.inc
    Coordinate with the people doing web announcement for this
  * Once the release has been publicly announced run tag_all.sh
    At the moment you have to do this manually for SVN modules:
      - svn tags are in tags/KDE/4.9.0/modulename
-
- * Update the version numbers right away in master.
-     vi version
-     ./increase_frameworks_version.sh step1 ; wait for CI ; ./increase_frameworks_version.sh step2
 
 Note:
  * Running ./pack_all.sh again will only repackage the repos that have changed
