@@ -80,7 +80,7 @@ svn add kde-frameworks-$version.php
 
 otherdate="`date +'%d'`th `date +'%B %Y'`"
 echo "<!-- KF $version released -->"
-echo "<strong>$otherdate</strong> - <a href=\"kde-frameworks-$version.php\">KDE Announces $version</a>"
+echo "<strong>$otherdate</strong> - <a href=\"kde-frameworks-$version.php\">KDE Frameworks $version released</a>"
 echo "<br />"
 echo "\"<em>KDE Ships Frameworks $version.</em>\""
 echo "<p />"
