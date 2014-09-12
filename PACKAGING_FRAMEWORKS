@@ -39,7 +39,7 @@ Several days later:
  cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
 
  * Email changelog text to kde-packager@kde.org and release-team@kde.org
- * Email changelog text to kde-announce@kde.org and kde-core-devel@kde.org
+ * Email changelog text to kde-devel@kde.org and kde-core-devel@kde.org
  * TODO: automate social media stuff
 
  * Update the version numbers right away in master.

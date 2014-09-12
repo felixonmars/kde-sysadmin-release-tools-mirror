@@ -42,11 +42,11 @@ cat $here/modules.git | while read repo branch; do
             $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_major'/ if (/^set.ECM_MAJOR_VERSION ([0-9]*)/);' CMakeLists.txt
             $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_minor'/ if (/^set.ECM_MINOR_VERSION ([0-9]*)/);' CMakeLists.txt
             $cmd perl -pi -e '$_ =~ s/\Q$1/'$ecm_patch'/ if (/^set.ECM_PATCH_VERSION ([0-9]*)/);' CMakeLists.txt
-            $cmd git commit -a -m "Upgrade ECM version for $ecm_version release."
+            $cmd git commit -a -m "Upgrade ECM version to $ecm_version."
         else
             $cmd perl -pi -e '$_ =~ s/\Q$1/'$version'/ if (/^set.KF5_VERSION \"([^\"]*)\"/);' CMakeLists.txt
             test -f setup.py && $cmd perl -pi -e '$_ =~ s/\Q$1/'$version'/ if (/^ +version=.(.*).,/);' setup.py # for kapidox
-            $cmd git commit -a -m "Upgrade KF5 version for $version release."
+            $cmd git commit -a -m "Upgrade KF5 version to $version."
         fi
     else
         $cmd perl -pi -e 's/ECM [0-9]+\.[0-9]+\.[0-9]+/ECM '$ecm_version'/g' CMakeLists.txt
