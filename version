@@ -1,1 +1,5 @@
-version=4.14.1
+if [ "$repo" = "kde-workspace" ]; then
+   version=4.11.12
+else
+   version=4.14.1
+fi
