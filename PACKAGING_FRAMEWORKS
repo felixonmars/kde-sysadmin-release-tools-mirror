@@ -23,13 +23,24 @@ This is a quick description on how KDE Frameworks packaging is done.
 
  * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES and tags.git
 
+ * Write the list of changes in markdown format, into a file called changelog (here),
+   send it to kde-frameworks-devel@kde.org for information and review.
+   Example syntax: (remove the indentation)
+
+        ### KActivities
+
+        * reimplementation of the file item plugin for linking files to activities
+
 Several days later:
  * chmod a+rx on the FTP directory, 8 hours before the release
- * Write the list of changes in markdown format, into a file called changelog (here)
- * ./create_sources_inc ; cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
+ ./tag_all.sh
+ ./create_sources_inc
+   (paste the output into files as requested)
+ cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
 
- * Make sure someone acts on RELEASE_PROMOTION
- * Once the release has been publicly announced run tag_all.sh
+ * Email changelog text to kde-packager@kde.org and release-team@kde.org
+ * Email changelog text to kde-announce@kde.org and kde-core-devel@kde.org
+ * TODO: automate social media stuff
 
  * Update the version numbers right away in master.
      vi version

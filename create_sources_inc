@@ -75,3 +75,15 @@ perl -pi -e "s/INSERT_DATE_HERE/$date/" kde-frameworks-$version.php
 
 svn add kde-frameworks-$version.php
 
+########
+# Output lines for announcements/index.php
+
+otherdate="`date +'%d'`th `date +'%B %Y'`"
+echo "<!-- KF $version released -->"
+echo "<strong>$otherdate</strong> - <a href=\"kde-frameworks-$version.php\">KDE Announces $version</a>"
+echo "<br />"
+echo "\"<em>KDE Ships Frameworks $version.</em>\""
+echo "<p />"
+
+echo "Paste the above into www_announcements/index.php, at the top of the list of announcements"
+
