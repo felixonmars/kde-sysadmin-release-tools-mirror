@@ -86,4 +86,21 @@ echo "\"<em>KDE Ships Frameworks $version.</em>\""
 echo "<p />"
 
 echo "Paste the above into www_announcements/index.php, at the top of the list of announcements"
+echo "<press any key>"
+read
+
+#######
+# Announcement email
+
+echo
+echo "$otherdate. KDE today announces the release of KDE Frameworks $version."
+echo
+echo "KDE Frameworks are 60 addon libraries to Qt which provide a wide variety of "
+echo "commonly needed functionality in mature, peer reviewed and well tested "
+echo "libraries with friendly licensing terms. For an introduction see the "
+echo "Frameworks 5.0 release announcement."
+echo
+sed -e 's/^#* //;s/^\*/ /' changelog
+echo
+echo "http://kde.org/announcements/kde-frameworks-$version.php"
 
