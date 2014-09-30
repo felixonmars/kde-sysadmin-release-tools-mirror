@@ -38,7 +38,12 @@ function grabTranslations()
         if test -d $podir; then
             local hasdestdir=0;
             test -d $destdir && hasdestdir=1 || mkdir -p $destdir
-            if cp -f $podir/${repo}5.po $destdir 2>/dev/null || cp -f $podir/${repo}5_*.po $destdir 2>/dev/null; then
+            pofile=
+            if [ -f $podir/${repo}5.po ]; then pofile=$podir/${repo}5.po;
+            elif [ -f $podir/${repo}5_qt.po ]; then pofile=$podir/${repo}5_qt.po;
+            elif [ ${repo} = "kdelibs4support" -a -f $podir/${repo}.po ]; then pofile=$podir/${repo}.po; fi
+
+            if [ -n "$pofile" ] && cp -f "$pofile" $destdir; then
                 has_po=1
                 local scriptdir=$subdir/scripts/$l10n_module
                 rm -rf $destdir/scripts
