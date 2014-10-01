@@ -23,6 +23,8 @@ function grabTranslations()
     local branch=$2
     local l10n=$3
 
+    pofiles=`find . -name Messages.sh | xargs grep -- '-o \$podir' | sed -e 's,.*podir/,,' | sed -e 's/pot$/po/'`
+
     mkdir -p po
 
     # Copy po files and translated docbooks
@@ -38,13 +40,13 @@ function grabTranslations()
         if test -d $podir; then
             local hasdestdir=0;
             test -d $destdir && hasdestdir=1 || mkdir -p $destdir
-            local pofile=
-            if [ -f $podir/${repo}5.po ]; then pofile=$podir/${repo}5.po;
-            elif [ -f $podir/${repo}5_qt.po ]; then pofile=$podir/${repo}5_qt.po;
-            elif [ ${repo} = "kdelibs4support" -a -f $podir/${repo}.po ]; then pofile=$podir/${repo}.po; fi
+            for pofile in $pofiles; do
+                if [ -f "$podir/$pofile" ] && cp -f "$podir/$pofile" $destdir; then
+                    has_po=1
+                fi
+            done
 
-            if [ -n "$pofile" ] && cp -f "$pofile" $destdir; then
-                has_po=1
+            if [ "$has_po" -eq 1 ]; then
                 # Copy kf5_entry.desktop into kconfigwidgets
                 if [ ${repo} = "kconfigwidgets" ]; then
                     local entryfile=$podir/kf5_entry.desktop
