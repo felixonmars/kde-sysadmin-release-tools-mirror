@@ -62,6 +62,7 @@ svn add kde-frameworks-$version.php
 # Now create the announcement page
 
 cd ../www_announcements
+svn up
 
 cp kde-frameworks-template.top kde-frameworks-$version.php
 
