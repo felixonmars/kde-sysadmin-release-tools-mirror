@@ -21,7 +21,7 @@ This is a quick description on how KDE Frameworks packaging is done.
  * If you have ssh access to ftpadmin@depot.kde.org:
      ./upload_all.sh
 
- * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES and tags.git
+ * Inform release-team@kde.org, attaching REVISIONS_AND_HASHES
 
  * Write the list of changes in markdown format, into a file called changelog (here),
    send it to kde-frameworks-devel@kde.org for information and review.
