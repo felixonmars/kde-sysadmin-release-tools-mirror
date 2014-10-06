@@ -2,6 +2,16 @@
 
 . version
 
+# E.g. 'October 06, 2014'
+date=`date +'%B %d, %Y'`
+# E.g. '06th October 2014'
+otherdate="`date +'%d'`th `date +'%B %Y'`"
+
+# If automatic date isn't what you want, set this instead
+# Remember to comment it out afterwards
+# date='October 07, 2014'
+# otherdate='07th October 2014'
+
 output=../www_info/source-kf-$version.inc
 echo > $output
 
@@ -71,7 +81,6 @@ cp kde-frameworks-template.top kde-frameworks-$version.php
 cat kde-frameworks-template.bottom >> kde-frameworks-$version.php
 
 perl -pi -e "s/5\.1\.0/$version/g" kde-frameworks-$version.php
-date=`date +'%B %d, %Y'`
 perl -pi -e "s/INSERT_DATE_HERE/$date/" kde-frameworks-$version.php
 
 svn add kde-frameworks-$version.php
@@ -79,13 +88,12 @@ svn add kde-frameworks-$version.php
 ########
 # Output lines for announcements/index.php
 
-otherdate="`date +'%d'`th `date +'%B %Y'`"
-echo "<!-- KF $version released -->"
+echo "<!-- KF $version -->"
 echo "<strong>$otherdate</strong> - <a href=\"kde-frameworks-$version.php\">KDE Frameworks $version released</a>"
 echo "<br />"
 echo "\"<em>KDE Ships Frameworks $version.</em>\""
 echo "<p />"
-
+echo
 echo "Paste the above into www_announcements/index.php, at the top of the list of announcements"
 echo "<press any key>"
 read
@@ -93,6 +101,8 @@ read
 #######
 # Announcement email
 
+echo "KDE Frameworks $version released"
+echo
 echo
 echo "$otherdate. KDE today announces the release of KDE Frameworks $version."
 echo
@@ -101,7 +111,7 @@ echo "commonly needed functionality in mature, peer reviewed and well tested "
 echo "libraries with friendly licensing terms. For an introduction see the "
 echo "Frameworks 5.0 release announcement."
 echo
-sed -e 's/^#* //;s/^\*/ /' changelog
+sed -e 's/^#* //;s/^\*/ /' ../release-tools/changelog
 echo
 echo "http://kde.org/announcements/kde-frameworks-$version.php"
 

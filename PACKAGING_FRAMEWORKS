@@ -14,14 +14,22 @@ This is a quick description on how KDE Frameworks packaging is done.
       (then locally, try compiling the rc tag -> git fetch --tags ; kdesrc-build extra-cmake-modules frameworks)
      ./pack_all.sh
 
- * To apply a hotfix:
-        git checkout local_release ; git fetch ; git cherry-pick -x sha1 ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
-        Update N in tags.git, ./pack.sh <module> ; ./upload_all.sh ; create_sources_inc
-
  * If you have ssh access to ftpadmin@depot.kde.org:
      ./upload_all.sh
 
  * Inform release-team@kde.org, attaching REVISIONS_AND_HASHES
+
+ * To update a tag+tarball after making fixes (grabbing all changes from master)
+     (this is the lazy version of the next solution, it re-commits all po files so it's not as good)
+     ./make_rc_tag.sh kconfigwidgets && ./pack.sh kconfigwidgets && ./upload_all.sh
+     (and re-run ./create_sources_inc if already done)
+
+ * To update a tag+tarball by cherry-picking a single fix
+     git checkout local_release ; git fetch ; git cherry-pick -x sha1 (or git merge origin/master) ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
+     Update N in tags.git, ./pack.sh <module> ; ./upload_all.sh
+     (and re-run ./create_sources_inc if already done)
+
+ * cat versions/* > REVISIONS_AND_HASHES, if you want to send it all-in-one-go after updates
 
  * Write the list of changes in markdown format, into a file called changelog (here),
    send it to kde-frameworks-devel@kde.org for information and review.
@@ -38,7 +46,6 @@ Several days later:
    (paste the output into files as requested)
  cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
 
- * Email changelog text to kde-packager@kde.org and release-team@kde.org
  * Email changelog text to kde-devel@kde.org and kde-core-devel@kde.org
  * TODO: automate social media stuff
 
