@@ -53,3 +53,7 @@ Several days later:
      vi version
      ./increase_frameworks_version.sh step1 ; wait for CI ; ./increase_frameworks_version.sh step2
 
+To make a patchlevel release:
+ * Use the cherry-pick procedure above. Run "./create_sources_inc x.y.z", commit the new info file.
+   Edit info/kde-frameworks/*.php: mention the "known bugs" and include the new info file under the main one.
+

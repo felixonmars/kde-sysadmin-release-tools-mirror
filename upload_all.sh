@@ -5,7 +5,11 @@
 
 . version
 
-dest=stable/frameworks/$version
+# version=x.y.z ==> dir=x.y
+# Patch-level releases go into the same directory, since they are typically just one framework
+dir=`echo $version | sed -e 's/\.[0-9]$//'`
+
+dest=stable/frameworks/$dir
 
 ssh ftpadmin@depot.kde.org "mkdir -p $dest"
 ssh ftpadmin@depot.kde.org "chmod o-rx $dest"

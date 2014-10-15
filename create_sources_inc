@@ -15,32 +15,40 @@ otherdate="`date +'%d'`th `date +'%B %Y'`"
 output=../www_info/source-kf-$version.inc
 echo > $output
 
+process_file()
+{
+    i=$1
+    filename=`basename $i`
+    echo '<tr valign="top">' >> $output
+    l=`echo $filename | sed -e "s#.tar.xz##"`
+    echo '   <td><a href="http://download.kde.org/stable/frameworks/'$version'/'$filename'">'$l'</a></td>' >> $output
+    size=`stat -c "%s" $i`
+    size=`echo "$size / 1024" | bc`
+    if test "$size" -lt 1024; then
+        size="$size"kB
+    else
+        size=`echo "($size * 10) / 1024" | bc`
+        if test "$size" -lt 100; then
+            size=`echo "$size"MB | sed -e "s#\(.\)MB#.\1MB#"`
+        else
+           size=`echo "$size"MB | sed -e "s#\(.\)MB#MB#"`
+        fi
+    fi
+    echo '   <td align="right">'$size'</td>' >> $output
+    sha1=`sha1sum $i | cut -f1 -d' '`
+    echo '   <td><tt>'$sha1'</tt></td>' >> $output
+    echo '</tr>' >> $output
+    echo '' >> $output
+}
+
 process_folder()
 {
     for i in $1/*.tar.xz; do 
-        filename=`basename $i`
-        echo '<tr valign="top">' >> $output
-        l=`echo $filename | sed -e "s#.tar.xz##"`
-        echo '   <td><a href="http://download.kde.org/stable/frameworks/'$version'/'$filename'">'$l'</a></td>' >> $output
-        size=`stat -c "%s" $i`
-        size=`echo "$size / 1024" | bc`
-        if test "$size" -lt 1024; then
-            size="$size"kB
-        else
-            size=`echo "($size * 10) / 1024" | bc`
-            if test "$size" -lt 100; then
-                size=`echo "$size"MB | sed -e "s#\(.\)MB#.\1MB#"`
-            else
-               size=`echo "$size"MB | sed -e "s#\(.\)MB#MB#"`
-            fi
-        fi
-        echo '   <td align="right">'$size'</td>' >> $output
-        sha1=`sha1sum $i | cut -f1 -d' '`
-        echo '   <td><tt>'$sha1'</tt></td>' >> $output
-        echo '</tr>' >> $output
-        echo '' >> $output
+        process_file $i
     done
 }
+
+onlyversion=$1
 
 echo '<table border="0" cellpadding="4" cellspacing="0">' >> $output
 echo '<tr valign="top">' >> $output
@@ -49,15 +57,23 @@ echo '  <th align="left">Size</th>' >> $output
 echo '  <th align="left">Sha1 Sum</th>' >> $output
 echo '</tr>' >> $output
 
-process_folder "sources" "frameworks"
-if [ -d "sources/kde-l10n" ]; then
-    process_folder "sources/kde-l10n" "src/kde-l10n"
+if [ -n "$onlyversion" ]; then
+    process_file sources/*-$onlyversion.tar.xz
+else
+    process_folder "sources" "$onlyversion"
+    if [ -d "sources/kde-l10n" ]; then
+        process_folder "sources/kde-l10n"
+    fi
 fi
 
 echo '</table>' >> $output
 
 cd `dirname $output`
 svn add `basename $output`
+
+if [ -n "$onlyversion" ]; then
+    exit 0
+fi
 
 ##################
 # Now create the main info page
