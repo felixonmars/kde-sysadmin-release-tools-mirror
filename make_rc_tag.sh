@@ -36,6 +36,7 @@ function grabTranslations()
             continue
         fi
         local destdir=$checkout/po/$lang
+        rm -rf $destdir/docs
         local podir=$subdir/messages/$l10n_module
         if test -d $podir; then
             local hasdestdir=0;
@@ -64,14 +65,22 @@ function grabTranslations()
                 rm -r $destdir
             fi
         fi
-        # the subdir in l10n is supposed to be named exactly after the framework
-        local docdir=$subdir/docs/$l10n_module/$repo
-        if test -d $docdir; then
-            rm -rf $destdir/docs
-            mkdir -p $destdir/docs
-            cp -a $docdir/* $destdir/docs
-            test -f $destdir/docs/CMakeLists.txt && has_po=1
-        fi
+        # Look for translated docbooks
+        local docdir=$subdir/docs/$l10n_module
+        #  We look at the sources to find out the name of the docbooks we want for this framework
+
+        local docsubdir_it
+        for docsubdir_it in $checkout/docs/*; do
+            if test -d $docsubdir_it; then
+                local docsubdir=`basename $docsubdir_it`
+                if test -d $docdir/$docsubdir; then
+                    mkdir -p $destdir/docs
+                    cp -a $docdir/$docsubdir $destdir/docs/
+                    rm -rf $destdir/docs/$docsubdir/.svn
+                    has_po=1
+                 fi
+            fi
+        done
     done
 
     if [ $has_po -eq 1 ]; then
