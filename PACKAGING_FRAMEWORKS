@@ -26,7 +26,7 @@ This is a quick description on how KDE Frameworks packaging is done.
 
  * To update a tag+tarball by cherry-picking a single fix
      git checkout local_release ; git fetch ; git cherry-pick -x sha1 (or git merge origin/master) ; git tag -a vx.y.z-rcN -m "<message>" ; git push --tags
-     Update N in tags.git, ./pack.sh <module> ; ./upload_all.sh
+     Update N in tags.git, check version file, ./pack.sh <module> ; ./upload_all.sh
      (and re-run ./create_sources_inc if already done)
 
  * cat versions/* > REVISIONS_AND_HASHES, if you want to send it all-in-one-go after updates

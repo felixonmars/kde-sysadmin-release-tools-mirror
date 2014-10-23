@@ -58,7 +58,9 @@ echo '  <th align="left">Sha1 Sum</th>' >> $output
 echo '</tr>' >> $output
 
 if [ -n "$onlyversion" ]; then
-    process_file sources/*-$onlyversion.tar.xz
+    for i in sources/*-$onlyversion.tar.xz; do
+        process_file $i
+    done
 else
     process_folder "sources" "$onlyversion"
     if [ -d "sources/kde-l10n" ]; then
