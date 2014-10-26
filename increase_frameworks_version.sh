@@ -34,6 +34,7 @@ cat $here/modules.git | while read repo branch; do
     checkout=$(findCheckout $repo)
     cd $checkout || exit 2
     echo $PWD
+    $cmd git checkout master || exit 3
     if [ "$step" = step1 ]; then
         if [ "$repo" = extra-cmake-modules ]; then
             ecm_major=`echo $ecm_version | cut -d. -f1`
