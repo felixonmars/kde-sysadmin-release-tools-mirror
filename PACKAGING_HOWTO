@@ -15,7 +15,7 @@ obviously some of the version numbers need to be replaced by the version you are
    Note that usually the tarballs are first only available to distro packagers
    and later they are public to everyone. sysadmin knows how to do that.
  * Do not forget to tell whoever does the ftp work to update the latest symlink
- * Inform kde-packager@kde.org and release-team@kde.org, attaching REVISIONS_AND_HASHES
+ * Inform release-team@kde.org, attaching REVISIONS_AND_HASHES
  * Make sure someone acts on RELEASE_PROMOTION
  * Run create_sources_inc and upload it to trunk/www/sites/www/info/source-4.11.80.inc
    Coordinate with the people doing web announcement for this

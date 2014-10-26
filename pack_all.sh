@@ -22,5 +22,5 @@ if [ "$release_l10n_separately" = "1" ]; then
     bash pack_l10n.sh
 fi
 
-# for sending to kde-packager@kde.org
+# for sending to release-team@kde.org
 cat versions/* > REVISIONS_AND_HASHES
