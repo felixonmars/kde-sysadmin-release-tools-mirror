@@ -14,6 +14,7 @@ On release day:
     * www/announcements/index.php,
     * www/info/releases.php,
     * www/download/index.php (only for stable releases + updates) and
+    * www/info/x.x.x.php
 - Update the contents of release_files in the define_release_data function of trunk/l10n-kde4/scripts/generate_release_data.py
   Remember the key of release_files has to match the $release variable of the announce-x.x.x.php file
 
