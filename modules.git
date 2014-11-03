@@ -61,6 +61,7 @@ ksnapshot                                   master
 libkdcraw                                   master
 libkexiv2                                   master
 libkipi                                     master
+libkface                                    master
 libksane                                    master
 okular                                      master
 svgpart                                     master
