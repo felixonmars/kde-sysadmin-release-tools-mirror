@@ -1,4 +1,3 @@
-kdelibs                                     KDE/4.14
 nepomuk-core                                Applications/14.12
 nepomuk-widgets                             Applications/14.12
 kde-runtime                                 Applications/14.12
@@ -41,9 +40,6 @@ pairs                                       Applications/14.12
 parley                                      Applications/14.12
 rocs                                        Applications/14.12
 step                                        Applications/14.12
-kdepim                                      KDE/4.14
-kdepimlibs                                  KDE/4.14
-kdepim-runtime                              KDE/4.14
 gwenview                                    Applications/14.12
 kamera                                      Applications/14.12
 kcolorchooser                               Applications/14.12
