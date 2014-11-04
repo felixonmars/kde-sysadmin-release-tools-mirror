@@ -1,19 +1,7 @@
-nepomuk-core                                Applications/14.12
-nepomuk-widgets                             Applications/14.12
 kde-runtime                                 Applications/14.12
 kde-baseapps                                Applications/14.12
 kate                                        Applications/14.12
 konsole                                     Applications/14.12
-smokegen                                    Applications/14.12
-smokeqt                                     Applications/14.12
-smokekde                                    Applications/14.12
-qyoto                                       Applications/14.12
-kimono                                      Applications/14.12
-pykde4                                      Applications/14.12
-qtruby                                      Applications/14.12
-korundum                                    Applications/14.12
-perlqt                                      Applications/14.12
-perlkde                                     Applications/14.12
 analitza                                    Applications/14.12
 artikulate                                  Applications/14.12
 blinken                                     Applications/14.12
@@ -58,7 +46,6 @@ libkipi                                     Applications/14.12
 libksane                                    Applications/14.12
 okular                                      Applications/14.12
 svgpart                                     Applications/14.12
-kross-interpreters                          Applications/14.12
 ark                                         Applications/14.12
 filelight                                   Applications/14.12
 kcalc                                       Applications/14.12
