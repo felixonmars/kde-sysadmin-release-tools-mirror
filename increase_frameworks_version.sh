@@ -57,8 +57,3 @@ cat $here/modules.git | while read repo branch; do
     $cmd git pull --rebase
     $cmd git push
 done
-
-if [ "$step" = "step1" -a "$release_l10n_separately" = 0 ]; then
-    cd $here
-    $cmd ./update_l10n.sh
-fi

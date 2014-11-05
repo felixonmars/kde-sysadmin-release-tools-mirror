@@ -15,7 +15,7 @@ This is a quick description on how KDE Frameworks packaging is done.
      ./pack_all.sh
 
  * If you have ssh access to ftpadmin@depot.kde.org:
-     ./upload_all.sh
+     ./upload_all.sh           # cannot be done from a resumed screen...
 
  * Inform release-team@kde.org, attaching REVISIONS_AND_HASHES
 
