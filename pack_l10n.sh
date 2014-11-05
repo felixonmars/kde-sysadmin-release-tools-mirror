@@ -47,6 +47,12 @@ remove_stuff()
     rm -rf */no-auto-merge
 }
 
+remove_stuff_kf5()
+{
+    remove_stuff
+    rm -rf */kde-workspace
+}
+
 pack_variants()
 {
     if test -f pack-with-variants; then
@@ -66,11 +72,10 @@ pack_lang()
     while [ $checkout -eq 1 ]; do
         umask 000
         MANIFEST="`mktemp -t`"
-        # Intentionally not passing a $repo to get_svn_rev so that we get
-        # the rev of the root l10n dir and thus the checkDownloadUptodate thing
-        # works for langs inside langs (like sr)
+
         rev=`get_svn_rev`
         svn export $l10n_repo/$lang@ $lang@ &> /dev/null
+        svn export $l10n_repo2/$lang@ 2$lang@ &> /dev/null
         rev2=`get_svn_rev`
         if [ "$rev" = "$rev2" ]; then
             if [ $rootLang -eq 1 ]; then
@@ -79,6 +84,11 @@ pack_lang()
             fi
             cd $lang
             remove_stuff
+            cd ../2$lang
+            remove_stuff_kf5
+            cd ..
+            cp -R 2$lang/* $lang/
+            cd $lang
             pack_variants
             rev3=`get_svn_rev`
             # Check again after pack_variants just in case
@@ -104,7 +114,7 @@ pack_lang()
             fi
         fi
         if [ $rootLang -eq 1 ]; then
-            rm -rf $lang kde-l10n-$lang-$version
+            rm -rf $lang 2$lang kde-l10n-$lang-$version
         fi
     done
 }
@@ -113,8 +123,10 @@ cat language_list | while read lang; do
     finalDestination=sources/kde-l10n/kde-l10n-$lang-$version.tar.xz
     versionFilePath=versions/kde-l10n-$lang
     repoLine="$l10n_repo/$lang"
+    # Passing a very "up" root since we are shipping kde4 and kf5 translations
+    branch=svn://anonsvn.kde.org/home/kde/branches/stable/
 
-    checkDownloadUptodate "svn"
+    checkDownloadUptodate "svn" $finalDestination
     uptodate=$?
     if [ $uptodate = 1 ]; then
         echo "kde-l10n-$lang is already up to date, no need to re-download. Use -f as parameter if you want to force"
