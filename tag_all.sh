@@ -56,6 +56,8 @@ done
 if [ "$release_l10n_separately" = 1 ]; then
     l10n_repo=`echo $l10n_repo | sed 's#svn://anonsvn.kde.org#svn+ssh://svn@svn.kde.org#g'`
     svn mkdir svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n -m "Create tag for $version" || exit 9
+    svn mkdir svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/4 -m "Create tag for $version" || exit 9
+    svn mkdir svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/5 -m "Create tag for $version" || exit 9
     for lang in `cat language_list`; do
         echo $lang
         . $here/version
@@ -63,12 +65,25 @@ if [ "$release_l10n_separately" = 1 ]; then
         if [ ! -f $versionfile ]; then echo "$versionfile not found"; exit 10; fi
         b=`sed '2q;d' $versionfile`
         echo $b
-        echo $l10n_repo
-        svn cp $l10n_repo/$lang@$b svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n -m "Create tag for $version" || exit 11
-        variants=`svn cat svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/$lang/pack-with-variants 2> /dev/null` || continue
+
+        branch=`echo $l10n_repo4 | sed 's#svn://anonsvn.kde.org#svn+ssh://svn@svn.kde.org#g'`
+        echo $branch
+        svn cp $branch/$lang@$b svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/4 -m "Create tag for $version" || exit 11
+
+        variants=`svn cat svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/4/$lang/pack-with-variants 2> /dev/null` || variants=""
         for variant in $variants; do
             echo $variant
-            svn cp $l10n_repo/$variant@$b svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n -m "Create tag for $version" || exit 12
+            svn cp $branch/$variant@$b svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/4 -m "Create tag for $version" || exit 12
+        done
+
+        branch=`echo $l10n_repo5 | sed 's#svn://anonsvn.kde.org#svn+ssh://svn@svn.kde.org#g'`
+        echo $branch
+        svn cp --parents $branch/$lang@$b svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/5 -m "Create tag for $version" || exit 11
+
+        variants=`svn cat svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/5/$lang/pack-with-variants 2> /dev/null` || variants=""
+        for variant in $variants; do
+            echo $variant
+            svn cp $branch/$variant@$b svn+ssh://svn@svn.kde.org/home/kde/tags/Applications/$version/kde-l10n/5 -m "Create tag for $version" || exit 12
         done
     done
 fi

@@ -1,7 +1,7 @@
 make_zip=0
 
-l10n_repo=svn://anonsvn.kde.org/home/kde/branches/stable/l10n-kde4
-l10n_repo2=svn://anonsvn.kde.org/home/kde/branches/stable/l10n-kf5
+l10n_repo4=svn://anonsvn.kde.org/home/kde/branches/stable/l10n-kde4
+l10n_repo5=svn://anonsvn.kde.org/home/kde/branches/stable/l10n-kf5
 
 release_l10n_separately=1
 
