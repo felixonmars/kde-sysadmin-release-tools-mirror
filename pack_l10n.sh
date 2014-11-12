@@ -129,6 +129,7 @@ pack_lang()
                     echo "project($lang)" > kde-l10n-$lang-$version/CMakeLists.txt
                     echo "cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)" > kde-l10n-$lang-$version/CMakeLists.txt
                     echo "cmake_policy(SET CMP0002 OLD)" >> kde-l10n-$lang-$version/CMakeLists.txt
+                    echo "cmake_policy(SET CMP0014 OLD)" >> kde-l10n-$lang-$version/CMakeLists.txt
                     echo "add_subdirectory(4)" >> kde-l10n-$lang-$version/CMakeLists.txt
                     echo "add_subdirectory(5)" >> kde-l10n-$lang-$version/CMakeLists.txt
                     echo "add_subdirectory($lang)" >> kde-l10n-$lang-$version/4/CMakeLists.txt
