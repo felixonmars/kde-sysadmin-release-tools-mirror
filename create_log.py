@@ -47,7 +47,7 @@ for repo in repos:
 	p = subprocess.Popen('git rev-parse '+fromVersion, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	retval = p.wait()
 	if retval != 0:
-		print "<h3><a name='" + repo + "' href='http://quickgit.kde.org/?p="+repo+".git'>" + repo + "</a> <a href='#" + repo + "' onclick='toggle('ul" + repo +"', this)'>[Show]</a></h3>"
+		print "<h3><a name='" + repo + "' href='http://quickgit.kde.org/?p="+repo+".git'>" + repo + "</a> <a href='#" + repo + "' onclick='toggle(\"ul" + repo +"\", this)'>[Show]</a></h3>"
 		print "<ul id='ul" + repo + "' style='display: none'><li>New in this release</li></ul>"
 		continue
 
