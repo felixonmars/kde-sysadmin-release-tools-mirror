@@ -58,9 +58,14 @@ function grabTranslations()
                 # Copy the scripts subdir
                 local scriptdir=$subdir/scripts/$l10n_module
                 rm -rf $destdir/scripts
-                mkdir $destdir/scripts
-                cp -rf $scriptdir/${repo}5 $destdir/scripts/ 2>/dev/null || cp -rf $scriptdir/${repo}5_* $destdir/scripts/ 2>/dev/null || rmdir $destdir/scripts
-                rm -rf $destdir/scripts/${repo}5/.svn
+                for pofile in $pofiles; do
+                    scriptmod=`echo $pofile | sed 's/\.po$//'`
+                    if test -d $scriptdir/$scriptmod; then
+                        test -d $destdir/scripts || mkdir $destdir/scripts
+                        cp -rf $scriptdir/$scriptmod $destdir/scripts/ 2>/dev/null
+                        rm -rf $destdir/scripts/$scriptmod/.svn
+                   fi
+                done
             elif [ $hasdestdir -eq 0 ]; then
                 rm -r $destdir
             fi
