@@ -79,9 +79,9 @@ for repo in repos:
 				if line.startswith("Merge remote-tracking branch"):
 					ignoreCommit = True
 				elif line.startswith("SVN_SILENT"):
-					pass
+					ignoreCommit = True
 				elif line.startswith("GIT_SILENT"):
-					pass
+					ignoreCommit = True
 				elif line.startswith("Merge branch"):
 					ignoreCommit = True
 				elif line:
