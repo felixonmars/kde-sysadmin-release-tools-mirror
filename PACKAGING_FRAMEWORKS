@@ -2,6 +2,7 @@ This is a quick description on how KDE Frameworks packaging is done.
 
  * Ensure everything is green in build.kde.org
  * ssh -A scripty@l10n.kde.org, and from there:
+    First, ensure that the tags from the last release have been pushed!
     cd ~/frameworks_packaging/release-tools/
     git pull
     rm -rf sources versions REVISIONS_AND_HASHES l10n tags.git
@@ -47,6 +48,7 @@ Several days later:
  cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
 
  * Email changelog text to kde-devel@kde.org and kde-core-devel@kde.org
+ * Email changelog text to kde-announce@kde.org
  * TODO: automate social media stuff
 
  * Update the version numbers right away in master.

@@ -41,6 +41,7 @@ kmediaplayer master
 knewstuff master
 knotifications master
 knotifyconfig master
+kpackage master
 kparts master
 kplotting master
 kpty master
@@ -54,6 +55,7 @@ kwallet master
 kwidgetsaddons master
 kwindowsystem master
 kxmlgui master
+networkmanager-qt master
 plasma-framework master
 solid master
 sonnet master
