@@ -1,12 +1,12 @@
 if [ "$repo" = "kdelibs" ]; then
    version=4.14.4
-elsif [ "$repo" = "kdepim" ]; then
+elif [ "$repo" = "kdepim" ]; then
    version=4.14.4
-elsif [ "$repo" = "kdepimlibs" ]; then
+elif [ "$repo" = "kdepimlibs" ]; then
    version=4.14.4
-elsif [ "$repo" = "kdepim-runtime" ]; then
+elif [ "$repo" = "kdepim-runtime" ]; then
    version=4.14.4
-elsif [ "$repo" = "kde-workspace" ]; then
+elif [ "$repo" = "kde-workspace" ]; then
    version=4.11.15
 else
    version=14.12.1
