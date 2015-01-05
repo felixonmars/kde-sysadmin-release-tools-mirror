@@ -1,3 +1,8 @@
+kdelibs                                     KDE/4.14
+kdepim                                      KDE/4.14
+kdepim-runtime                              KDE/4.14
+kdepimlibs                                  KDE/4.14
+kde-workspace                               KDE/4.11
 kde-runtime                                 Applications/14.12
 kde-baseapps                                Applications/14.12
 kate                                        Applications/14.12
