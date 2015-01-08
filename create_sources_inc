@@ -106,15 +106,13 @@ svn add kde-frameworks-$version.php
 ########
 # Output lines for announcements/index.php
 
-echo "<!-- KF $version -->"
-echo "<strong>$otherdate</strong> - <a href=\"kde-frameworks-$version.php\">KDE Frameworks $version released</a>"
-echo "<br />"
-echo "\"<em>KDE Ships Frameworks $version.</em>\""
-echo "<p />"
-echo
-echo "Paste the above into www_announcements/index.php, at the top of the list of announcements"
-echo "<press any key>"
-read
+announcelines="<!-- KF $version -->
+<strong>$otherdate</strong> - <a href=\\\"kde-frameworks-$version.php\\\">KDE Frameworks $version released</a>
+<br />
+\\\"<em>KDE Ships Frameworks $version.</em>\\\"
+<p />"
+
+perl -pi -e "\$_ .= \"$announcelines\" if (/INSERT NEW ENTRIES BELOW THIS LINE/);" index.php
 
 #######
 # Announcement email

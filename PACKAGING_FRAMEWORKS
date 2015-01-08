@@ -44,7 +44,6 @@ Several days later:
  * chmod a+rx on the FTP directory, 8 hours before the release
  ./tag_all.sh
  ./create_sources_inc
-   (paste the output into files as requested)
  cd ../www_info ; svn commit ; cd ../www_announcements ; svn commit
 
  * Email changelog text to kde-devel@kde.org and kde-core-devel@kde.org
