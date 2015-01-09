@@ -12,7 +12,7 @@ otherdate="`date +'%d'`th `date +'%B %Y'`"
 # date='October 07, 2014'
 # otherdate='07th October 2014'
 
-output=../www_info/source-kf-$version.inc
+output=../www/info/source-kf-$version.inc
 echo > $output
 
 process_file()
@@ -89,7 +89,7 @@ svn add kde-frameworks-$version.php
 #######
 # Now create the announcement page
 
-cd ../www_announcements
+cd ../www/announcements
 svn up
 
 cp kde-frameworks-template.top kde-frameworks-$version.php
@@ -113,6 +113,13 @@ announcelines="<!-- KF $version -->
 <p />"
 
 perl -pi -e "\$_ .= \"$announcelines\" if (/INSERT NEW ENTRIES BELOW THIS LINE/);" index.php
+
+########
+# Toplevel index.php
+
+echo "TODO: add entry into www/index.php"
+echo
+echo
 
 #######
 # Announcement email
