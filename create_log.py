@@ -19,7 +19,6 @@ for line in f:
 
 repos.sort()
 
-fromVersion = "v4.14.3"
 versionsDir = os.getcwd() + "/versions"
 
 print "<script type='text/javascript'>"
@@ -38,6 +37,19 @@ print "</script>"
 for repo in repos:
 	toVersion = getVersionFrom(repo)
 	os.chdir(srcdir+repo)
+
+	if repo == "kdelibs":
+		fromVersion = "v4.14.3"
+	elif repo == "kdepim":
+		fromVersion = "v4.14.3"
+	elif repo == "kdepimlibs":
+		fromVersion = "v4.14.3"
+	elif repo == "kdepim-runtime":
+		fromVersion = "v4.14.3"
+	elif repo == "kde-workspace":
+		fromVersion = "v4.11.14"
+	else:
+		fromVersion = "v14.12.0"
 
 	p = subprocess.Popen('git fetch', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	retval = p.wait()
@@ -101,14 +113,16 @@ for repo in repos:
 					if line.startswith("BUGS:"):
 						bugNumbers = line[line.find(":") + 1:].strip()
 						for bugNumber in bugNumbers.split(","):
+							if bugNumber.isdigit():
+								if extra:
+									extra += ". "
+								extra += "Fixes bug <a href='https://bugs.kde.org/" + bugNumber + "'>#" + bugNumber + "</a>"
+					elif line.startswith("BUG:"):
+						bugNumber = line[line.find(":") + 1:].strip()
+						if bugNumber.isdigit():
 							if extra:
 								extra += ". "
 							extra += "Fixes bug <a href='https://bugs.kde.org/" + bugNumber + "'>#" + bugNumber + "</a>"
-					elif line.startswith("BUG:"):
-						if extra:
-							extra += ". "
-						bugNumber = line[line.find(":") + 1:].strip()
-						extra += "Fixes bug <a href='https://bugs.kde.org/" + bugNumber + "'>#" + bugNumber + "</a>"
 					elif line.startswith("REVIEW:"):
 						if extra:
 							extra += ". "
@@ -121,12 +135,13 @@ for repo in repos:
 						extra += "See bug <a href='https://bugs.kde.org/" + bugNumber + "'>#" + bugNumber + "</a>"
 					elif line.startswith("FEATURE:"):
 						feature = line[line.find(":") + 1:].strip()
-						if extra:
-							extra += ". "
 						if feature.isdigit():
+							if extra:
+								extra += ". "
 							extra += "Implements feature <a href='https://bugs.kde.org/" + feature + "'>#" + feature + "</a>"
 						else:
-							changelog = feature
+							if feature:
+								changelog = feature
 							
 					elif line.startswith("CHANGELOG:"):
 						raise NameError('Unhandled CHANGELOG')
