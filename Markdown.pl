@@ -475,7 +475,7 @@ sub _RunSpanGamut {
 
 	$text = _EncodeAmpsAndAngles($text);
 
-	$text = _DoItalicsAndBold($text);
+    #$text = _DoItalicsAndBold($text);
 
 	# Do hard breaks:
 	$text =~ s/ {2,}\n/ <br$g_empty_element_suffix\n/g;
