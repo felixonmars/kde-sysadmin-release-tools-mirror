@@ -39,17 +39,17 @@ for repo in repos:
 	os.chdir(srcdir+repo)
 
 	if repo == "kdelibs":
-		fromVersion = "v4.14.3"
+		fromVersion = "v4.14.4"
 	elif repo == "kdepim":
-		fromVersion = "v4.14.3"
+		fromVersion = "v4.14.4"
 	elif repo == "kdepimlibs":
-		fromVersion = "v4.14.3"
+		fromVersion = "v4.14.4"
 	elif repo == "kdepim-runtime":
-		fromVersion = "v4.14.3"
+		fromVersion = "v4.14.4"
 	elif repo == "kde-workspace":
-		fromVersion = "v4.11.14"
+		fromVersion = "v4.11.15"
 	else:
-		fromVersion = "v14.12.0"
+		fromVersion = "v14.12.1"
 
 	p = subprocess.Popen('git fetch', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	retval = p.wait()
