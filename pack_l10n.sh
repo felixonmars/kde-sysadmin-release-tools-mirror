@@ -61,6 +61,9 @@ pack_variants4()
         cat pack-with-variants | while read vdir; do
             echo $vdir
             svn export $l10n_repo4/$vdir@ $vdir@ &> /dev/null
+            cd $vdir
+            remove_stuff
+            cd ..
         done
         rm -f pack-with-variants
     fi
@@ -72,6 +75,9 @@ pack_variants5()
         cat pack-with-variants | while read vdir; do
             echo $vdir
             svn export $l10n_repo5/$vdir@ $vdir@ &> /dev/null
+            cd $vdir
+            remove_stuff_kf5
+            cd ..
         done
         rm -f pack-with-variants
     fi
