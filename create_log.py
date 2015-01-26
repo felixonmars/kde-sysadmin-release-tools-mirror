@@ -35,27 +35,21 @@ print "}"
 print "</script>"
 
 for repo in repos:
-	#toVersion = getVersionFrom(repo)
+	toVersion = getVersionFrom(repo)
 	os.chdir(srcdir+repo)
 
 	if repo == "kdelibs":
 		fromVersion = "v4.14.4"
-		toVersion = "origin/KDE/4.14"
 	elif repo == "kdepim":
 		fromVersion = "v4.14.4"
-		toVersion = "origin/KDE/4.14"
 	elif repo == "kdepimlibs":
 		fromVersion = "v4.14.4"
-		toVersion = "origin/KDE/4.14"
 	elif repo == "kdepim-runtime":
 		fromVersion = "v4.14.4"
-		toVersion = "origin/KDE/4.14"
 	elif repo == "kde-workspace":
 		fromVersion = "v4.11.15"
-		toVersion = "origin/KDE/4.11"
 	else:
 		fromVersion = "v14.12.1"
-		toVersion = "origin/Applications/14.12"
 
 	p = subprocess.Popen('git fetch', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	retval = p.wait()
